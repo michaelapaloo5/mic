@@ -69,7 +69,7 @@ export default function Hero() {
                 <div className="m:w-1/2 l:w-[45%]">
                   <img
                     loading="lazy"
-                    src="/images/visa-credit-card.png"
+                    src="/images/visa-card.jpg"
                     alt="DKB Visa Kreditkarte"
                     className="block w-full h-auto object-cover"
                   />
