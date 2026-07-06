@@ -11,12 +11,8 @@ export default function Home() {
   return (
     <div id="__nuxt">
       <div className="page-container flex flex-col min-h-full">
-        <div className="flex-container">
-          <div className="page-header shrink-0 sticky left-0 top-0 w-full z-page-header">
-            <Header />
-          </div>
-        </div>
-        <main className="pt-[52px] l:pt-[68px]">
+        <Header />
+        <main className="pt-[52px] lg:pt-[68px]">
           <Hero />
 
           <BlockSection
