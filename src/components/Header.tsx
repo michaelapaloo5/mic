@@ -30,25 +30,82 @@ const desktopNav: NavItem[] = [
       { heading: "Kredite", links: [{ label: "Privatkredit", href: "/privatkunden/privatkredit" }] },
       { heading: "Investieren & Sparen", links: [{ label: "Tagesgeld", href: "/privatkunden/tagesgeld" }, { label: "Depot", href: "/privatkunden/depot" }, { label: "Altersvorsorge", href: "/privatkunden/altersvorsorge" }] },
       { heading: "Finanzierung & Immobilie", links: [{ label: "Baufinanzierung", href: "/privatkunden/baufinanzierung" }, { label: "Immobilienbewertung", href: "/privatkunden/immobilienbewertung" }] },
+      { heading: "Service & Hilfe", links: [{ label: "Hilfe & Kontakt", href: "/fragen-antworten" }, { label: "Freunde werben", href: "https://freundewerben.dkb.de/" }] },
     ],
   },
   {
     label: "Geschäftlich",
     href: "/geschaeftskunden",
+    children: [
+      {
+        heading: "Branchen",
+        links: [
+          { label: "Wohnungswirtschaft", href: "/geschaeftskunden/wohnungswirtschaft" },
+          { label: "Erneuerbare Energien", href: "/geschaeftskunden/erneuerbare-energien" },
+          { label: "Landwirtschaft & Ernährung", href: "/geschaeftskunden/landwirtschaft-ernaehrung" },
+          { label: "Freie Berufe", href: "/geschaeftskunden/freie-berufe" },
+          { label: "Sozialwirtschaft", href: "/geschaeftskunden/sozialwirtschaft" },
+          { label: "Kommunen", href: "/geschaeftskunden/kommunen" },
+        ],
+      },
+      {
+        heading: "",
+        links: [
+          { label: "Energie & Versorgung", href: "/geschaeftskunden/energie-versorgung" },
+          { label: "Tourismus", href: "/geschaeftskunden/tourismus" },
+          { label: "Unternehmen", href: "/geschaeftskunden/unternehmen" },
+        ],
+      },
+      {
+        heading: "Über uns",
+        links: [
+          { label: "Zahlen & Fakten", href: "/geschaeftskunden/zahlen-fakten" },
+          { label: "Investoren", href: "/geschaeftskunden/investoren" },
+          { label: "English Version", href: "/en" },
+        ],
+      },
+    ],
   },
   {
     label: "Nachhaltig",
     href: "/nachhaltigkeit",
+    children: [
+      {
+        heading: "",
+        links: [
+          { label: "Nachhaltigkeit bei der DKB", href: "/nachhaltigkeit" },
+          { label: "Nachhaltige Geldanlagen", href: "/nachhaltigkeit/nachhaltige-geldanlagen" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Unternehmen",
+    href: "/ueber-uns",
+    children: [
+      {
+        heading: "",
+        links: [
+          { label: "Über uns", href: "/ueber-uns" },
+          { label: "Presse", href: "/presse" },
+          { label: "Karriere", href: "/karriere" },
+          { label: "Investor Relations", href: "/ueber-uns/investor-relations" },
+          { label: "Compliance", href: "/ueber-uns/compliance" },
+          { label: "English Version", href: "/en" },
+        ],
+      },
+    ],
   },
 ]
 
-const mobileNav: { label: string; href: string }[] = [
+const mobileNav: { label: string; href: string; children?: { heading?: string; links: { label: string; href: string }[] }[] }[] = [
   { label: "Privat", href: "/privatkunden" },
   { label: "Geschäftlich", href: "/geschaeftskunden" },
   { label: "Nachhaltig", href: "/nachhaltigkeit" },
-  { label: "Über uns", href: "/ueber-uns" },
+  { label: "Unternehmen", href: "/ueber-uns" },
   { label: "Karriere", href: "/karriere" },
   { label: "Presse", href: "/presse" },
+  { label: "English Version", href: "/en" },
 ]
 
 export default function Header() {
@@ -81,10 +138,15 @@ export default function Header() {
       <div className="bg-white">
         <div className="max-w-[1440px] mx-auto px-4 xl:px-10">
           <div className="flex items-center justify-between h-16 l:h-20">
-            {/* Logo */}
-            <a href="/" aria-label="DKB Startseite" className="shrink-0">
-              <DKBLogo className="h-7 w-auto" />
-            </a>
+            {/* Logo + Tagline */}
+            <div className="flex items-center gap-3">
+              <a href="/" aria-label="DKB Startseite" className="shrink-0">
+                <DKBLogo className="h-7 w-auto" />
+              </a>
+              <span className="hidden m:inline text-dkb-text font-semibold text-sm leading-none">
+                Das kann Bank
+              </span>
+            </div>
 
             {/* Desktop nav */}
             <nav className="hidden l:flex items-center h-full" aria-label="Hauptnavigation">
@@ -141,18 +203,19 @@ export default function Header() {
             {/* Right side */}
             <div className="flex items-center gap-3">
               <a
-                href="https://banking.dkb.de/login"
-                className="hidden l:inline-flex items-center gap-2 px-5 py-2.5 border-2 border-dkb-blue-dark text-dkb-blue-dark font-semibold rounded-lg hover:bg-dkb-blue-dark hover:text-white transition-all duration-200 text-sm"
+                href="/login"
+                className="hidden l:inline-flex items-center gap-2 px-4 py-2 text-dkb-blue-dark font-semibold hover:text-dkb-blue-dark/80 transition-colors text-sm"
               >
                 <Icon name="lock" size={16} />
                 Anmelden
               </a>
               <button
-                className="l:hidden p-2 -mr-2 text-dkb-text hover:text-dkb-blue-dark transition-colors"
+                className="l:hidden flex items-center gap-1.5 p-2 -mr-2 text-dkb-text hover:text-dkb-blue-dark transition-colors"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label={mobileMenuOpen ? "Menü schließen" : "Menü öffnen"}
               >
-                <Icon name={mobileMenuOpen ? "x" : "menu"} size={28} />
+                <Icon name={mobileMenuOpen ? "x" : "menu"} size={24} />
+                <span className="text-sm font-semibold">Menü</span>
               </button>
             </div>
           </div>
@@ -178,7 +241,7 @@ export default function Header() {
             </ul>
             <hr className="my-6 border-gray-100" />
             <a
-              href="https://banking.dkb.de/login"
+              href="/login"
               className="flex items-center justify-center gap-2 w-full py-3 bg-dkb-blue-dark text-white font-semibold rounded-lg hover:brightness-110 transition-all"
               onClick={() => setMobileMenuOpen(false)}
             >

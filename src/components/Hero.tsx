@@ -31,7 +31,7 @@ export default function Hero() {
             </div>
             <div className="mb-3">
               <Button
-                variant="secondary"
+                variant="primary"
                 theme="blue"
                 size="l"
                 href="/privatkunden/girokonto?wt_mc=pk.giro_hp_b"

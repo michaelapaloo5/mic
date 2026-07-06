@@ -28,7 +28,7 @@ export default function TeaserGrid({
         </div>
         {cta && (
           <div className="mt-8">
-            <Button variant="secondary" theme="blue" size="l" href={cta.href}>
+            <Button variant="primary" theme="blue" size="l" href={cta.href}>
               {cta.label}
             </Button>
           </div>

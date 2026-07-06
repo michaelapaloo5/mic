@@ -58,7 +58,7 @@ export default function BlockSection({
               )}
               {cta && (
                 <div className="mt-6">
-                  <Button variant="secondary" theme="blue" size="l" href={cta.href}>
+                  <Button variant="primary" theme="blue" size="l" href={cta.href}>
                     {cta.label}
                   </Button>
                 </div>
@@ -79,7 +79,7 @@ export default function BlockSection({
                 )}
                 {cta && (
                   <div className="mt-6 mx-0 mb-8 l:mt-8 l:mb-14">
-                    <Button variant="secondary" theme="blue" size="l" href={cta.href}>
+                    <Button variant="primary" theme="blue" size="l" href={cta.href}>
                       {cta.label}
                     </Button>
                   </div>
