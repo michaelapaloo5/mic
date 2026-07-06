@@ -27,11 +27,7 @@ const GIRO_TRANSACTIONS: Transaction[] = [
   { id: 8, date: "20.06.2026", description: "Stadtwerke Strom", amount: 89.50, type: "debit", category: "Energie" },
 ]
 
-const TAGESGELD_TRANSACTIONS: Transaction[] = [
-  { id: 1, date: "01.07.2026", description: "Zinsgutschrift DKB AG", amount: 12.34, type: "credit", category: "Zinsen" },
-  { id: 2, date: "01.06.2026", description: "Zinsgutschrift DKB AG", amount: 11.87, type: "credit", category: "Zinsen" },
-  { id: 3, date: "02.05.2026", description: "Überweisung vom Girokonto", amount: 2000.0, type: "credit", category: "Umbuchung" },
-]
+
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -39,7 +35,6 @@ export default function DashboardPage() {
   const [account, setAccount] = useState<{ iban: string; balance: number } | null>(null)
   const [view, setView] = useState<PageView>("finanzstatus")
   const [giroTab, setGiroTab] = useState("Umsatzliste")
-  const [tagesgeldTab, setTagesgeldTab] = useState("Umsatzliste")
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
@@ -160,7 +155,7 @@ export default function DashboardPage() {
       default:
         return (
           <>
-            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6">
+            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
@@ -240,83 +235,6 @@ export default function DashboardPage() {
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <p className="text-gray-500">Verfügbar</p>
                     <p className="font-semibold">{account ? formatEuro(account.balance + 500) : "—"}</p>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center shrink-0">
-                    <span className="text-teal-600 font-bold text-lg">T</span>
-                  </div>
-                  <div className="min-w-0">
-                    <h2 className="text-xl font-semibold">Tagesgeld</h2>
-                    <p className="text-sm text-gray-500 font-mono truncate">DE87 1001 0101 9876 5432 01</p>
-                  </div>
-                </div>
-                <div className="text-left sm:text-right">
-                  <p className="text-3xl font-bold">{formatEuro(8750.0)}</p>
-                  <p className="text-sm text-green-600">2,25 % p.a. Zinsen</p>
-                </div>
-              </div>
-
-              <div className="flex gap-4 mb-6 border-b overflow-x-auto">
-                {["Umsatzliste", "Kontodetails"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setTagesgeldTab(tab)}
-                    className={`px-4 py-3 font-medium text-sm whitespace-nowrap border-none bg-transparent cursor-pointer ${
-                      tagesgeldTab === tab
-                        ? "text-blue-600 border-b-2 border-blue-600"
-                        : "text-gray-600 hover:text-blue-600"
-                    }`}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-
-              {tagesgeldTab === "Umsatzliste" ? (
-                <div>
-                  <div className="hidden sm:flex items-center justify-between text-xs text-gray-500 uppercase tracking-wider pb-2 border-b mb-3">
-                    <span className="w-24">Datum</span>
-                    <span className="flex-1">Beschreibung</span>
-                    <span className="w-20 text-right">Betrag</span>
-                  </div>
-                  <div className="space-y-1">
-                    {TAGESGELD_TRANSACTIONS.map((tx) => (
-                      <div key={tx.id} className="flex items-center justify-between py-3 px-2 rounded-lg hover:bg-gray-50 -mx-2 gap-2">
-                        <span className="hidden sm:block w-24 text-sm text-gray-600 shrink-0">{tx.date}</span>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium truncate">{tx.description}</p>
-                          <p className="text-xs text-gray-400 sm:hidden">{tx.date}</p>
-                        </div>
-                        <span className={`text-sm font-semibold shrink-0 ${tx.type === "credit" ? "text-green-600" : ""}`}>
-                          {tx.type === "credit" ? "+" : "-"}{formatEuro(tx.amount)}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                  <div className="p-4 bg-gray-50 rounded-lg">
-                    <p className="text-gray-500">Kontotyp</p>
-                    <p className="font-semibold">DKB Tagesgeld</p>
-                  </div>
-                  <div className="p-4 bg-gray-50 rounded-lg">
-                    <p className="text-gray-500">IBAN</p>
-                    <p className="font-semibold font-mono text-sm break-all">DE87 1001 0101 9876 5432 01</p>
-                  </div>
-                  <div className="p-4 bg-gray-50 rounded-lg">
-                    <p className="text-gray-500">Zinssatz</p>
-                    <p className="font-semibold">2,25 % p.a.</p>
-                  </div>
-                  <div className="p-4 bg-gray-50 rounded-lg">
-                    <p className="text-gray-500">Zinsbindung</p>
-                    <p className="font-semibold">Variable Verzinsung</p>
                   </div>
                 </div>
               )}
