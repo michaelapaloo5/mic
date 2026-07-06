@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "DKB | Das kann Bank",
+  title: "Das kann Bank",
   description:
     "Dein Girokonto, Tagesgeld & Depot bei der DKB – einer der größten Direktbanken Deutschlands! Alles digital, alles in einer App.",
 };
@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
