@@ -496,47 +496,94 @@ function ProdukteView() {
 }
 
 function ProfilView({ user }: { user: { email: string; user_metadata: { name: string } } | null }) {
+  const [editing, setEditing] = useState(false)
+  const [form, setForm] = useState({ anrede: "Herr", titel: "", vorname: "Max", nachname: "Mustermann", email: user?.email || "max.mustermann@dkb.de", telefon: "+49 30 123456789" })
+
+  if (editing) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+        <h2 className="text-xl font-semibold mb-4">Profileinstellungen bearbeiten</h2>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Anrede</p>
+              <select value={form.anrede} onChange={e => setForm({ ...form, anrede: e.target.value })} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white">
+                <option>Herr</option>
+                <option>Frau</option>
+                <option>Divers</option>
+              </select>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Titel</p>
+              <input value={form.titel} onChange={e => setForm({ ...form, titel: e.target.value })} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Vorname</p>
+              <input value={form.vorname} onChange={e => setForm({ ...form, vorname: e.target.value })} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Nachname</p>
+              <input value={form.nachname} onChange={e => setForm({ ...form, nachname: e.target.value })} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">E-Mail</p>
+              <input value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Telefon</p>
+              <input value={form.telefon} onChange={e => setForm({ ...form, telefon: e.target.value })} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+            </div>
+          </div>
+          <div className="flex justify-end gap-3">
+            <button onClick={() => setEditing(false)} className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors bg-white cursor-pointer">Abbrechen</button>
+            <button onClick={() => setEditing(false)} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">Speichern</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
       <h2 className="text-xl font-semibold mb-4">Profileinstellungen</h2>
       <div className="space-y-4">
         <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
           <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
-            {user?.user_metadata?.name?.charAt(0) || "M"}
+            {form.vorname.charAt(0)}{form.nachname.charAt(0)}
           </div>
           <div>
-            <p className="font-semibold text-lg">{user?.user_metadata?.name || "Max Mustermann"}</p>
-            <p className="text-sm text-gray-500">{user?.email || "max.mustermann@dkb.de"}</p>
+            <p className="font-semibold text-lg">{form.vorname} {form.nachname}</p>
+            <p className="text-sm text-gray-500">{form.email}</p>
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="p-4 bg-gray-50 rounded-lg">
             <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Anrede</p>
-            <p className="font-medium">Herr</p>
+            <p className="font-medium">{form.anrede}</p>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
             <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Titel</p>
-            <p className="font-medium">—</p>
+            <p className="font-medium">{form.titel || "—"}</p>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
             <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Vorname</p>
-            <p className="font-medium">Max</p>
+            <p className="font-medium">{form.vorname}</p>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
             <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Nachname</p>
-            <p className="font-medium">Mustermann</p>
+            <p className="font-medium">{form.nachname}</p>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
             <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">E-Mail</p>
-            <p className="font-medium">{user?.email || "max.mustermann@dkb.de"}</p>
+            <p className="font-medium">{form.email}</p>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
             <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Telefon</p>
-            <p className="font-medium">+49 30 123456789</p>
+            <p className="font-medium">{form.telefon}</p>
           </div>
         </div>
         <div className="flex justify-end">
-          <button className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
+          <button onClick={() => setEditing(true)} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
             Einstellungen bearbeiten
           </button>
         </div>
@@ -546,19 +593,44 @@ function ProfilView({ user }: { user: { email: string; user_metadata: { name: st
 }
 
 function PostfachView() {
+  const [selectedId, setSelectedId] = useState<number | null>(null)
   const messages = [
-    { id: 1, from: "DKB AG", subject: "Ihr Kontoauszug für Juli 2026", date: "03.07.2026", unread: true },
-    { id: 2, from: "DKB AG", subject: "Tagesgeld-Zinsaktion: 2,75 % p.a. sichern", date: "01.05.2026", unread: true },
-    { id: 3, from: "DKB AG", subject: "Jahressteuerbescheinigung 2025", date: "15.03.2026", unread: false },
-    { id: 4, from: "DKB AG", subject: "Ihre neue Visa Debitkarte ist unterwegs", date: "12.03.2026", unread: false },
-    { id: 5, from: "DKB AG", subject: "Strategie DKB 2030 – Information für Kunden", date: "05.03.2026", unread: false },
+    { id: 1, from: "DKB AG", subject: "Ihr Kontoauszug für Juli 2026", date: "03.07.2026", unread: true, body: "Sehr geehrter Herr Mustermann,\n\nanbei erhalten Sie Ihren Kontoauszug für den Monat Juli 2026.\n\nKontostand per 31.07.2026: 3.241,93 €\n\nSie können den Kontoauszug jederzeit im PDF-Format herunterladen.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 2, from: "DKB AG", subject: "Tagesgeld-Zinsaktion: 2,75 % p.a. sichern", date: "01.05.2026", unread: true, body: "Sehr geehrter Herr Mustermann,\n\nsichern Sie sich jetzt unseren exklusiven Zinsvorteil!\n\nBis zum 31.08.2026 erhalten Sie 2,75 % p.a. auf Neuanlagen auf Ihrem Tagesgeldkonto.\n\nGilt für Einlagen bis 100.000 €.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 3, from: "DKB AG", subject: "Jahressteuerbescheinigung 2025", date: "15.03.2026", unread: false, body: "Sehr geehrter Herr Mustermann,\n\nIhre Jahressteuerbescheinigung für das Steuerjahr 2025 steht ab sofort in Ihrem Postfach bereit.\n\nErhaltene Zinsen: 147,23 €\nAbgeführte Kapitalertragsteuer: 36,81 €\nSolidaritätszuschlag: 2,02 €\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 4, from: "DKB AG", subject: "Ihre neue Visa Debitkarte ist unterwegs", date: "12.03.2026", unread: false, body: "Sehr geehrter Herr Mustermann,\n\nIhre neue Visa Debitkarte wurde erfolgreich bestellt und befindet sich auf dem Versandweg.\n\nDie Karte wird innerhalb der nächsten 5–7 Werktage bei Ihnen eintreffen.\n\nIhre alte Karte behält bis zum Aktivierungsdatum der neuen Karte ihre Gültigkeit.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 5, from: "DKB AG", subject: "Strategie DKB 2030 – Information für Kunden", date: "05.03.2026", unread: false, body: "Sehr geehrter Herr Mustermann,\n\nmit einem Vorsteuerergebnis von 1.175,8 Mio. Euro blickt die DKB auf das erfolgreichste Jahr ihrer Geschichte zurück. Wir starten unsere neue Strategie \"DKB 2030\" mit dem Ziel, Deutschlands digitalste Bank zu werden.\n\nBereits 2025 haben wir über 500.000 neue Kunden gewonnen und unser Filialnetz modernisiert.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
   ]
+
+  if (selectedId !== null) {
+    const m = messages.find(msg => msg.id === selectedId)!
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+        <button onClick={() => setSelectedId(null)} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">
+          ← Zurück zur Übersicht
+        </button>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0">
+            <Mail size={18} />
+          </div>
+          <div>
+            <p className="font-semibold text-lg">{m.subject}</p>
+            <p className="text-sm text-gray-500">{m.from} • {m.date}</p>
+          </div>
+        </div>
+        <div className="p-4 bg-gray-50 rounded-lg whitespace-pre-line text-sm leading-relaxed">
+          {m.body}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
       <h2 className="text-xl font-semibold mb-4">Postfach</h2>
       <div className="space-y-2">
         {messages.map((m) => (
-          <div key={m.id} className={`flex items-center justify-between p-4 rounded-lg gap-4 cursor-pointer hover:bg-gray-50 transition-colors ${m.unread ? "bg-blue-50 border-l-4 border-blue-600" : "bg-gray-50"}`}>
+          <div key={m.id} onClick={() => setSelectedId(m.id)} className={`flex items-center justify-between p-4 rounded-lg gap-4 cursor-pointer hover:bg-gray-50 transition-colors ${m.unread ? "bg-blue-50 border-l-4 border-blue-600" : "bg-gray-50"}`}>
             <div className="flex items-center gap-3 min-w-0">
               <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${m.unread ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-600"}`}>
                 <Mail size={16} />
@@ -626,6 +698,91 @@ function FeedbackView() {
 }
 
 function SicherheitView() {
+  const [tanVerfahren, setTanVerfahren] = useState("pushTAN")
+  const [showTanSelector, setShowTanSelector] = useState(false)
+  const [bioLogin, setBioLogin] = useState(true)
+  const [showDevices, setShowDevices] = useState(false)
+  const [showPasswordForm, setShowPasswordForm] = useState(false)
+  const [pwCurrent, setPwCurrent] = useState("")
+  const [pwNew, setPwNew] = useState("")
+  const [pwConfirm, setPwConfirm] = useState("")
+
+  const devices = [
+    { name: "iPhone 15 Pro", lastAccess: "06.07.2026, 14:32 Uhr", location: "Berlin, Deutschland", active: true },
+    { name: "MacBook Air", lastAccess: "05.07.2026, 09:15 Uhr", location: "Berlin, Deutschland", active: true },
+  ]
+
+  if (showDevices) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+        <button onClick={() => setShowDevices(false)} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">
+          ← Zurück zur Sicherheitsübersicht
+        </button>
+        <h2 className="text-xl font-semibold mb-4">Geräteverwaltung</h2>
+        <div className="space-y-3">
+          {devices.map((d) => (
+            <div key={d.name} className="p-4 bg-gray-50 rounded-lg flex items-center justify-between gap-4">
+              <div className="min-w-0">
+                <p className="font-medium">{d.name}</p>
+                <p className="text-xs text-gray-500">Letzter Zugriff: {d.lastAccess}</p>
+                <p className="text-xs text-gray-500">{d.location}</p>
+              </div>
+              <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full shrink-0">Aktiv</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (showPasswordForm) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+        <button onClick={() => { setShowPasswordForm(false); setPwCurrent(""); setPwNew(""); setPwConfirm("") }} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">
+          ← Zurück zur Sicherheitsübersicht
+        </button>
+        <h2 className="text-xl font-semibold mb-4">Passwort ändern</h2>
+        <div className="space-y-4 max-w-md">
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Aktuelles Passwort</p>
+            <input type="password" value={pwCurrent} onChange={e => setPwCurrent(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Neues Passwort</p>
+            <input type="password" value={pwNew} onChange={e => setPwNew(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Neues Passwort bestätigen</p>
+            <input type="password" value={pwConfirm} onChange={e => setPwConfirm(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+          </div>
+          <div className="flex justify-end gap-3">
+            <button onClick={() => { setShowPasswordForm(false); setPwCurrent(""); setPwNew(""); setPwConfirm("") }} className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors bg-white cursor-pointer">Abbrechen</button>
+            <button onClick={() => { setShowPasswordForm(false); setPwCurrent(""); setPwNew(""); setPwConfirm("") }} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">Speichern</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (showTanSelector) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+        <button onClick={() => setShowTanSelector(false)} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">
+          ← Zurück zur Sicherheitsübersicht
+        </button>
+        <h2 className="text-xl font-semibold mb-4">TAN-Verfahren ändern</h2>
+        <div className="space-y-2">
+          {["pushTAN", "chipTAN", "mobileTAN", "SMS-TAN"].map((v) => (
+            <div key={v} onClick={() => { setTanVerfahren(v); setShowTanSelector(false) }} className={`p-4 rounded-lg cursor-pointer flex items-center justify-between ${tanVerfahren === v ? "bg-blue-50 border border-blue-200" : "bg-gray-50 hover:bg-gray-100"}`}>
+              <p className={`font-medium ${tanVerfahren === v ? "text-blue-600" : ""}`}>{v}</p>
+              {tanVerfahren === v && <span className="text-blue-600 text-sm font-medium">Aktiv</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
       <h2 className="text-xl font-semibold mb-4">Sicherheit</h2>
@@ -641,23 +798,25 @@ function SicherheitView() {
           <div className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
             <div>
               <p className="font-medium">TAN-Verfahren</p>
-              <p className="text-sm text-gray-500">pushTAN</p>
+              <p className="text-sm text-gray-500">{tanVerfahren}</p>
             </div>
-            <button className="text-sm text-blue-600 hover:underline bg-transparent border-none cursor-pointer">Ändern</button>
+            <button onClick={() => setShowTanSelector(true)} className="text-sm text-blue-600 hover:underline bg-transparent border-none cursor-pointer">Ändern</button>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
             <div>
               <p className="font-medium">Geräteverwaltung</p>
-              <p className="text-sm text-gray-500">2 aktive Geräte</p>
+              <p className="text-sm text-gray-500">{devices.length} aktive Geräte</p>
             </div>
-            <button className="text-sm text-blue-600 hover:underline bg-transparent border-none cursor-pointer">Verwalten</button>
+            <button onClick={() => setShowDevices(true)} className="text-sm text-blue-600 hover:underline bg-transparent border-none cursor-pointer">Anzeigen</button>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
             <div>
               <p className="font-medium">Biometrischer Login</p>
-              <p className="text-sm text-gray-500">Fingerabdruck aktiv</p>
+              <p className="text-sm text-gray-500">{bioLogin ? "Fingerabdruck aktiv" : "Deaktiviert"}</p>
             </div>
-            <button className="text-sm text-blue-600 hover:underline bg-transparent border-none cursor-pointer">Verwalten</button>
+            <button onClick={() => setBioLogin(!bioLogin)} className={`text-sm px-3 py-1 rounded-lg border-none cursor-pointer font-medium ${bioLogin ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-600"}`}>
+              {bioLogin ? "Aktiv" : "Aktivieren"}
+            </button>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
             <div>
@@ -671,7 +830,7 @@ function SicherheitView() {
             <p className="font-medium">Passwort ändern</p>
             <p className="text-sm text-gray-500">Zuletzt geändert vor 3 Monaten</p>
           </div>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
+          <button onClick={() => setShowPasswordForm(true)} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
             Ändern
           </button>
         </div>
