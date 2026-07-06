@@ -217,8 +217,8 @@ export default function LoginPage() {
 
               <div className="text-center mt-3">
                 <a
-                  href="https://banking.dkb.de/reset-password"
-                  className="text-[rgb(0,106,199)] text-[15px] font-inherit underline"
+                  href="#"
+                  className="text-[rgb(0,106,199)] text-[15px] font-inherit underline no-underline hover:underline"
                 >
                   Passwort vergessen?
                 </a>

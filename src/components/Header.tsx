@@ -91,9 +91,7 @@ export default function Header() {
           {/* Right: Anmelden + help links */}
           <div className="flex items-center gap-2 l:gap-3 xl:gap-4" data-v-5987f5df>
             <a
-              href="https://banking.dkb.de/login"
-              target="_blank"
-              rel="noopener"
+              href="/login"
               className="button-component navigation__cta-area__login inline-flex items-center gap-1 l:gap-2 rounded-[6px] font-[500] no-underline !p-1 !pr-2 l:!p-3 text-[13px] l:text-[17px] transition-colors bg-[rgba(0,144,255,0.09)] text-[rgb(0,106,199)] hover:bg-[rgba(0,144,255,0.18)] hover:text-[rgb(19,78,138)]"
             >
               <svg
