@@ -1,16 +1,22 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { createPortal } from "react-dom"
 import DKBLogo from "./DKBLogo"
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 0)
     window.addEventListener("scroll", onScroll)
     return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  useEffect(() => {
+    setMounted(true)
   }, [])
 
   useEffect(() => {
@@ -27,7 +33,7 @@ export default function Header() {
   ]
 
   return (
-    <div>
+    <>
       <nav
         data-v-5987f5df
         className={`fixed top-0 left-0 w-full z-[80] bg-white ${
@@ -127,47 +133,51 @@ export default function Header() {
         </div>
       </nav>
 
-      {menuOpen && (
-        <div className="fixed inset-0 bg-black/30 z-[100] l:hidden" onClick={() => setMenuOpen(false)} />
+      {mounted && createPortal(
+        <>
+          {menuOpen && (
+            <div className="fixed inset-0 bg-black/30 z-[9999] l:hidden" onClick={() => setMenuOpen(false)} />
+          )}
+          <div
+            className={`fixed top-0 left-0 h-full w-[300px] bg-white z-[99999] shadow-xl transform transition-transform duration-200 l:hidden ${
+              menuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
+            <div className="p-4 border-b flex items-center justify-between">
+              <DKBLogo className="w-[71px] h-10 text-[rgb(20,141,234)]" />
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="border-none bg-transparent text-gray-500 cursor-pointer p-1"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4 space-y-1">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block px-3 py-3 rounded-lg text-[rgb(0,106,199)] font-[500] text-[17px] hover:bg-[rgba(0,144,255,0.09)] transition-colors no-underline"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <hr className="my-3 border-gray-200" />
+              <a
+                href="/login"
+                onClick={() => setMenuOpen(false)}
+                className="block px-3 py-3 rounded-lg text-[rgb(0,106,199)] font-[500] text-[17px] hover:bg-[rgba(0,144,255,0.09)] transition-colors no-underline"
+              >
+                Anmelden
+              </a>
+            </div>
+          </div>
+        </>,
+        document.body
       )}
-
-      <div
-        className={`fixed top-0 left-0 h-full w-[300px] bg-white z-[110] shadow-xl transform transition-transform duration-200 l:hidden ${
-          menuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="p-4 border-b flex items-center justify-between">
-          <DKBLogo className="w-[71px] h-10 text-[rgb(20,141,234)]" />
-          <button
-            onClick={() => setMenuOpen(false)}
-            className="border-none bg-transparent text-gray-500 cursor-pointer p-1"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-              <path fillRule="evenodd" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" clipRule="evenodd" />
-            </svg>
-          </button>
-        </div>
-        <div className="p-4 space-y-1">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="block px-3 py-3 rounded-lg text-[rgb(0,106,199)] font-[500] text-[17px] hover:bg-[rgba(0,144,255,0.09)] transition-colors no-underline"
-            >
-              {link.label}
-            </a>
-          ))}
-          <hr className="my-3 border-gray-200" />
-          <a
-            href="/login"
-            onClick={() => setMenuOpen(false)}
-            className="block px-3 py-3 rounded-lg text-[rgb(0,106,199)] font-[500] text-[17px] hover:bg-[rgba(0,144,255,0.09)] transition-colors no-underline"
-          >
-            Anmelden
-          </a>
-        </div>
-      </div>
-    </div>
+    </>
   )
 }
