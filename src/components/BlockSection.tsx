@@ -34,7 +34,7 @@ export default function BlockSection({
 
   return (
     <section className={`${bgClass} ${className}`}>
-      <div className="!py-8 m:!py-14 max-w-[1440px] mx-auto px-6 xl:px-16">
+      <div className="!py-8 m:!py-14 mx-auto px-6 m:px-[30px] max-w-[1350px]">
         <div className="grid grid-cols-12 gap-0">
           {/* Headline - full width */}
           <div className="col-span-12">

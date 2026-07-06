@@ -19,7 +19,7 @@ export default function TeaserGrid({
 }: TeaserGridProps) {
   return (
     <section className={`bg-white ${className}`}>
-      <div className="!py-8 m:!py-14 max-w-[1440px] mx-auto px-6 xl:px-16">
+      <div className="!py-8 m:!py-14 mx-auto px-6 m:px-[30px] max-w-[1350px]">
         <h2 className="text-headline-s m:text-headline-m font-bold mb-4 m:mb-6 leading-tight">
           {headline}
         </h2>

@@ -7,7 +7,7 @@ export default function AppPromo() {
       <div className="w-full h-[40px]" />
 
       {/* App badges */}
-      <div className="flex flex-col mb-[-120px] m:mt-[50px] m:mb-[-125px] l:mb-[-150px] [&_a]:[all:unset] max-w-[1440px] mx-auto px-6">
+      <div className="flex flex-col mb-[-120px] m:mt-[50px] m:mb-[-125px] l:mb-[-150px] [&_a]:[all:unset] mx-auto px-6 m:px-[30px] max-w-[1350px]">
         <div className="w-full">
           <a
             href="https://play.google.com/store/apps/details?id=com.dkbcodefactory.banking"
@@ -40,7 +40,7 @@ export default function AppPromo() {
 
       {/* Bottom dark section */}
       <div className="bg-[rgb(9,118,214)] mt-[200px] m:mt-[150px] l:mt-[200px]">
-        <div className="max-w-[1440px] mx-auto px-6">
+        <div className="mx-auto px-6 m:px-[30px] max-w-[1350px]">
           <div className="flex flex-col m:flex-row m:justify-between l:gap-[90px] xl:gap-[230px]">
             {/* Phone image */}
             <div className="self-end m:self-auto m:order-2 m:mb-[48px]">

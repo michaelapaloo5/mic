@@ -63,8 +63,8 @@ export default function Footer() {
   const [openGroup, setOpenGroup] = useState<number | null>(null)
 
   return (
-    <footer className="shrink-0 flex flex-col bg-[rgb(9,118,214)] text-white">
-      <div className="py-4 m:py-8 px-4 m:px-8 max-w-[1440px] mx-auto w-full">
+    <footer className="shrink-0 flex flex-col bg-[rgb(0,46,92)] text-white">
+      <div className="py-4 m:py-8 px-4 m:px-[30px] mx-auto w-full max-w-[1350px]">
         <div className="flex flex-col items-start justify-center l:flex-row l:justify-between gap-[24px] m:gap-[30px] l:gap-[45px] xl:gap-[72px]">
           {footerGroups.map((group, gi) => (
             <div key={gi} className="w-full l:w-auto">
@@ -120,7 +120,7 @@ export default function Footer() {
 
       {/* Legal Bar */}
       <div className="border-t border-white/20">
-        <div className="max-w-[1440px] mx-auto px-4 m:px-8 py-6 flex flex-col m:flex-row items-start m:items-center justify-between gap-4">
+        <div className="mx-auto px-4 m:px-[30px] py-6 flex flex-col m:flex-row items-start m:items-center justify-between gap-4 max-w-[1350px]">
           <p className="text-s text-white/70">&copy; 2026 Deutsche Kreditbank AG</p>
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 list-none m-0 p-0">
             {legalLinks.map((link, li) => (

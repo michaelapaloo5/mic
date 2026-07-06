@@ -6,7 +6,7 @@ export default function IllustrationBanner() {
         <div className="bg-[rgb(9,118,214)] w-1/2 h-full z-[-1] absolute left-0" />
         <div className="bg-[rgb(243,249,254)] w-1/2 h-full z-[-1] absolute right-0" />
       </div>
-      <div className="illustration-banner tw-grid relative !p-0 m:!my-0 m:!mx-auto l:!py-0 l:!px-[30px] max-w-[1440px] mx-auto">
+      <div className="illustration-banner tw-grid relative !p-0 m:!my-0 m:!mx-auto l:!py-0 l:!px-[30px] mx-auto max-w-[1350px]">
         {/* Mobile: two slides */}
         <div className="l:hidden">
           <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">

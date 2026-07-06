@@ -134,7 +134,7 @@ export default function Header() {
       scrolled ? "shadow-[0_2px_8px_rgba(0,0,0,0.08)]" : ""
     }`}>
       <div className="navigation-wrapper bg-white">
-        <div className="navigation__top-bar max-w-[1440px] mx-auto px-4 xl:px-10">
+        <div className="navigation__top-bar mx-auto px-4 m:px-[30px] max-w-[1350px]">
           {/* 3 equal columns: hamburger | logo+nav | anmelden */}
           <div className="flex items-center justify-between [&>*]:basis-[33%] h-16 l:h-20">
             {/* LEFT: Hamburger (mobile only) */}

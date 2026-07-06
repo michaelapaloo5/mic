@@ -4,11 +4,11 @@ import Icon from "./Icon"
 export default function Hero() {
   return (
     <section className="bg-[rgb(243,249,254)]">
-      <div className="max-w-[1440px] mx-auto l:flex l:justify-center l:items-stretch l:h-[85vh]">
+      <div className="mx-auto px-6 m:px-[30px] l:flex l:justify-center l:items-stretch max-w-[1350px]">
         {/* Text column */}
-        <div className="flex-[2] pl-[30px] pt-[27px] s:pr-[30px] m:px-14 m:py-14 xl:py-0 xl:!px-0 xxl:px-[165px] flex flex-col justify-center">
+          <div className="flex-[2] px-6 m:px-[30px] py-7 m:py-14 flex flex-col justify-center">
           <div className="max-w-[630px]">
-            <h1 className="text-headline-m m:text-headline-l l:text-headline-m xl:text-headline-l xxl:text-headline-xl xxl:!leading-[4.75rem] -tracking-[0.84px] [&_em]:not-italic [&_em]:text-[#1fb8b0] font-bold">
+            <h1 className="text-headline-m l:text-headline-l font-bold [&_em]:not-italic [&_em]:text-[#1fb8b0]">
               <em>Kostenloses Girokonto</em>{" "}mit Visa Debitkarte
             </h1>
             <div className="mt-4 mb-8 m:mb-12">
