@@ -1,11 +1,15 @@
+import type { CSSProperties } from "react"
+
 interface DKBLogoProps {
   className?: string
+  style?: CSSProperties
 }
 
-export default function DKBLogo({ className = "" }: DKBLogoProps) {
+export default function DKBLogo({ className = "", style }: DKBLogoProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 434 246"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
