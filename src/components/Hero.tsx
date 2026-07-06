@@ -51,7 +51,7 @@ export default function Hero() {
                   variant="primary"
                   theme="blue"
                   size="m"
-                  href="/privatkunden/girokonto?wt_mc=pk.giro_hp_b"
+                  href="/signup"
                   className="w-full shrink-0 m:w-auto"
                 >
                   Zum Girokonto
