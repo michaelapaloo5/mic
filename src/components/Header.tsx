@@ -29,7 +29,7 @@ export default function Header() {
   return (
     <nav
       data-v-5987f5df
-      className={`sticky top-0 left-0 w-full z-50 ${
+      className={`fixed top-0 left-0 w-full z-[80] bg-white ${
         scrolled ? "[box-shadow:0px_4px_8px_0px_rgba(1,84,166,0.16)]" : ""
       }`}
     >
@@ -131,12 +131,12 @@ export default function Header() {
 
       {/* Mobile menu overlay */}
       {menuOpen && (
-        <div className="fixed inset-0 bg-black/30 z-40 l:hidden" onClick={() => setMenuOpen(false)} />
+        <div className="fixed inset-0 bg-black/30 z-[90] l:hidden" onClick={() => setMenuOpen(false)} />
       )}
 
       {/* Mobile menu drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-[300px] bg-white z-50 shadow-xl transform transition-transform duration-200 l:hidden ${
+        className={`fixed top-0 left-0 h-full w-[300px] bg-white z-[100] shadow-xl transform transition-transform duration-200 l:hidden ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

@@ -16,7 +16,7 @@ export default function Home() {
             <Header />
           </div>
         </div>
-        <main>
+        <main className="pt-[52px] l:pt-[68px]">
           <Hero />
 
           <BlockSection
