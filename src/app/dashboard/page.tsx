@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { demoGetUser, demoSignOut, demoGetAccountInfo } from "@/lib/demo-auth"
-import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight, HelpCircle, FileText, Menu, X } from "lucide-react"
+import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight, HelpCircle, FileText, Menu, X, User, Mail, MessageSquare, Shield } from "lucide-react"
 
-type PageView = "finanzstatus" | "karten" | "auftraege" | "produkte"
+type PageView = "finanzstatus" | "karten" | "auftraege" | "produkte" | "profil" | "postfach" | "feedback" | "sicherheit"
 
 interface Transaction {
   id: number
@@ -65,6 +65,10 @@ export default function DashboardPage() {
     { id: "karten", label: "Karten", icon: <CreditCard size={20} /> },
     { id: "auftraege", label: "Aufträge", icon: <Send size={20} /> },
     { id: "produkte", label: "Produkte", icon: <ShoppingBag size={20} /> },
+    { id: "postfach", label: "Postfach", icon: <Mail size={20} /> },
+    { id: "profil", label: "Profileinstellungen", icon: <User size={20} /> },
+    { id: "sicherheit", label: "Sicherheit", icon: <Shield size={20} /> },
+    { id: "feedback", label: "Feedback", icon: <MessageSquare size={20} /> },
   ]
 
   function sidebarContent(closeOnClick = false) {
@@ -145,6 +149,14 @@ export default function DashboardPage() {
         return <AuftraegeView />
       case "produkte":
         return <ProdukteView />
+      case "profil":
+        return <ProfilView user={user} />
+      case "postfach":
+        return <PostfachView />
+      case "feedback":
+        return <FeedbackView />
+      case "sicherheit":
+        return <SicherheitView />
       default:
         return (
           <>
@@ -478,6 +490,191 @@ function ProdukteView() {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  )
+}
+
+function ProfilView({ user }: { user: { email: string; user_metadata: { name: string } } | null }) {
+  return (
+    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+      <h2 className="text-xl font-semibold mb-4">Profileinstellungen</h2>
+      <div className="space-y-4">
+        <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+          <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+            {user?.user_metadata?.name?.charAt(0) || "M"}
+          </div>
+          <div>
+            <p className="font-semibold text-lg">{user?.user_metadata?.name || "Max Mustermann"}</p>
+            <p className="text-sm text-gray-500">{user?.email || "max.mustermann@dkb.de"}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Anrede</p>
+            <p className="font-medium">Herr</p>
+          </div>
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Titel</p>
+            <p className="font-medium">—</p>
+          </div>
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Vorname</p>
+            <p className="font-medium">Max</p>
+          </div>
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Nachname</p>
+            <p className="font-medium">Mustermann</p>
+          </div>
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">E-Mail</p>
+            <p className="font-medium">{user?.email || "max.mustermann@dkb.de"}</p>
+          </div>
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Telefon</p>
+            <p className="font-medium">+49 30 123456789</p>
+          </div>
+        </div>
+        <div className="flex justify-end">
+          <button className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
+            Einstellungen bearbeiten
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function PostfachView() {
+  const messages = [
+    { id: 1, from: "DKB AG", subject: "Ihr Kontoauszug für Juli 2026", date: "03.07.2026", unread: true },
+    { id: 2, from: "DKB AG", subject: "Tagesgeld-Zinsaktion: 2,75 % p.a. sichern", date: "01.05.2026", unread: true },
+    { id: 3, from: "DKB AG", subject: "Jahressteuerbescheinigung 2025", date: "15.03.2026", unread: false },
+    { id: 4, from: "DKB AG", subject: "Ihre neue Visa Debitkarte ist unterwegs", date: "12.03.2026", unread: false },
+    { id: 5, from: "DKB AG", subject: "Strategie DKB 2030 – Information für Kunden", date: "05.03.2026", unread: false },
+  ]
+  return (
+    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+      <h2 className="text-xl font-semibold mb-4">Postfach</h2>
+      <div className="space-y-2">
+        {messages.map((m) => (
+          <div key={m.id} className={`flex items-center justify-between p-4 rounded-lg gap-4 cursor-pointer hover:bg-gray-50 transition-colors ${m.unread ? "bg-blue-50 border-l-4 border-blue-600" : "bg-gray-50"}`}>
+            <div className="flex items-center gap-3 min-w-0">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${m.unread ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-600"}`}>
+                <Mail size={16} />
+              </div>
+              <div className="min-w-0">
+                <p className={`text-sm ${m.unread ? "font-bold" : "font-medium"} truncate`}>{m.subject}</p>
+                <p className="text-xs text-gray-500">{m.from} • {m.date}</p>
+              </div>
+            </div>
+            {m.unread && <span className="w-2 h-2 bg-blue-600 rounded-full shrink-0" />}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function FeedbackView() {
+  const [rating, setRating] = useState(0)
+  const [submitted, setSubmitted] = useState(false)
+  return (
+    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+      <h2 className="text-xl font-semibold mb-4">Feedback</h2>
+      {submitted ? (
+        <div className="text-center py-12">
+          <div className="text-4xl mb-4">🙏</div>
+          <p className="text-lg font-semibold mb-2">Vielen Dank für dein Feedback!</p>
+          <p className="text-sm text-gray-500">Wir arbeiten stetig daran, unser Banking zu verbessern.</p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          <p className="text-sm text-gray-600">Wie zufrieden bist du mit unserem Banking?</p>
+          <div className="flex gap-2">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                onClick={() => setRating(star)}
+                className={`w-10 h-10 rounded-full text-lg border-none cursor-pointer transition-colors ${
+                  star <= rating ? "bg-yellow-400 text-white" : "bg-gray-200 text-gray-500 hover:bg-gray-300"
+                }`}
+              >
+                ★
+              </button>
+            ))}
+          </div>
+          {rating > 0 && (
+            <>
+              <textarea
+                placeholder="Teile uns mit, was wir besser machen können..."
+                className="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white resize-none"
+                rows={4}
+              />
+              <button
+                onClick={() => setSubmitted(true)}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer"
+              >
+                Absenden
+              </button>
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function SicherheitView() {
+  return (
+    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+      <h2 className="text-xl font-semibold mb-4">Sicherheit</h2>
+      <div className="space-y-4">
+        <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">
+          <Shield size={20} className="text-green-600 mt-0.5 shrink-0" />
+          <div>
+            <p className="font-medium text-green-800">Sicherheitsstatus: Gut</p>
+            <p className="text-sm text-green-700">Alle Sicherheitseinstellungen sind aktiv.</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
+            <div>
+              <p className="font-medium">TAN-Verfahren</p>
+              <p className="text-sm text-gray-500">pushTAN</p>
+            </div>
+            <button className="text-sm text-blue-600 hover:underline bg-transparent border-none cursor-pointer">Ändern</button>
+          </div>
+          <div className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
+            <div>
+              <p className="font-medium">Geräteverwaltung</p>
+              <p className="text-sm text-gray-500">2 aktive Geräte</p>
+            </div>
+            <button className="text-sm text-blue-600 hover:underline bg-transparent border-none cursor-pointer">Verwalten</button>
+          </div>
+          <div className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
+            <div>
+              <p className="font-medium">Biometrischer Login</p>
+              <p className="text-sm text-gray-500">Fingerabdruck aktiv</p>
+            </div>
+            <button className="text-sm text-blue-600 hover:underline bg-transparent border-none cursor-pointer">Verwalten</button>
+          </div>
+          <div className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
+            <div>
+              <p className="font-medium">Letzter Login</p>
+              <p className="text-sm text-gray-500">06.07.2026, 14:32 Uhr</p>
+            </div>
+          </div>
+        </div>
+        <div className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
+          <div>
+            <p className="font-medium">Passwort ändern</p>
+            <p className="text-sm text-gray-500">Zuletzt geändert vor 3 Monaten</p>
+          </div>
+          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
+            Ändern
+          </button>
+        </div>
       </div>
     </div>
   )
