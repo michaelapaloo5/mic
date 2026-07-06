@@ -358,14 +358,27 @@ export default function DashboardPage() {
           <div className="w-80 p-8 space-y-6 shrink-0 hidden xl:block">
             <div>
               <h3 className="text-lg font-semibold mb-4">Aktuelles</h3>
-              <div className="bg-blue-600 text-white rounded-lg p-6">
-                <p className="text-sm font-medium mb-2">Freunde werben</p>
-                <h4 className="text-lg font-bold mb-3">
-                  Dein Konto. Deine Empfehlung. Deine 50 €.
-                </h4>
-                <p className="text-sm mb-4">
-                  Empfiehl unser kostenloses Girokonto und erhalte 50 € direkt auf dein Konto.
-                </p>
+              <div className="space-y-3">
+                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                  <p className="text-[11px] text-blue-600 font-semibold uppercase tracking-wider mb-1">02.07.2026</p>
+                  <h4 className="text-sm font-bold mb-1">Hypothekenpfandbrief begeben</h4>
+                  <p className="text-xs text-gray-600">DKB platziert erfolgreich Hypothekenpfandbrief am Kapitalmarkt.</p>
+                </div>
+                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                  <p className="text-[11px] text-blue-600 font-semibold uppercase tracking-wider mb-1">01.05.2026</p>
+                  <h4 className="text-sm font-bold mb-1">Tagesgeld-Zinsaktion</h4>
+                  <p className="text-xs text-gray-600">2,75 % p.a. aufs Tagesgeld für Neuanlagen bis 31.08.2026.</p>
+                </div>
+                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                  <p className="text-[11px] text-blue-600 font-semibold uppercase tracking-wider mb-1">05.03.2026</p>
+                  <h4 className="text-sm font-bold mb-1">Rekordergebnis 2025</h4>
+                  <p className="text-xs text-gray-600">DKB erzielt Vorsteuerergebnis von 1.175,8 Mio. Euro und startet Strategie "DKB 2030".</p>
+                </div>
+                <div className="bg-blue-600 text-white rounded-lg p-4">
+                  <p className="text-xs font-medium mb-1">Aktion</p>
+                  <h4 className="text-sm font-bold mb-2">Freunde werben & 50 € sichern</h4>
+                  <p className="text-xs opacity-90">Empfiehl unser kostenloses Girokonto und erhalte 50 € direkt auf dein Konto.</p>
+                </div>
               </div>
             </div>
           </div>
