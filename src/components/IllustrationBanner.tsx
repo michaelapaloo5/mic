@@ -1,108 +1,97 @@
-import Icon from "./Icon"
-
 export default function IllustrationBanner() {
-  const slides = [
-    {
-      title: "Altersvorsorgedepot",
-      description: "Jetzt clever fürs Alter vorsorgen – mit einem Depot, das zu dir passt.",
-      href: "/privatkunden/altersvorsorge",
-      theme: "blue",
-      img: "/images/altersvorsorge.svg",
-    },
-    {
-      title: "Immobilienbewertung",
-      description: "Wie viel ist deine Immobilie wert? Jetzt kostenlos bewerten lassen.",
-      href: "/privatkunden/immobilienbewertung",
-      theme: "grey",
-      img: "/images/immobilienbewertung.svg",
-    },
-  ]
-
   return (
-    <section className="bg-white">
-      {/* Desktop: side by side */}
-      <div className="hidden m:grid grid-cols-2">
-        {slides.map((slide, i) => (
-          <a
-            key={i}
-            href={slide.href}
-            className={`group relative flex flex-col justify-end p-10 xl:p-16 min-h-[400px] overflow-hidden ${
-              slide.theme === "blue" ? "bg-dkb-blue-dark" : "bg-dkb-grey"
-            }`}
-          >
-            <div className="relative z-10 max-w-sm">
-              <h3
-                className={`text-headline-s m:text-headline-m font-bold leading-tight ${
-                  slide.theme === "blue" ? "text-white" : "text-dkb-text"
-                }`}
-              >
-                {slide.title}
-              </h3>
-              <p
-                className={`mt-3 text-m ${
-                  slide.theme === "blue" ? "text-white/80" : "text-dkb-text/80"
-                }`}
-              >
-                {slide.description}
-              </p>
-              <span
-                className={`mt-4 inline-flex items-center gap-2 font-semibold text-sm border-b-2 pb-0.5 ${
-                  slide.theme === "blue"
-                    ? "text-white border-white"
-                    : "text-dkb-blue-dark border-dkb-blue-dark"
-                } group-hover:gap-3 transition-all`}
-              >
-                Mehr erfahren
-                <Icon name="arrow-right" size={16} />
-              </span>
+    <div className="illustration-banner-container relative">
+      {/* Desktop background columns */}
+      <div className="hidden l:contents">
+        <div className="bg-[rgb(9,118,214)] w-1/2 h-full z-[-1] absolute left-0" />
+        <div className="bg-[rgb(243,249,254)] w-1/2 h-full z-[-1] absolute right-0" />
+      </div>
+      <div className="illustration-banner tw-grid relative !p-0 m:!my-0 m:!mx-auto l:!py-0 l:!px-[30px] max-w-[1440px] mx-auto">
+        {/* Mobile: two slides */}
+        <div className="l:hidden">
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+            {/* Blue slide */}
+            <div className="bg-[rgb(9,118,214)] min-w-[85vw] snap-start p-8 mr-4 first:ml-4 rounded-2xl flex flex-col justify-between min-h-[280px]">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <h3 className="text-headline-s font-bold text-white leading-tight">
+                    Altersvorsorgedepot: Sichere dir ab 2027 jährlich bis zu 540 Euro Förderung.
+                  </h3>
+                  <a
+                    href="/privatkunden/investieren/altersvorsorgedepot?wt_mc=pk.avd.hp_illu"
+                    className="mt-4 inline-flex items-center gap-2 text-white font-semibold text-sm border-b border-solid border-b-white pb-0.5"
+                  >
+                    Für Updates anmelden
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+                <img src="/images/easy-life.svg" alt="" className="w-20 h-20 ml-6" />
+              </div>
             </div>
-            <img
-              src={slide.img}
-              alt={slide.title}
-              className="absolute right-0 bottom-0 h-4/5 w-auto object-contain opacity-30"
-              loading="lazy"
-            />
-          </a>
-        ))}
+            {/* Grey slide */}
+            <div className="bg-[rgb(243,249,254)] min-w-[85vw] snap-start p-8 mr-4 first:ml-4 last:mr-4 rounded-2xl flex flex-col justify-between min-h-[280px]">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <h3 className="text-headline-s font-bold text-[#0d0e0ff2] leading-tight">
+                    Immobilienbewertung leicht gemacht: direkt & kostenlos
+                  </h3>
+                  <a
+                    href="/privatkunden/immobilien/immobilienbewertung?wt_mc=pk.ibw.hp.illu.g.0226"
+                    className="mt-4 inline-flex items-center gap-2 text-[#0d0e0ff2] font-semibold text-sm border-b border-solid border-b-[#0d0e0ff2] pb-0.5"
+                  >
+                    Zur Online-Immobilienbewertung
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+                <img src="/images/house.svg" alt="" className="w-20 h-20 ml-6" />
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Desktop: side by side */}
+        <div className="hidden l:grid l:grid-cols-2">
+          {/* Blue column */}
+          <div className="bg-[rgb(9,118,214)] flex items-center justify-between py-[73px] px-[30px]">
+            <div className="flex-1">
+              <h3 className="text-headline-m font-bold text-white leading-tight max-w-md">
+                Altersvorsorgedepot: Sichere dir ab 2027 jährlich bis zu 540 Euro Förderung.
+              </h3>
+              <a
+                href="/privatkunden/investieren/altersvorsorgedepot?wt_mc=pk.avd.hp_illu"
+                className="mt-4 inline-flex items-center gap-2 text-white font-semibold text-sm border-b border-solid border-b-white pb-0.5 hover:gap-3 transition-all"
+              >
+                Für Updates anmelden
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+            </div>
+            <img src="/images/easy-life.svg" alt="" className="w-[120px] h-[90px] ml-6 l:ml-0 l:mr-8" />
+          </div>
+          {/* Grey column */}
+          <div className="bg-[rgb(243,249,254)] flex items-center justify-between py-[73px] px-[30px]">
+            <div className="flex-1">
+              <h3 className="text-headline-m font-bold text-[#0d0e0ff2] leading-tight max-w-md">
+                Immobilienbewertung leicht gemacht: direkt & kostenlos
+              </h3>
+              <a
+                href="/privatkunden/immobilien/immobilienbewertung?wt_mc=pk.ibw.hp.illu.g.0226"
+                className="mt-4 inline-flex items-center gap-2 text-[#0d0e0ff2] font-semibold text-sm border-b border-solid border-b-[#0d0e0ff2] pb-0.5 hover:gap-3 transition-all"
+              >
+                Zur Online-Immobilienbewertung
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+            </div>
+            <img src="/images/house.svg" alt="" className="w-[120px] h-[90px] ml-6 l:ml-0 l:mr-8" />
+          </div>
+        </div>
       </div>
-
-      {/* Mobile: horizontal scroll */}
-      <div className="m:hidden scroll-swiper scrollbar-hide">
-        {slides.map((slide, i) => (
-          <a
-            key={i}
-            href={slide.href}
-            className={`group inline-flex flex-col justify-end w-[85vw] min-h-[320px] p-8 mr-4 first:ml-4 last:mr-4 rounded-2xl ${
-              slide.theme === "blue" ? "bg-dkb-blue-dark" : "bg-dkb-grey"
-            }`}
-          >
-            <h3
-              className={`text-headline-s font-bold leading-tight ${
-                slide.theme === "blue" ? "text-white" : "text-dkb-text"
-              }`}
-            >
-              {slide.title}
-            </h3>
-            <p
-              className={`mt-2 text-m ${
-                slide.theme === "blue" ? "text-white/80" : "text-dkb-text/80"
-              }`}
-            >
-              {slide.description}
-            </p>
-            <span
-              className={`mt-4 inline-flex items-center gap-2 font-semibold text-sm border-b-2 pb-0.5 w-fit ${
-                slide.theme === "blue"
-                  ? "text-white border-white"
-                  : "text-dkb-blue-dark border-dkb-blue-dark"
-              }`}
-            >
-              Mehr erfahren
-              <Icon name="arrow-right" size={16} />
-            </span>
-          </a>
-        ))}
-      </div>
-    </section>
+    </div>
   )
 }

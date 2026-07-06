@@ -3,55 +3,54 @@ import Icon from "./Icon"
 
 export default function Hero() {
   return (
-    <section className="bg-dkb-grey">
-      <div className="max-w-[1440px] mx-auto">
-        <div className="flex flex-col-reverse m:flex-row items-stretch">
-          {/* Text column */}
-          <div className="flex-1 px-6 py-10 m:py-16 xl:py-20 xl:px-16 flex flex-col justify-center">
-            <h1 className="text-headline-m m:text-headline-l xl:text-headline-xl font-bold leading-tight -tracking-[0.84px]">
-              Kostenloses Girokonto&nbsp;mit{" "}
-              <em className="not-italic text-dkb-positive-pressed">Visa Debitkarte</em>
+    <section className="bg-[rgb(243,249,254)]">
+      <div className="max-w-[1440px] mx-auto l:flex l:justify-center l:items-stretch l:h-[85vh]">
+        {/* Text column */}
+        <div className="flex-[2] px-[30px] pt-[27px] m:px-14 m:py-14 xl:py-0 xxl:px-[165px] flex flex-col justify-center">
+          <div className="max-w-[630px]">
+            <h1 className="text-headline-m m:text-headline-l l:text-headline-m xl:text-headline-l xxl:text-headline-xl xxl:!leading-[4.75rem] -tracking-[0.84px] [&_em]:not-italic [&_em]:text-[#1fb8b0] font-bold">
+              <em>Kostenloses Girokonto</em>{" "}mit Visa Debitkarte
             </h1>
-            <ul className="mt-6 space-y-3">
-              {[
-                "Kostenlose Kontoführung & Visa Debitkarte",
-                "Bargeldabhebungen weltweit kostenlos",
-                "Geld einzahlen an über 12.000 Stellen",
-                "DKB App mit vielen nützlichen Funktionen",
-              ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3 text-m m:text-l text-dkb-text">
-                  <span className="mt-0.5 shrink-0 text-dkb-teal">
-                    <Icon name="checkmark" size={22} />
-                  </span>
-                  {item}
+            <div className="mt-4 mb-8 m:mb-12">
+              <ul className="[&_li]:list-image-checkmarks-teal [&_li+li]:mt-4 pl-4 text-l xl:text-xl">
+                <li>
+                  <p>
+                    <a href="/#kostenloses-konto" className="text-[#2ad1c9] font-semibold">
+                      Kostenloses{" "}
+                    </a>
+                    Konto bei 700 € monatlichem Geldeingang oder für alle unter 28 Jahren
+                  </p>
                 </li>
-              ))}
-            </ul>
-            <div className="mt-8 flex flex-col m:flex-row items-start gap-4">
-              <Button variant="primary" theme="blue" size="l" href="/privatkunden/girokonto">
+                <li>
+                  <p>Moderne App und intuitives Web-Banking</p>
+                </li>
+                <li>
+                  <p>Schnelle Kontoeröffnung in 5 Minuten – alles online, ohne Papierkram</p>
+                </li>
+              </ul>
+            </div>
+            <div className="mb-3">
+              <Button
+                variant="secondary"
+                theme="blue"
+                size="l"
+                href="/privatkunden/girokonto?wt_mc=pk.giro_hp_b"
+              >
                 Zum Girokonto
-              </Button>
-              <Button variant="tertiary" theme="blue" size="l" href="/privatkunden/konten-und-karten">
-                Alle Konten & Karten
-                <Icon name="arrow-right" size={18} />
               </Button>
             </div>
           </div>
-          {/* Image column */}
-          <div className="flex-1 min-h-[300px] m:min-h-full">
-            <picture>
-              <source
-                media="(min-width: 740px)"
-                srcSet="/images/hero-desktop.svg"
-              />
-              <img
-                src="/images/hero-mobile.svg"
-                alt="Mann auf Couch mit Smartphone"
-                className="w-full h-full object-cover"
-                style={{ aspectRatio: "1908 / 1273" }}
-              />
-            </picture>
-          </div>
+        </div>
+        {/* Image column */}
+        <div className="flex-[2] min-h-[300px] l:min-h-full">
+          <picture>
+            <source media="(min-width: 1024px)" srcSet="/images/hero-desktop.jpg" />
+            <img
+              src="/images/hero-mobile.jpg"
+              alt="Ein Mann mit Smartphone sitzt auf der Couch"
+              className="w-full h-full object-cover object-center"
+            />
+          </picture>
         </div>
       </div>
     </section>

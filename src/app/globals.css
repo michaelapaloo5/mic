@@ -7,8 +7,6 @@
   --color-dkb-grey: rgb(243, 249, 254);
   --color-dkb-navy: #0d0e0f;
   --color-dkb-text: rgb(13, 14, 15, 0.95);
-  --color-dkb-positive: #2ad1c9;
-  --color-dkb-positive-pressed: #1fb8b0;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Inter", monospace;
@@ -37,21 +35,13 @@
 
 body {
   background: #ffffff;
-  color: var(--color-dkb-text);
+  color: rgb(13, 14, 15, 0.95);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 @layer utilities {
-  .scroll-swiper {
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-  .scroll-swiper > * {
-    scroll-snap-align: start;
-  }
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -59,4 +49,23 @@ body {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+}
+
+.list-image-checkmarks-teal {
+  list-style: none;
+  padding-left: 1.5rem;
+}
+.list-image-checkmarks-teal li {
+  position: relative;
+}
+.list-image-checkmarks-teal li::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 0.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232ad1c9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
