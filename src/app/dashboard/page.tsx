@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { demoGetUser, demoSignOut, demoGetAccountInfo } from "@/lib/demo-auth"
-import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight, HelpCircle, FileText, Menu, X, User, Mail, MessageSquare, Shield } from "lucide-react"
+import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight, HelpCircle, FileText, Menu, X, User, Mail, MessageSquare, Shield, ArrowRightLeft } from "lucide-react"
 
-type PageView = "finanzstatus" | "karten" | "auftraege" | "produkte" | "profil" | "postfach" | "feedback" | "sicherheit"
+type PageView = "finanzstatus" | "karten" | "auftraege" | "produkte" | "profil" | "postfach" | "feedback" | "sicherheit" | "send"
 
 interface Transaction {
   id: number
@@ -64,6 +64,7 @@ export default function DashboardPage() {
     { id: "profil", label: "Profileinstellungen", icon: <User size={20} /> },
     { id: "sicherheit", label: "Sicherheit", icon: <Shield size={20} /> },
     { id: "feedback", label: "Feedback", icon: <MessageSquare size={20} /> },
+    { id: "send", label: "Geld senden", icon: <ArrowRightLeft size={20} /> },
   ]
 
   function sidebarContent(closeOnClick = false) {
@@ -136,6 +137,90 @@ export default function DashboardPage() {
     )
   }
 
+function SendView() {
+  const [step, setStep] = useState(1)
+  const [form, setForm] = useState({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" })
+
+  if (step === 2) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
+        <h2 className="text-xl font-semibold mb-4">Bestätigung</h2>
+        <div className="space-y-3 text-sm mb-6">
+          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
+            <span className="text-gray-500">Empfänger</span>
+            <span className="font-medium">{form.empfaenger}</span>
+          </div>
+          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
+            <span className="text-gray-500">IBAN</span>
+            <span className="font-medium font-mono text-xs">{form.iban}</span>
+          </div>
+          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
+            <span className="text-gray-500">Betrag</span>
+            <span className="font-medium">{parseFloat(form.betrag || "0").toFixed(2).replace(".", ",")} €</span>
+          </div>
+          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
+            <span className="text-gray-500">Verwendungszweck</span>
+            <span className="font-medium">{form.verwendungszweck || "—"}</span>
+          </div>
+        </div>
+        <div className="flex gap-3">
+          <button onClick={() => setStep(1)} className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors bg-white cursor-pointer">Zurück</button>
+          <button onClick={() => { setStep(3) }} className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">Absenden</button>
+        </div>
+      </div>
+    )
+  }
+
+  if (step === 3) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg text-center py-12">
+        <div className="text-4xl mb-4 text-green-500">✓</div>
+        <h2 className="text-xl font-semibold mb-2">Überweisung ausgeführt</h2>
+        <p className="text-sm text-gray-500 mb-6">{form.betrag?.replace(".", ",")} € an {form.empfaenger} wurden überwiesen.</p>
+        <button onClick={() => { setStep(1); setForm({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" }) }} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
+          Neue Überweisung
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
+      <h2 className="text-xl font-semibold mb-4">Geld senden</h2>
+      <div className="space-y-4">
+        <div>
+          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Empfänger</p>
+          <input value={form.empfaenger} onChange={e => setForm({ ...form, empfaenger: e.target.value })} placeholder="Name des Empfängers" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+        </div>
+        <div>
+          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">IBAN</p>
+          <input value={form.iban} onChange={e => setForm({ ...form, iban: e.target.value })} placeholder="DE00 0000 0000 0000 0000 00" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white font-mono" />
+        </div>
+        <div>
+          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Betrag (€)</p>
+          <input type="number" value={form.betrag} onChange={e => setForm({ ...form, betrag: e.target.value })} placeholder="0,00" step="0.01" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+        </div>
+        <div>
+          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Verwendungszweck</p>
+          <textarea value={form.verwendungszweck} onChange={e => setForm({ ...form, verwendungszweck: e.target.value })} placeholder="Optional" rows={2} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white resize-none" />
+        </div>
+        <div className="flex justify-end">
+          <button
+            onClick={() => setStep(2)}
+            disabled={!form.empfaenger || !form.iban || !form.betrag}
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Weiter
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+
+
   function renderContent() {
     switch (view) {
       case "karten":
@@ -152,6 +237,8 @@ export default function DashboardPage() {
         return <FeedbackView />
       case "sicherheit":
         return <SicherheitView />
+      case "send":
+        return <SendView />
       default:
         return (
           <>
@@ -164,6 +251,9 @@ export default function DashboardPage() {
                   <div className="min-w-0">
                     <h2 className="text-xl font-semibold">Girokonto</h2>
                     <p className="text-sm text-gray-500 font-mono truncate">{account?.iban || "DE12 1001 0101 2345 6789 01"}</p>
+                    <button onClick={() => setView("send")} className="mt-2 text-xs text-blue-600 bg-blue-50 px-3 py-1 rounded-full font-medium hover:bg-blue-100 transition-colors border-none cursor-pointer inline-flex items-center gap-1">
+                      <ArrowRightLeft size={12} /> Überweisen
+                    </button>
                   </div>
                 </div>
                 <div className="text-left sm:text-right">
