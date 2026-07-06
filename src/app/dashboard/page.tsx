@@ -324,7 +324,7 @@ function KartenView() {
         <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-xl p-6">
           <p className="text-sm opacity-80 mb-1">Visa Debit</p>
           <p className="text-xs opacity-60 mb-4">Kostenlos weltweit zahlen</p>
-          <p className="text-lg font-mono tracking-wider">4532 7910 4561 2345</p>
+          <p className="text-lg font-mono tracking-wider">**** **** **** 2345</p>
           <div className="flex justify-between items-end mt-6">
             <div>
               <p className="text-xs opacity-60">Gültig bis</p>
@@ -339,7 +339,7 @@ function KartenView() {
         <div className="bg-gradient-to-br from-gray-700 to-gray-900 text-white rounded-xl p-6">
           <p className="text-sm opacity-80 mb-1">Girocard</p>
           <p className="text-xs opacity-60 mb-4">Für Bargeld am Automaten</p>
-          <p className="text-lg font-mono tracking-wider">5390 1284 5590 1234</p>
+          <p className="text-lg font-mono tracking-wider">**** **** **** 1234</p>
           <div className="flex justify-between items-end mt-6">
             <div>
               <p className="text-xs opacity-60">Gültig bis</p>
