@@ -7,14 +7,14 @@ export default function IllustrationBanner() {
       description: "Jetzt clever fürs Alter vorsorgen – mit einem Depot, das zu dir passt.",
       href: "/privatkunden/altersvorsorge",
       theme: "blue",
-      img: "/images/altersvorsorge.jpg",
+      img: "/images/altersvorsorge.svg",
     },
     {
       title: "Immobilienbewertung",
       description: "Wie viel ist deine Immobilie wert? Jetzt kostenlos bewerten lassen.",
       href: "/privatkunden/immobilienbewertung",
       theme: "grey",
-      img: "/images/immobilienbewertung.jpg",
+      img: "/images/immobilienbewertung.svg",
     },
   ]
 

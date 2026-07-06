@@ -9,7 +9,7 @@ export default function AppPromo() {
           {/* Phone image */}
           <div className="relative -mt-40 m:-mt-32 flex justify-center m:justify-start">
             <img
-              src="/images/app-phone.png"
+              src="/images/app-phone.svg"
               alt="DKB App auf Smartphone"
               className="w-64 m:w-80 xl:w-96 h-auto"
               loading="lazy"

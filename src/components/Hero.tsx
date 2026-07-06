@@ -42,10 +42,10 @@ export default function Hero() {
             <picture>
               <source
                 media="(min-width: 740px)"
-                srcSet="/images/hero-desktop.jpg"
+                srcSet="/images/hero-desktop.svg"
               />
               <img
-                src="/images/hero-mobile.jpg"
+                src="/images/hero-mobile.svg"
                 alt="Mann auf Couch mit Smartphone"
                 className="w-full h-full object-cover"
                 style={{ aspectRatio: "1908 / 1273" }}
