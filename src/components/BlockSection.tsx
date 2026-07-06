@@ -38,7 +38,7 @@ export default function BlockSection({
         <div className="grid grid-cols-12 gap-0">
           {/* Headline - full width */}
           <div className="col-span-12">
-            <h2 className="text-headline-s m:text-headline-m font-bold mb-4 m:mb-6 leading-tight">
+            <h2 className="text-headline-s l:text-headline-m font-bold mb-4 l:mb-6 leading-tight">
               {headline}
             </h2>
           </div>
@@ -50,15 +50,15 @@ export default function BlockSection({
                 <p key={i} className="text-m m:text-l mb-4">{p}</p>
               ))}
               {subHeadline?.bullets && (
-                <ul className="[&_li]:list-image-checkmarks-teal [&_li+li]:mt-4 pl-4 text-m m:text-l mb-8 m:mb-14">
-                  {subHeadline.bullets.map((b, i) => (
+                  <ul className="[&_li]:list-image-checkmarks-teal [&_li+li]:mt-4 pl-[25px] text-m m:text-l mb-8 m:mb-14">
+                    {subHeadline.bullets.map((b, i) => (
                     <li key={i}><p>{b}</p></li>
                   ))}
                 </ul>
               )}
               {cta && (
                 <div className="mt-6">
-                  <Button variant="primary" theme="blue" size="l" href={cta.href}>
+                    <Button variant="secondary" theme="blue" size="m" href={cta.href}>
                     {cta.label}
                   </Button>
                 </div>
@@ -71,7 +71,7 @@ export default function BlockSection({
                   <p key={i} className="text-m m:text-l mb-4">{p}</p>
                 ))}
                 {subHeadline?.bullets && (
-                  <ul className="[&_li]:list-image-checkmarks-teal [&_li+li]:mt-4 pl-4 text-m m:text-l mb-8 m:mb-14">
+                  <ul className="[&_li]:list-image-checkmarks-teal [&_li+li]:mt-4 pl-[25px] text-m m:text-l mb-8 m:mb-14">
                     {subHeadline.bullets.map((b, i) => (
                       <li key={i}><p>{b}</p></li>
                     ))}
@@ -79,7 +79,7 @@ export default function BlockSection({
                 )}
                 {cta && (
                   <div className="mt-6 mx-0 mb-8 l:mt-8 l:mb-14">
-                    <Button variant="primary" theme="blue" size="l" href={cta.href}>
+                  <Button variant="secondary" theme="blue" size="m" href={cta.href}>
                       {cta.label}
                     </Button>
                   </div>

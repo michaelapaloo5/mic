@@ -167,7 +167,7 @@ export default function Header() {
                     )}
                   </a>
                   {item.children && activeDropdown === idx && (
-                    <div className="absolute top-full left-0 bg-white shadow-lg rounded-b-xl border border-gray-100 min-w-[600px] p-6 grid grid-cols-2 gap-6 z-50">
+                    <div className="absolute top-full left-0 bg-white shadow-lg rounded-b-lg min-w-[600px] p-4 grid grid-cols-2 gap-6 z-50">
                       {item.children.map((group, gi) => (
                         <div key={gi}>
                           {group.heading && (

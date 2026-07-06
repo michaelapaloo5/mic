@@ -19,6 +19,7 @@ type IconName =
   | "card"
   | "shield"
   | "percent"
+  | "xing"
 
 interface IconProps {
   name: IconName
@@ -80,6 +81,9 @@ const paths: Record<IconName, ReactElement> = {
   ),
   "percent": (
     <><line x1="19" y1="5" x2="5" y2="19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /><circle cx="6.5" cy="6.5" r="2.5" fill="none" stroke="currentColor" strokeWidth="2" /><circle cx="17.5" cy="17.5" r="2.5" fill="none" stroke="currentColor" strokeWidth="2" /></>
+  ),
+  "xing": (
+    <path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.64l4.92 9.04c.19.342.512.66 1.034.66h3.457c.22 0 .342-.128.342-.347 0-.116-.058-.245-.185-.396l-4.854-8.854a.456.456 0 010-.058L20.89 1.06c.12-.165.185-.268.185-.35 0-.189-.126-.35-.425-.35l-3.458-.34zM6.08 4.495c-.18 0-.31.13-.31.317 0 .108.08.238.166.36l2.064 3.628a.149.149 0 010 .058L4.96 13.96c-.113.163-.166.3-.166.404 0 .19.137.317.383.317h3.477c.504 0 .746-.33.963-.66l3.575-6.42-2.086-3.708c-.194-.38-.456-.66-.984-.66H6.08z" fill="currentColor" />
   ),
 }
 

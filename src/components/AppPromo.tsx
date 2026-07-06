@@ -56,13 +56,15 @@ export default function AppPromo() {
                 Egal, ob du kurz deinen Kontostand checken oder eine Überweisung tätigen willst: Mit unserer DKB-App erledigst du deine Bankgeschäfte sicher, einfach und bequem von überall.
               </div>
               <div className="flex mt-4 m:mt-6">
-                <a
+                <Button
+                  variant="primary"
+                  theme="light"
+                  size="m"
                   href="/privatkunden/girokonto/banking-app"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-all duration-200 px-6 py-3 text-base bg-white text-[rgb(9,118,214)] hover:bg-gray-50 w-full m:w-auto"
-                  aria-label="DKB-App entdecken"
+                  className="w-full m:w-auto"
                 >
                   DKB-App entdecken
-                </a>
+                </Button>
               </div>
             </div>
           </div>

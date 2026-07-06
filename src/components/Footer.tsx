@@ -47,6 +47,8 @@ const footerGroups = [
 const socialLinks = [
   { name: "LinkedIn", href: "https://www.linkedin.com/company/dkb", icon: "linkedin" as const },
   { name: "Instagram", href: "https://www.instagram.com/dkb.de/", icon: "instagram" as const },
+  { name: "YouTube", href: "https://www.youtube.com/user/DKBde", icon: "youtube" as const },
+  { name: "Xing", href: "https://www.xing.com/pages/dkb", icon: "xing" as const },
 ]
 
 const legalLinks = [
@@ -100,7 +102,7 @@ export default function Footer() {
         </div>
 
         {/* Social Icons */}
-        <div className="flex items-center gap-5 mt-12 l:mt-0">
+        <div className="flex items-center gap-[20px] mt-12 l:mt-0">
           {socialLinks.map((social, si) => (
             <a
               key={si}
@@ -108,7 +110,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.name}
-              className="text-white/70 hover:text-white transition-colors block"
+              className="text-white/70 hover:text-white transition-colors inline-flex"
             >
               <Icon name={social.icon} size={24} />
             </a>
@@ -119,13 +121,13 @@ export default function Footer() {
       {/* Legal Bar */}
       <div className="border-t border-white/20">
         <div className="max-w-[1440px] mx-auto px-4 m:px-8 py-6 flex flex-col m:flex-row items-start m:items-center justify-between gap-4">
-          <p className="text-sm text-white/70">&copy; 2026 Deutsche Kreditbank AG</p>
+          <p className="text-s text-white/70">&copy; 2026 Deutsche Kreditbank AG</p>
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 list-none m-0 p-0">
             {legalLinks.map((link, li) => (
               <li key={li}>
                 <a
                   href={link.href}
-                  className="text-sm text-white/80 hover:text-white transition-colors font-semibold border-b border-transparent hover:border-[rgb(42,209,201)] hover:border-b-[rgba(42,209,201,0.36)]"
+                  className="text-sm text-white/80 hover:text-white transition-colors font-semibold border-b border-[rgb(42,209,201)] border-solid"
                 >
                   {link.label}
                 </a>

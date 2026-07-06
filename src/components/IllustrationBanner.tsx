@@ -62,7 +62,7 @@ export default function IllustrationBanner() {
               </h3>
               <a
                 href="/privatkunden/investieren/altersvorsorgedepot?wt_mc=pk.avd.hp_illu"
-                className="mt-4 inline-flex items-center gap-2 text-white font-semibold text-sm border-b border-solid border-b-white pb-0.5 hover:gap-3 transition-all"
+                className="mt-4 inline-flex items-center gap-2 text-white font-semibold text-sm border-b border-solid border-b-white pb-0.5"
               >
                 Für Updates anmelden
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -80,7 +80,7 @@ export default function IllustrationBanner() {
               </h3>
               <a
                 href="/privatkunden/immobilien/immobilienbewertung?wt_mc=pk.ibw.hp.illu.g.0226"
-                className="mt-4 inline-flex items-center gap-2 text-[#0d0e0ff2] font-semibold text-sm border-b border-solid border-b-[#0d0e0ff2] pb-0.5 hover:gap-3 transition-all"
+                className="mt-4 inline-flex items-center gap-2 text-[#0d0e0ff2] font-semibold text-sm border-b border-solid border-b-[#0d0e0ff2] pb-0.5"
               >
                 Zur Online-Immobilienbewertung
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
