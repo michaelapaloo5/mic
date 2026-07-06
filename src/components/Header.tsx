@@ -5,12 +5,26 @@ import DKBLogo from "./DKBLogo"
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 0)
     window.addEventListener("scroll", onScroll)
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : ""
+    return () => { document.body.style.overflow = "" }
+  }, [menuOpen])
+
+  const navLinks = [
+    { href: "/privatkunden", label: "Privat" },
+    { href: "/geschaeftskunden", label: "Geschäftlich" },
+    { href: "/nachhaltigkeit", label: "Nachhaltig" },
+    { href: "/fragen-antworten", label: "Hilfe & Kontakt" },
+    { href: "https://freundewerben.dkb.de/empfehlen/1", label: "Freunde werben" },
+  ]
 
   return (
     <nav
@@ -28,24 +42,21 @@ export default function Header() {
           <div className="navigation__toggle px-0 py-[5px] l:hidden" data-v-5987f5df>
             <button
               type="button"
+              onClick={() => setMenuOpen(!menuOpen)}
               className="button-component navigation__hamburger inline-flex items-center gap-1 text-[rgb(0,106,199)] px-[6px] py-[5px] rounded-[6px] font-[500] border-none cursor-pointer"
               tabIndex={0}
               aria-haspopup="true"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M3 4a1 1 0 0 0 0 2h18a1 1 0 1 0 0-2zm-1 8a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m0 7a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <span className="ml-[2px]">Menü</span>
+              {menuOpen ? (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" clipRule="evenodd" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" d="M3 4a1 1 0 0 0 0 2h18a1 1 0 1 0 0-2zm-1 8a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m0 7a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1" clipRule="evenodd" />
+                </svg>
+              )}
+              <span className="ml-[2px]">{menuOpen ? "Schließen" : "Menü"}</span>
             </button>
           </div>
 
@@ -68,24 +79,15 @@ export default function Header() {
             className="hidden l:flex items-center gap-6 xl:gap-8"
             data-v-5987f5df
           >
-            <a
-              href="/privatkunden"
-              className="text-[rgb(0,106,199)] text-[17px] font-[500] border-b-2 border-transparent hover:border-[rgb(0,106,199)] py-1 transition-colors no-underline"
-            >
-              Privat
-            </a>
-            <a
-              href="/geschaeftskunden"
-              className="text-[rgb(0,106,199)] text-[17px] font-[500] border-b-2 border-transparent hover:border-[rgb(0,106,199)] py-1 transition-colors no-underline"
-            >
-              Geschäftlich
-            </a>
-            <a
-              href="/nachhaltigkeit"
-              className="text-[rgb(0,106,199)] text-[17px] font-[500] border-b-2 border-transparent hover:border-[rgb(0,106,199)] py-1 transition-colors no-underline"
-            >
-              Nachhaltig
-            </a>
+            {navLinks.slice(0, 3).map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[rgb(0,106,199)] text-[17px] font-[500] border-b-2 border-transparent hover:border-[rgb(0,106,199)] py-1 transition-colors no-underline"
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
 
           {/* Right: Anmelden + help links */}
@@ -124,6 +126,50 @@ export default function Header() {
               Freunde werben
             </a>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile menu overlay */}
+      {menuOpen && (
+        <div className="fixed inset-0 bg-black/30 z-40 l:hidden" onClick={() => setMenuOpen(false)} />
+      )}
+
+      {/* Mobile menu drawer */}
+      <div
+        className={`fixed top-0 left-0 h-full w-[300px] bg-white z-50 shadow-xl transform transition-transform duration-200 l:hidden ${
+          menuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="p-4 border-b flex items-center justify-between">
+          <DKBLogo className="w-[71px] h-10 text-[rgb(20,141,234)]" />
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="border-none bg-transparent text-gray-500 cursor-pointer p-1"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path fillRule="evenodd" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        <div className="p-4 space-y-1">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="block px-3 py-3 rounded-lg text-[rgb(0,106,199)] font-[500] text-[17px] hover:bg-[rgba(0,144,255,0.09)] transition-colors no-underline"
+            >
+              {link.label}
+            </a>
+          ))}
+          <hr className="my-3 border-gray-200" />
+          <a
+            href="/login"
+            onClick={() => setMenuOpen(false)}
+            className="block px-3 py-3 rounded-lg text-[rgb(0,106,199)] font-[500] text-[17px] hover:bg-[rgba(0,144,255,0.09)] transition-colors no-underline"
+          >
+            Anmelden
+          </a>
         </div>
       </div>
     </nav>
