@@ -1,101 +1,124 @@
 @import "tailwindcss";
 
-@theme inline {
-  --color-dkb-primary: rgb(9, 118, 214);
-  --color-dkb-primary-hover: rgb(19, 78, 138);
-  --color-dkb-text-interact: #006ac7;
-  --color-dkb-teal: rgb(42, 209, 201);
-  --color-dkb-teal-hover: rgba(42, 209, 201, 0.36);
-  --color-dkb-grey: rgb(243, 249, 254);
-  --color-dkb-navy: #0d0e0f;
-  --color-dkb-footer: rgb(0, 46, 92);
-  --color-dkb-text: rgb(13, 14, 15, 0.95);
-  --color-dkb-text-body: rgba(9, 17, 24, 0.84);
-  --color-dkb-text-subdued: rgba(15, 47, 71, 0.66);
+@font-face {
+  font-display: fallback;
+  font-family: DKBEuclid;
+  font-style: normal;
+  font-weight: 300;
+  src: url("/fonts/DKBEuclid-Light.woff2") format("woff2"),
+    url("/fonts/DKBEuclid-Light.woff") format("woff");
+}
+@font-face {
+  font-display: fallback;
+  font-family: DKBEuclid;
+  font-style: italic;
+  font-weight: 300;
+  src: url("/fonts/DKBEuclid-LightItalic.woff2") format("woff2"),
+    url("/fonts/DKBEuclid-LightItalic.woff") format("woff");
+}
+@font-face {
+  font-display: fallback;
+  font-family: DKBEuclid;
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/DKBEuclid-Regular.woff2") format("woff2"),
+    url("/fonts/DKBEuclid-Regular.woff") format("woff");
+}
+@font-face {
+  font-display: fallback;
+  font-family: DKBEuclid;
+  font-style: normal;
+  font-weight: 500;
+  src: url("/fonts/DKBEuclid-Medium.woff2") format("woff2"),
+    url("/fonts/DKBEuclid-Medium.woff") format("woff");
+}
+@font-face {
+  font-display: fallback;
+  font-family: DKBEuclid;
+  font-style: italic;
+  font-weight: 500;
+  src: url("/fonts/DKBEuclid-MediumItalic.woff2") format("woff2"),
+    url("/fonts/DKBEuclid-MediumItalic.woff") format("woff");
+}
+@font-face {
+  font-display: fallback;
+  font-family: DKBEuclid;
+  font-style: normal;
+  font-weight: 600;
+  src: url("/fonts/DKBEuclid-Semibold.woff2") format("woff2"),
+    url("/fonts/DKBEuclid-Semibold.woff") format("woff");
+}
+@font-face {
+  font-display: fallback;
+  font-family: DKBEuclid;
+  font-style: italic;
+  font-weight: 600;
+  src: url("/fonts/DKBEuclid-SemiboldItalic.woff2") format("woff2"),
+    url("/fonts/DKBEuclid-SemiboldItalic.woff") format("woff");
+}
+@font-face {
+  font-display: fallback;
+  font-family: DKBEuclid;
+  font-style: normal;
+  font-weight: 700;
+  src: url("/fonts/DKBEuclid-Bold.woff2") format("woff2"),
+    url("/fonts/DKBEuclid-Bold.woff") format("woff");
+}
+@font-face {
+  font-display: fallback;
+  font-family: DKBEuclid;
+  font-style: italic;
+  font-weight: 700;
+  src: url("/fonts/DKBEuclid-BoldItalic.woff2") format("woff2"),
+    url("/fonts/DKBEuclid-BoldItalic.woff") format("woff");
+}
 
+@theme inline {
   --font-sans: "DKBEuclid", Arial, sans-serif;
   --font-mono: "DKBEuclid", monospace;
 
-  --text-headline-xs: 1.125rem;
-  --text-headline-xs--line-height: 1.4;
-  --text-headline-s: 1.5rem;
-  --text-headline-s--line-height: 1.25;
-  --text-headline-m: 2rem;
-  --text-headline-m--line-height: 1.31;
-  --text-headline-l: 3rem;
-  --text-headline-l--line-height: 1.25;
-  --text-headline-xl: 4rem;
-  --text-headline-xl--line-height: 1.15;
+  --color-dkb-primary: rgb(9, 118, 214);
+  --color-dkb-primary-hover: rgb(19, 78, 138);
+  --color-dkb-text-interact: rgb(0, 106, 199);
+  --color-dkb-teal: rgb(42, 209, 201);
+  --color-dkb-grey: rgb(243, 249, 254);
+  --color-dkb-navy: #0d0e0f;
+  --color-dkb-footer: rgb(0, 46, 92);
+  --color-dkb-text-body: rgba(9, 17, 24, 0.84);
+  --color-dkb-text-default: rgba(13, 14, 15, 0.95);
+  --color-dkb-text-subdued: rgba(15, 47, 71, 0.66);
+  --color-dkb-border-cards: rgba(8, 76, 128, 0.21);
+  --color-dkb-disabled: rgba(33, 51, 65, 0.2);
 }
 
 body {
   background: rgb(243, 249, 254);
   color: rgba(13, 14, 15, 0.95);
   font-family: "DKBEuclid", Arial, sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  letter-spacing: 0.0125rem;
+  line-height: 1.625rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1.31;
-  margin-bottom: 1rem;
-  color: rgba(13, 14, 15, 0.95);
-}
-@media (min-width: 1024px) {
-  h1 {
-    font-size: 3rem;
-    line-height: 1.25;
-  }
-}
-
-h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.25;
-  margin-bottom: 1rem;
-  color: rgba(13, 14, 15, 0.95);
-}
-
-h3 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.4;
-  color: rgba(13, 14, 15, 0.95);
-}
-@media (min-width: 1024px) {
-  h3 {
-    font-size: 1.25rem;
-    line-height: 1.4;
-  }
-}
-
-@layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.list-image-checkmarks-teal {
-  list-style: none;
-  padding-left: 1.5rem;
-}
-.list-image-checkmarks-teal li {
+.button-component {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 2.5rem;
   position: relative;
+  text-align: center;
+  text-decoration-line: none !important;
+  transition-duration: 0.3s;
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-.list-image-checkmarks-teal li::before {
-  content: "";
-  position: absolute;
-  left: -1.5rem;
-  top: 0.25rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232ad1c9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
+
+.list-image-checkmarks-teal li,
+.list-image-checkmarks-teal ul {
+  list-style-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='16' fill='none' viewBox='0 0 17 16'%3E%3Cpath fill='%232ad1c9' fill-rule='evenodd' d='M15.79 2.74a1.8 1.8 0 0 0-.56-2.46 1.75 1.75 0 0 0-2.43.55L6.44 11.06 3.2 7.3a1.81 1.81 0 0 0-2.58-.17 1.87 1.87 0 0 0-.18 2.61l4.74 5.5c.49.57 1.24.77 1.9.57.42-.11.8-.38 1.04-.77l7.66-12.31z' clip-rule='evenodd'/%3E%3C/svg%3E");
 }

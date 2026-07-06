@@ -4,7 +4,6 @@ import { type FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import DKBLogo from "@/components/DKBLogo"
-import Icon from "@/components/Icon"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -31,9 +30,11 @@ export default function LoginPage() {
     })
 
     if (error) {
-      setError(error.message === "Invalid login credentials"
-        ? "Anmeldename oder Passwort falsch."
-        : error.message)
+      setError(
+        error.message === "Invalid login credentials"
+          ? "Anmeldename oder Passwort falsch."
+          : error.message,
+      )
       setLoading(false)
       return
     }
@@ -42,66 +43,57 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#f3f9fe" }}>
-      {/* HEADER matching DKB public site */}
-      <header className="bg-white" style={{ borderBottom: "1px solid rgba(8,76,128,0.21)" }}>
-        <div className="mx-auto" style={{ maxWidth: "1350px", padding: "0 24px" }}>
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            height: "64px"
-          }}>
-            <div style={{ flex: "0 0 33%" }}>
-              <a href="/" className="flex items-center" style={{ textDecoration: "none" }}>
-                <DKBLogo style={{ height: "32px", width: "auto", color: "#006ac7" }} />
-              </a>
-            </div>
-            <div style={{ flex: "0 0 33%", display: "flex", justifyContent: "center" }}>
-              {/* desktop nav would go here */}
-            </div>
-            <div style={{ flex: "0 0 33%", display: "flex", justifyContent: "flex-end" }}>
+    <div className="min-h-screen flex flex-col bg-[rgb(243,249,254)]">
+      {/* Header */}
+      <header className="bg-white">
+        <div className="mx-auto px-6 m:px-[30px] max-w-[1350px]">
+          <div className="flex items-center justify-between py-[7px] l:py-3">
+            <div className="flex-[33%]">
               <a
                 href="/"
-                className="no-underline inline-flex items-center gap-2 px-[18px] py-[13px] rounded-[6px] font-[500] text-[17px]"
-                style={{
-                  color: "#006ac7",
-                  border: "1px solid #006ac7",
-                  transition: "all 0.2s"
-                }}
+                className="flex items-center no-underline w-[71px] h-10"
+                aria-label="DKB Startseite"
               >
-                <Icon name="lock" className="w-4 h-4" />
-                Anmelden
+                <DKBLogo className="w-full h-full text-[rgb(0,106,199)]" />
+              </a>
+            </div>
+            <div className="flex-[33%] flex justify-center" />
+            <div className="flex-[33%] flex justify-end">
+              <a
+                href="/"
+                className="inline-flex items-center gap-1 l:gap-2 rounded-[6px] font-[500] no-underline !p-1 !pr-2 l:!p-3 text-[13px] l:text-[17px] bg-[rgba(0,144,255,0.09)] text-[rgb(0,106,199)] hover:bg-[rgba(0,144,255,0.18)] hover:text-[rgb(19,78,138)] transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  className="w-4 h-4 l:w-5 l:h-5"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M17 0a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3v-1a1 1 0 1 1 2 0v1a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v2a1 1 0 1 1-2 0V3a3 3 0 0 1 3-3zM4 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-4 2a4 4 0 0 1 7.465-2H15a1 1 0 1 1 0 2v1a1 1 0 1 1-2 0v-1h-1v2a1 1 0 1 1-2 0v-2H8a4 4 0 0 1-8 0"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="hidden xl:inline-block">Anmelden</span>
               </a>
             </div>
           </div>
         </div>
       </header>
 
-      {/* LOGIN FORM */}
-      <main style={{
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "32px 16px"
-      }}>
-        <div style={{
-          width: "100%",
-          maxWidth: "400px",
-          backgroundColor: "#fff",
-          borderRadius: "12px",
-          boxShadow: "0 2px 6px rgba(4,94,184,0.12)",
-          border: "1px solid rgba(8,76,128,0.21)",
-          padding: "32px"
-        }}>
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "32px" }}>
-            <DKBLogo style={{ height: "28px", width: "auto", color: "#006ac7" }} />
+      {/* Login form */}
+      <main className="flex-1 flex items-center justify-center px-4 py-8">
+        <div className="w-full max-w-[400px] bg-white rounded-[12px] shadow-[0_2px_6px_rgba(4,94,184,0.12)] border border-[rgba(8,76,128,0.21)] p-8">
+          <div className="flex justify-center mb-8">
+            <DKBLogo className="h-7 w-auto text-[rgb(0,106,199)]" />
           </div>
 
           {step === "username" ? (
             <form onSubmit={handleUsernameSubmit}>
-              <div style={{ position: "relative", marginBottom: "20px" }}>
+              <div className="relative mb-5">
                 <input
                   id="anmeldename"
                   type="text"
@@ -110,34 +102,17 @@ export default function LoginPage() {
                   required
                   autoFocus
                   autoComplete="username"
-                  style={{
-                    width: "100%",
-                    height: "56px",
-                    padding: "20px 16px 4px",
-                    fontSize: "17px",
-                    fontFamily: "inherit",
-                    color: "rgba(13,14,15,0.95)",
-                    backgroundColor: "transparent",
-                    border: "1px solid rgba(8,76,128,0.21)",
-                    borderRadius: "6px",
-                    outline: "none",
-                    boxSizing: "border-box",
-                    transition: "border-color 0.2s"
-                  }}
-                  onFocus={(e) => { e.target.style.borderColor = "rgba(9,118,214,0.76)"; e.target.style.borderWidth = "2px"; }}
-                  onBlur={(e) => { e.target.style.borderColor = "rgba(8,76,128,0.21)"; e.target.style.borderWidth = "1px"; }}
+                  className="w-full h-14 px-4 pt-5 pb-1 text-[17px] text-[rgba(13,14,15,0.95)] bg-transparent border border-[rgba(8,76,128,0.21)] rounded-[6px] outline-none focus:border-[rgba(9,118,214,0.76)] focus:border-2 transition-colors font-inherit box-border"
                 />
                 <label
                   htmlFor="anmeldename"
+                  className="absolute left-4 top-0 flex items-center h-14 text-[17px] text-[rgba(15,47,71,0.66)] transition-all duration-150 pointer-events-none font-inherit"
                   style={{
-                    position: "absolute",
-                    left: "16px",
-                    top: username ? "4px" : "18px",
+                    top: username ? "4px" : "0px",
                     fontSize: username ? "15px" : "17px",
-                    color: username ? "#006ac7" : "rgba(15,47,71,0.66)",
-                    transition: "all 0.15s ease",
-                    pointerEvents: "none",
-                    fontFamily: "inherit"
+                    color: username
+                      ? "rgb(0,106,199)"
+                      : "rgba(15,47,71,0.66)",
                   }}
                 >
                   Anmeldename
@@ -147,28 +122,30 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={!username.trim()}
+                className="w-full h-14 rounded-[6px] text-[17px] font-[500] font-inherit border-none transition-all duration-200 cursor-pointer disabled:cursor-not-allowed text-white"
                 style={{
-                  width: "100%",
-                  height: "56px",
-                  backgroundColor: username.trim() ? "#0a59a8" : "rgba(33,51,65,0.2)",
-                  color: username.trim() ? "#fff" : "rgba(33,51,65,0.4)",
-                  border: "none",
-                  borderRadius: "6px",
-                  fontSize: "17px",
-                  fontWeight: 500,
-                  fontFamily: "inherit",
-                  cursor: username.trim() ? "pointer" : "not-allowed",
-                  transition: "background-color 0.2s"
+                  backgroundColor: username.trim()
+                    ? "rgb(9,118,214)"
+                    : "rgba(33,51,65,0.2)",
+                  color: username.trim()
+                    ? "#fff"
+                    : "rgba(33,51,65,0.4)",
                 }}
-                onMouseOver={(e) => { if (username.trim()) e.currentTarget.style.backgroundColor = "#134e8a"; }}
-                onMouseOut={(e) => { if (username.trim()) e.currentTarget.style.backgroundColor = "#0a59a8"; }}
+                onMouseOver={(e) => {
+                  if (username.trim())
+                    e.currentTarget.style.backgroundColor = "rgb(19,78,138)"
+                }}
+                onMouseOut={(e) => {
+                  if (username.trim())
+                    e.currentTarget.style.backgroundColor = "rgb(9,118,214)"
+                }}
               >
                 Weiter
               </button>
             </form>
           ) : (
             <form onSubmit={handlePasswordSubmit}>
-              <div style={{ position: "relative", marginBottom: "16px" }}>
+              <div className="relative mb-4">
                 <input
                   id="passwort"
                   type="password"
@@ -177,34 +154,17 @@ export default function LoginPage() {
                   required
                   autoFocus
                   autoComplete="current-password"
-                  style={{
-                    width: "100%",
-                    height: "56px",
-                    padding: "20px 16px 4px",
-                    fontSize: "17px",
-                    fontFamily: "inherit",
-                    color: "rgba(13,14,15,0.95)",
-                    backgroundColor: "transparent",
-                    border: "1px solid rgba(8,76,128,0.21)",
-                    borderRadius: "6px",
-                    outline: "none",
-                    boxSizing: "border-box",
-                    transition: "border-color 0.2s"
-                  }}
-                  onFocus={(e) => { e.target.style.borderColor = "rgba(9,118,214,0.76)"; e.target.style.borderWidth = "2px"; }}
-                  onBlur={(e) => { e.target.style.borderColor = "rgba(8,76,128,0.21)"; e.target.style.borderWidth = "1px"; }}
+                  className="w-full h-14 px-4 pt-5 pb-1 text-[17px] text-[rgba(13,14,15,0.95)] bg-transparent border border-[rgba(8,76,128,0.21)] rounded-[6px] outline-none focus:border-[rgba(9,118,214,0.76)] focus:border-2 transition-colors font-inherit box-border"
                 />
                 <label
                   htmlFor="passwort"
+                  className="absolute left-4 top-0 flex items-center h-14 text-[17px] text-[rgba(15,47,71,0.66)] transition-all duration-150 pointer-events-none font-inherit"
                   style={{
-                    position: "absolute",
-                    left: "16px",
-                    top: password ? "4px" : "18px",
+                    top: password ? "4px" : "0px",
                     fontSize: password ? "15px" : "17px",
-                    color: password ? "#006ac7" : "rgba(15,47,71,0.66)",
-                    transition: "all 0.15s ease",
-                    pointerEvents: "none",
-                    fontFamily: "inherit"
+                    color: password
+                      ? "rgb(0,106,199)"
+                      : "rgba(15,47,71,0.66)",
                   }}
                 >
                   Passwort
@@ -212,7 +172,7 @@ export default function LoginPage() {
               </div>
 
               {error && (
-                <div style={{ fontSize: "15px", color: "#c22813", marginBottom: "12px", padding: "0 4px" }}>
+                <div className="text-[15px] text-[rgb(194,40,19)] mb-3 px-1">
                   {error}
                 </div>
               )}
@@ -220,53 +180,45 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading || !password}
+                className="w-full h-14 rounded-[6px] text-[17px] font-[500] font-inherit border-none transition-all duration-200 cursor-pointer disabled:cursor-not-allowed"
                 style={{
-                  width: "100%",
-                  height: "56px",
-                  backgroundColor: (loading || !password) ? "rgba(33,51,65,0.2)" : "#0a59a8",
-                  color: (loading || !password) ? "rgba(33,51,65,0.4)" : "#fff",
-                  border: "none",
-                  borderRadius: "6px",
-                  fontSize: "17px",
-                  fontWeight: 500,
-                  fontFamily: "inherit",
-                  cursor: (loading || !password) ? "not-allowed" : "pointer",
-                  transition: "background-color 0.2s"
+                  backgroundColor:
+                    loading || !password
+                      ? "rgba(33,51,65,0.2)"
+                      : "rgb(9,118,214)",
+                  color:
+                    loading || !password
+                      ? "rgba(33,51,65,0.4)"
+                      : "#fff",
                 }}
-                onMouseOver={(e) => { if (!loading && password) e.currentTarget.style.backgroundColor = "#134e8a"; }}
-                onMouseOut={(e) => { if (!loading && password) e.currentTarget.style.backgroundColor = "#0a59a8"; }}
+                onMouseOver={(e) => {
+                  if (!loading && password)
+                    e.currentTarget.style.backgroundColor =
+                      "rgb(19,78,138)"
+                }}
+                onMouseOut={(e) => {
+                  if (!loading && password)
+                    e.currentTarget.style.backgroundColor =
+                      "rgb(9,118,214)"
+                }}
               >
                 {loading ? "Wird geladen..." : "Anmelden"}
               </button>
 
-              <div style={{ textAlign: "center", marginTop: "16px" }}>
+              <div className="text-center mt-4">
                 <button
                   type="button"
                   onClick={() => setStep("username")}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    color: "#006ac7",
-                    fontSize: "15px",
-                    fontFamily: "inherit",
-                    cursor: "pointer",
-                    padding: 0,
-                    textDecoration: "underline"
-                  }}
+                  className="bg-none border-none text-[rgb(0,106,199)] text-[15px] font-inherit cursor-pointer p-0 underline"
                 >
                   Zurück
                 </button>
               </div>
 
-              <div style={{ textAlign: "center", marginTop: "12px" }}>
+              <div className="text-center mt-3">
                 <a
                   href="https://banking.dkb.de/reset-password"
-                  style={{
-                    color: "#006ac7",
-                    fontSize: "15px",
-                    fontFamily: "inherit",
-                    textDecoration: "underline"
-                  }}
+                  className="text-[rgb(0,106,199)] text-[15px] font-inherit underline"
                 >
                   Passwort vergessen?
                 </a>

@@ -1,5 +1,4 @@
 import Button from "./Button"
-import Icon from "./Icon"
 
 interface BlockSectionProps {
   headline: string
@@ -30,76 +29,112 @@ export default function BlockSection({
   noIllustration = false,
   className = "",
 }: BlockSectionProps) {
-  const bgClass = background === "grey" ? "bg-[rgb(243,249,254)]" : "bg-white"
+  const sectionClass =
+    background === "grey"
+      ? "block-section scroll-mt-medium l:scroll-mt-large block-section--white block-section--illustration"
+      : "block-section scroll-mt-medium l:scroll-mt-large block-section--white block-section--illustration"
+
+  const variantClass = illustration
+    ? illustration.position === "right"
+      ? "block-section--illustration-right"
+      : "block-section--illustration-left"
+    : noIllustration
+      ? "block-section--no-illustration block-section--banner-right"
+      : ""
 
   return (
-    <section className={`${bgClass} ${className}`}>
-      <div className="!py-8 m:!py-14 mx-auto px-6 m:px-[30px] max-w-[1350px]">
-        <div className="grid grid-cols-12 gap-0">
-          {/* Headline - full width */}
-          <div className="col-span-12">
-            <h2 className="text-headline-s l:text-headline-m font-bold mb-4 l:mb-6 leading-tight">
-              {headline}
-            </h2>
-          </div>
+    <section className={`${sectionClass} ${variantClass} ${background === "grey" ? "bg-[rgb(243,249,254)]" : "bg-white"} ${className}`}>
+      <div className="!py-8 m:!py-14 block-section__container tw-grid mx-auto px-6 m:px-[30px] max-w-[1350px] grid grid-cols-12">
+        <h2 className="block-section__headline col-span-12 text-[32px] font-[600] leading-[1.31] mb-4 l:text-[48px] l:leading-[1.25] l:mb-6">
+          {headline}
+        </h2>
 
-          {/* Content row */}
-          {noIllustration ? (
-            <div className="col-span-12">
-              {subHeadline?.paragraphs?.map((p, i) => (
-                <p key={i} className="text-m m:text-l mb-4">{p}</p>
-              ))}
-              {subHeadline?.bullets && (
-                  <ul className="[&_li]:list-image-checkmarks-teal [&_li+li]:mt-4 pl-[25px] text-m m:text-l mb-8 m:mb-14">
-                    {subHeadline.bullets.map((b, i) => (
-                    <li key={i}><p>{b}</p></li>
+        {noIllustration ? (
+          <div className="block-section__left-col col-span-12">
+            {subHeadline?.paragraphs?.map((p, i) => (
+              <p key={i} className="block-section__sub-headline text-[17px] l:text-[20px] mb-4">
+                {p}
+              </p>
+            ))}
+            {subHeadline?.bullets && (
+              <div className="block-section__sub-headline text-[17px] l:text-[20px] [&_ul]:pl-[25px] [&_ul_li+li]:mt-[1em] [&_ul]:list-image-checkmarks-teal">
+                <ul>
+                  {subHeadline.bullets.map((b, i) => (
+                    <li key={i}>
+                      <p>{b}</p>
+                    </li>
                   ))}
                 </ul>
-              )}
-              {cta && (
-                <div className="mt-6">
-                    <Button variant="secondary" theme="blue" size="m" href={cta.href}>
+              </div>
+            )}
+            <div className="block-section__content mt-6 l:mt-8" />
+            {cta && (
+              <div className="mt-6 mx-0 mb-8 l:mt-8 l:mb-14 block-section__cta">
+                <div className="action-bar mt-8 flex flex-col m:flex-row flex-wrap items-start m:items-center gap-6 m:gap-2">
+                  <Button
+                    variant="secondary"
+                    theme="blue"
+                    size="m"
+                    href={cta.href}
+                    className="w-full shrink-0 m:w-auto"
+                  >
                     {cta.label}
                   </Button>
                 </div>
-              )}
-            </div>
-          ) : (
-            <>
-              <div className={`col-span-12 m:col-span-8 ${illustration?.position === "right" ? "m:order-1" : ""}`}>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+            <div className="m:col-span-8 block-section__left-col col-span-12">
+              <div className="block-section__sub-headline text-[17px] l:text-[20px] [&_ul]:pl-[25px] [&_ul_li+li]:mt-[1em] [&_ul]:list-image-checkmarks-teal">
                 {subHeadline?.paragraphs?.map((p, i) => (
-                  <p key={i} className="text-m m:text-l mb-4">{p}</p>
+                  <p key={i} className="mb-4">{p}</p>
                 ))}
                 {subHeadline?.bullets && (
-                  <ul className="[&_li]:list-image-checkmarks-teal [&_li+li]:mt-4 pl-[25px] text-m m:text-l mb-8 m:mb-14">
+                  <ul>
                     {subHeadline.bullets.map((b, i) => (
-                      <li key={i}><p>{b}</p></li>
+                      <li key={i}>
+                        <p>{b}</p>
+                      </li>
                     ))}
                   </ul>
                 )}
-                {cta && (
-                  <div className="mt-6 mx-0 mb-8 l:mt-8 l:mb-14">
-                  <Button variant="secondary" theme="blue" size="m" href={cta.href}>
+              </div>
+              <div className="block-section__content mt-6 l:mt-8" />
+              {cta && (
+                <div className="mt-6 mx-0 mb-8 l:mt-8 l:mb-14 block-section__cta">
+                  <div className="action-bar mt-8 flex flex-col m:flex-row flex-wrap items-start m:items-center gap-6 m:gap-2">
+                    <Button
+                      variant="secondary"
+                      theme="blue"
+                      size="m"
+                      href={cta.href}
+                      className="w-full shrink-0 m:w-auto"
+                    >
                       {cta.label}
                     </Button>
                   </div>
-                )}
-              </div>
-              {illustration && (
-                <div className={`col-span-12 m:col-span-4 mt-6 m:mt-0 ${illustration.position === "left" ? "m:order-2" : ""}`}>
-                  <a href="#" tabIndex={-1} aria-hidden="true">
-                    <img
-                      src={illustration.src}
-                      alt={illustration.alt}
-                      className="w-full h-fit aspect-[3/2] object-cover"
-                      loading="lazy"
-                    />
-                  </a>
                 </div>
               )}
-            </>
-          )}
-        </div>
+            </div>
+            {illustration && (
+              <a
+                href={cta?.href || "#"}
+                className="link block-section__right-col col-span-12 flex justify-center mt-6 m:mt-0 m:col-span-4 !border-0 hover:bg-transparent"
+                tabIndex={-1}
+                aria-hidden="true"
+              >
+                <img
+                  src={illustration.src}
+                  alt={illustration.alt}
+                  className="w-full h-auto"
+                  loading="lazy"
+                />
+              </a>
+            )}
+          </>
+        )}
       </div>
     </section>
   )

@@ -13,31 +13,35 @@ interface ButtonProps {
   className?: string
   onClick?: () => void
   type?: "button" | "submit"
+  disabled?: boolean
+}
+
+const sizeStyles: Record<ButtonSize, string> = {
+  s: "text-[13px] leading-[1.125rem] px-4 py-2 font-[500]",
+  m: "text-[17px] leading-[1.4] px-[18px] py-[13px] font-[500]",
+  l: "text-[20px] leading-[1.2] px-5 py-4 font-[500]",
 }
 
 const variantStyles: Record<ButtonVariant, Record<ButtonTheme, string>> = {
   primary: {
-    blue: "bg-[rgb(9,118,214)] text-white shadow-[inset_0px_-4px_0px_#2ad1c9] hover:bg-[rgb(19,78,138)] active:brightness-90",
-    light: "bg-white text-[#006ac7] hover:bg-gray-50 active:bg-gray-100",
+    blue:
+      "bg-[rgb(9,118,214)] text-white hover:bg-[rgb(19,78,138)] disabled:bg-[rgba(33,51,65,0.2)] disabled:text-white",
+    light: "bg-white text-[rgb(0,106,199)] hover:bg-gray-50",
   },
   secondary: {
-    blue: "border border-[rgb(9,118,214)] text-[rgb(9,118,214)] hover:bg-[rgb(19,78,138)] hover:text-white active:brightness-90",
-    light: "border border-white text-white hover:bg-white hover:text-[rgb(9,118,214)] active:bg-gray-100",
+    blue:
+      "bg-[rgba(0,144,255,0.09)] text-[rgb(0,106,199)] hover:bg-[rgba(0,144,255,0.18)] hover:text-[rgb(19,78,138)]",
+    light:
+      "bg-white/10 text-white hover:bg-white/20",
   },
   tertiary: {
-    blue: "text-[#006ac7] hover:bg-[rgba(0,144,255,0.09)] active:bg-[rgba(0,144,255,0.18)]",
-    light: "text-white hover:bg-white/10 active:bg-white/20",
+    blue: "text-[rgb(0,106,199)] hover:bg-[rgba(0,144,255,0.09)]",
+    light: "text-white hover:bg-white/10",
   },
   subtle: {
     blue: "text-[rgba(15,47,71,0.66)] hover:text-[rgb(19,78,138)]",
     light: "text-white/80 hover:text-white",
   },
-}
-
-const sizeStyles: Record<ButtonSize, string> = {
-  s: "px-4 py-2 text-[13px]",
-  m: "px-[18px] py-[13px] text-[17px]",
-  l: "px-5 py-4 text-[20px]",
 }
 
 export default function Button({
@@ -49,11 +53,14 @@ export default function Button({
   className = "",
   onClick,
   type = "button",
+  disabled = false,
 }: ButtonProps) {
-  const baseStyles =
-    "inline-flex items-center justify-center gap-2 rounded-[6px] font-[500] transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(9,118,214,0.76)] cursor-pointer no-underline border border-transparent min-h-[2.5rem]"
+  const shadowClass =
+    variant === "primary" ? "mb-0.5 [box-shadow:inset_0_-4px_0_#2ad1c9]" : ""
 
-  const classes = `${baseStyles} ${variantStyles[variant][theme]} ${sizeStyles[size]} ${className}`
+  const borderClass = "border border-transparent"
+
+  const classes = `inline-flex items-center justify-center gap-2 rounded-[6px] cursor-pointer no-underline min-h-[2.5rem] transition-colors duration-300 ${borderClass} ${sizeStyles[size]} ${variantStyles[variant][theme]} ${shadowClass} ${className}`
 
   if (href) {
     return (
@@ -64,7 +71,12 @@ export default function Button({
   }
 
   return (
-    <button type={type} className={classes} onClick={onClick}>
+    <button
+      type={type}
+      className={classes}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   )

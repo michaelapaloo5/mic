@@ -1,20 +1,33 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from "next"
+import "./globals.css"
 
 export const metadata: Metadata = {
   title: "Das kann Bank",
   description:
     "Dein Girokonto, Tagesgeld & Depot bei der DKB – einer der größten Direktbanken Deutschlands! Alles digital, alles in einer App.",
-};
+  authors: [{ name: "DKB AG" }],
+  openGraph: {
+    title: "Das kann Bank",
+    description:
+      "Dein Girokonto, Tagesgeld & Depot bei der DKB – einer der größten Direktbanken Deutschlands! Alles digital, alles in einer App.",
+    url: "https://www.dkb.de",
+  },
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="de" className="h-full antialiased">
+      <head>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      </head>
       <body>{children}</body>
     </html>
-  );
+  )
 }
