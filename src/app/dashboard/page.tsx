@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { demoGetUser, demoSignOut, demoGetAccountInfo } from "@/lib/demo-auth"
-import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight } from "lucide-react"
+import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight, HelpCircle, FileText } from "lucide-react"
 
 type PageView = "finanzstatus" | "karten" | "auftraege" | "produkte"
 
@@ -263,14 +263,30 @@ export default function DashboardPage() {
             </button>
           ))}
         </nav>
-        <div className="p-3 border-t border-gray-200">
+        <div className="p-3 border-t border-gray-200 space-y-1">
           <button
-            onClick={handleLogout}
-            className="w-full px-3 py-3 rounded-lg flex items-center gap-3 font-medium text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors border-none bg-transparent cursor-pointer"
+            onClick={() => window.open("https://www.dkb.de/fragen-antworten", "_blank")}
+            className="w-full px-3 py-3 rounded-lg flex items-center gap-3 font-medium text-sm text-gray-700 hover:bg-gray-50 transition-colors border-none bg-transparent cursor-pointer"
           >
-            <ArrowUpRight size={20} />
-            Abmelden
+            <HelpCircle size={20} />
+            Hilfe & Kontakt
           </button>
+          <button
+            onClick={() => window.open("https://www.dkb.de/ueber-uns/impressum", "_blank")}
+            className="w-full px-3 py-3 rounded-lg flex items-center gap-3 font-medium text-sm text-gray-700 hover:bg-gray-50 transition-colors border-none bg-transparent cursor-pointer"
+          >
+            <FileText size={20} />
+            Rechtliches
+          </button>
+          <div className="pt-2">
+            <button
+              onClick={handleLogout}
+              className="w-full px-3 py-3 rounded-lg flex items-center gap-3 font-medium text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors border-none bg-transparent cursor-pointer"
+            >
+              <ArrowUpRight size={20} />
+              Abmelden
+            </button>
+          </div>
         </div>
       </div>
 
