@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { demoGetUser, demoSignOut, demoGetAccountInfo } from "@/lib/demo-auth"
-import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight, HelpCircle, FileText, Menu, X, User, Mail, MessageSquare, Shield, ArrowRightLeft, Clock, Globe, Repeat } from "lucide-react"
+import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight, HelpCircle, FileText, Menu, X, User, Mail, MessageSquare, Shield, ArrowRightLeft } from "lucide-react"
 
 type PageView = "finanzstatus" | "karten" | "auftraege" | "produkte" | "profil" | "postfach" | "feedback" | "sicherheit" | "transfer"
 
@@ -64,7 +64,7 @@ export default function DashboardPage() {
     { id: "profil", label: "Profileinstellungen", icon: <User size={20} /> },
     { id: "sicherheit", label: "Sicherheit", icon: <Shield size={20} /> },
     { id: "feedback", label: "Feedback", icon: <MessageSquare size={20} /> },
-    { id: "transfer", label: "Transfer", icon: <ArrowRightLeft size={20} /> },
+    { id: "transfer", label: "Überweisungen", icon: <ArrowRightLeft size={20} /> },
   ]
 
   function sidebarContent(closeOnClick = false) {
@@ -138,127 +138,42 @@ export default function DashboardPage() {
   }
 
   function TransferView() {
-  const [tab, setTab] = useState<string | null>(null)
-
-  if (tab === "sepa") return <SEPAForm onBack={() => setTab(null)} />
-  if (tab === "instant") return <InstantForm onBack={() => setTab(null)} />
-  if (tab === "standing") return <StandingForm onBack={() => setTab(null)} />
-  if (tab === "international") return <InternationalForm onBack={() => setTab(null)} />
-
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {[
-        { id: "sepa", title: "Standard-Überweisung (SEPA)", desc: "Kostenlose Überweisung innerhalb des SEPA-Raums. Geld kommt am nächsten Werktag an.", icon: <ArrowRightLeft size={24} />, color: "blue" },
-        { id: "instant", title: "Echtzeit-Überweisung", desc: "Geld in unter 10 Sekunden auf dem Empfängerkonto – 24/7 verfügbar.", icon: <Clock size={24} />, color: "green" },
-        { id: "standing", title: "Dauerauftrag", desc: "Wiederkehrende Zahlungen automatisch ausführen – Miete, Versicherung & mehr.", icon: <Repeat size={24} />, color: "purple" },
-        { id: "international", title: "Auslandsüberweisung", desc: "Geld außerhalb des SEPA-Raums senden – in Kooperation mit Wise.", icon: <Globe size={24} />, color: "teal" },
-      ].map((item) => (
-        <button
-          key={item.id}
-          onClick={() => setTab(item.id)}
-          className="bg-white rounded-lg shadow-sm p-6 text-left hover:shadow-md transition-shadow border-none cursor-pointer"
-        >
-          <div className={`w-12 h-12 rounded-lg bg-${item.color}-100 flex items-center justify-center text-${item.color}-600 mb-4`}>
-            {item.icon}
-          </div>
-          <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
-          <p className="text-sm text-gray-500">{item.desc}</p>
-        </button>
-      ))}
-    </div>
-  )
-}
-
-function SEPAForm({ onBack }: { onBack: () => void }) {
   const [step, setStep] = useState(1)
+  const [method, setMethod] = useState<string | null>(null)
   const [form, setForm] = useState({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" })
+  const [savedId, setSavedId] = useState<string | null>(null)
 
-  if (step === 2) {
-    return (
-      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
-        <button onClick={() => setStep(1)} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Zurück</button>
-        <h2 className="text-xl font-semibold mb-4">Bestätigung</h2>
-        <div className="space-y-3 text-sm mb-6">
-          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
-            <span className="text-gray-500">Empfänger</span>
-            <span className="font-medium">{form.empfaenger}</span>
-          </div>
-          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
-            <span className="text-gray-500">IBAN</span>
-            <span className="font-medium font-mono text-xs">{form.iban}</span>
-          </div>
-          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
-            <span className="text-gray-500">Betrag</span>
-            <span className="font-medium">{parseFloat(form.betrag || "0").toFixed(2).replace(".", ",")} €</span>
-          </div>
-          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
-            <span className="text-gray-500">Verwendungszweck</span>
-            <span className="font-medium">{form.verwendungszweck || "—"}</span>
-          </div>
-          <div className="p-3 bg-blue-50 rounded-lg text-xs text-blue-700">
-            <ArrowRightLeft size={14} className="inline mr-1" />SEPA-Standardüberweisung • Kostenlos • Ankunft am nächsten Werktag
-          </div>
-        </div>
-        <div className="flex gap-3">
-          <button onClick={() => setStep(1)} className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors bg-white cursor-pointer">Ändern</button>
-          <button onClick={() => setStep(3)} className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">Absenden</button>
-        </div>
-      </div>
-    )
+  const savedPayees = [
+    { id: "1", name: "Vermieterin S. Müller", iban: "DE21 1001 0010 0123 4567 89" },
+    { id: "2", name: "TK Versicherung", iban: "DE75 2005 0050 0987 6543 21" },
+    { id: "3", name: "Stadtwerke Berlin", iban: "DE12 1009 0000 0012 3456 78" },
+    { id: "4", name: "Netflix GmbH", iban: "DE33 3006 0601 1112 2233 44" },
+    { id: "5", name: "Telekom Deutschland", iban: "DE44 4007 0070 0444 5555 66" },
+  ]
+
+  const reset = () => {
+    setStep(1); setMethod(null); setForm({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" }); setSavedId(null)
   }
 
-  if (step === 3) {
+  if (step === 5) {
     return (
       <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg text-center py-12">
         <div className="text-4xl mb-4 text-green-500">✓</div>
-        <h2 className="text-xl font-semibold mb-2">SEPA-Überweisung ausgeführt</h2>
+        <h2 className="text-xl font-semibold mb-2">Überweisung ausgeführt</h2>
         <p className="text-sm text-gray-500 mb-6">{form.betrag?.replace(".", ",")} € an {form.empfaenger} werden bis zum nächsten Werktag überwiesen.</p>
-        <button onClick={() => { setStep(1); setForm({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" }) }} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
+        <button onClick={reset} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
           Neue Überweisung
         </button>
       </div>
     )
   }
 
-  return (
-    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Alle Transferarten</button>
-      <h2 className="text-xl font-semibold mb-1">SEPA-Standard-Überweisung</h2>
-      <p className="text-xs text-gray-500 mb-4">Kostenlos • Ankunft am nächsten Werktag</p>
-      <div className="space-y-4">
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Empfänger</p>
-          <input value={form.empfaenger} onChange={e => setForm({ ...form, empfaenger: e.target.value })} placeholder="Name des Empfängers" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">IBAN</p>
-          <input value={form.iban} onChange={e => setForm({ ...form, iban: e.target.value })} placeholder="DE00 0000 0000 0000 0000 00" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white font-mono" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Betrag (€)</p>
-          <input type="number" value={form.betrag} onChange={e => setForm({ ...form, betrag: e.target.value })} placeholder="0,00" step="0.01" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Verwendungszweck</p>
-          <textarea value={form.verwendungszweck} onChange={e => setForm({ ...form, verwendungszweck: e.target.value })} placeholder="Optional" rows={2} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white resize-none" />
-        </div>
-        <div className="flex justify-end">
-          <button onClick={() => setStep(2)} disabled={!form.empfaenger || !form.iban || !form.betrag} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Weiter</button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function InstantForm({ onBack }: { onBack: () => void }) {
-  const [step, setStep] = useState(1)
-  const [form, setForm] = useState({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" })
-
-  if (step === 2) {
+  if (step === 4) {
     return (
       <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
-        <button onClick={() => setStep(1)} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Zurück</button>
-        <h2 className="text-xl font-semibold mb-4">Bestätigung</h2>
+        <button onClick={() => setStep(3)} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Zurück</button>
+        <h2 className="text-xl font-semibold mb-4">TAN-Bestätigung</h2>
+        <p className="text-sm text-gray-500 mb-6">Authorisiere die Überweisung mit deinem TAN-Verfahren.</p>
         <div className="space-y-3 text-sm mb-6">
           <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
             <span className="text-gray-500">Empfänger</span>
@@ -276,211 +191,163 @@ function InstantForm({ onBack }: { onBack: () => void }) {
             <span className="text-gray-500">Verwendungszweck</span>
             <span className="font-medium">{form.verwendungszweck || "—"}</span>
           </div>
-          <div className="p-3 bg-green-50 rounded-lg text-xs text-green-700">
-            <Clock size={14} className="inline mr-1" />Echtzeit-Überweisung • in Sekunden beim Empfänger • 24/7
-          </div>
+        </div>
+        <div className="space-y-3 mb-6">
+          <p className="text-xs text-gray-500 uppercase tracking-wider">TAN-Verfahren wählen</p>
+          <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+            <input type="radio" name="tan" defaultChecked className="accent-blue-600" />
+            <div>
+              <p className="font-medium text-sm">TAN2go App</p>
+              <p className="text-xs text-gray-500">TAN in der App erhalten</p>
+            </div>
+          </label>
+          <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+            <input type="radio" name="tan" className="accent-blue-600" />
+            <div>
+              <p className="font-medium text-sm">chipTAN</p>
+              <p className="text-xs text-gray-500">TAN mit Kartenleser generieren</p>
+            </div>
+          </label>
         </div>
         <div className="flex gap-3">
-          <button onClick={() => setStep(1)} className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors bg-white cursor-pointer">Ändern</button>
-          <button onClick={() => setStep(3)} className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">Sofort senden</button>
+          <button onClick={() => setStep(3)} className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors bg-white cursor-pointer">Ändern</button>
+          <button onClick={() => setStep(5)} className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">Jetzt senden</button>
         </div>
       </div>
     )
   }
 
   if (step === 3) {
-    return (
-      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg text-center py-12">
-        <div className="text-4xl mb-4 text-green-500">✓</div>
-        <h2 className="text-xl font-semibold mb-2">Echtzeit-Überweisung ausgeführt</h2>
-        <p className="text-sm text-gray-500 mb-6">{form.betrag?.replace(".", ",")} € wurden sofort an {form.empfaenger} gesendet.</p>
-        <button onClick={() => { setStep(1); setForm({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" }) }} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
-          Neue Überweisung
-        </button>
-      </div>
-    )
-  }
-
-  return (
-    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Alle Transferarten</button>
-      <h2 className="text-xl font-semibold mb-1">Echtzeit-Überweisung</h2>
-      <p className="text-xs text-gray-500 mb-4">Sofort • 24/7 verfügbar • in unter 10 Sekunden</p>
-      <div className="space-y-4">
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Empfänger</p>
-          <input value={form.empfaenger} onChange={e => setForm({ ...form, empfaenger: e.target.value })} placeholder="Name des Empfängers" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">IBAN</p>
-          <input value={form.iban} onChange={e => setForm({ ...form, iban: e.target.value })} placeholder="DE00 0000 0000 0000 0000 00" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white font-mono" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Betrag (€)</p>
-          <input type="number" value={form.betrag} onChange={e => setForm({ ...form, betrag: e.target.value })} placeholder="0,00" step="0.01" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Verwendungszweck</p>
-          <textarea value={form.verwendungszweck} onChange={e => setForm({ ...form, verwendungszweck: e.target.value })} placeholder="Optional" rows={2} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white resize-none" />
-        </div>
-        <div className="flex justify-end">
-          <button onClick={() => setStep(2)} disabled={!form.empfaenger || !form.iban || !form.betrag} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Weiter</button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function StandingForm({ onBack }: { onBack: () => void }) {
-  const [form, setForm] = useState({ empfaenger: "", iban: "", betrag: "", interval: "Monatlich", start: "", verwendungszweck: "" })
-  const [saved, setSaved] = useState(false)
-
-  if (saved) {
-    return (
-      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg text-center py-12">
-        <div className="text-4xl mb-4 text-green-500">✓</div>
-        <h2 className="text-xl font-semibold mb-2">Dauerauftrag eingerichtet</h2>
-        <p className="text-sm text-gray-500 mb-6">{form.betrag?.replace(".", ",")} € {form.interval.toLowerCase()} an {form.empfaenger}.</p>
-        <button onClick={() => { setSaved(false); setForm({ empfaenger: "", iban: "", betrag: "", interval: "Monatlich", start: "", verwendungszweck: "" }) }} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
-          Neuen Dauerauftrag
-        </button>
-      </div>
-    )
-  }
-
-  return (
-    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Alle Transferarten</button>
-      <h2 className="text-xl font-semibold mb-1">Dauerauftrag einrichten</h2>
-      <p className="text-xs text-gray-500 mb-4">Wiederkehrende Zahlungen • Kostenlos • Jederzeit änderbar</p>
-      <div className="space-y-4">
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Empfänger</p>
-          <input value={form.empfaenger} onChange={e => setForm({ ...form, empfaenger: e.target.value })} placeholder="Name des Empfängers" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">IBAN</p>
-          <input value={form.iban} onChange={e => setForm({ ...form, iban: e.target.value })} placeholder="DE00 0000 0000 0000 0000 00" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white font-mono" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Betrag (€)</p>
-          <input type="number" value={form.betrag} onChange={e => setForm({ ...form, betrag: e.target.value })} placeholder="0,00" step="0.01" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Intervall</p>
-          <select value={form.interval} onChange={e => setForm({ ...form, interval: e.target.value })} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white">
-            <option>Monatlich</option>
-            <option>Alle 2 Monate</option>
-            <option>Vierteljährlich</option>
-            <option>Halbjährlich</option>
-            <option>Jährlich</option>
-          </select>
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Erste Ausführung</p>
-          <input type="date" value={form.start} onChange={e => setForm({ ...form, start: e.target.value })} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Verwendungszweck</p>
-          <textarea value={form.verwendungszweck} onChange={e => setForm({ ...form, verwendungszweck: e.target.value })} placeholder="Optional" rows={2} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white resize-none" />
-        </div>
-        <div className="flex justify-end">
-          <button onClick={() => setSaved(true)} disabled={!form.empfaenger || !form.iban || !form.betrag || !form.start} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Dauerauftrag einrichten</button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function InternationalForm({ onBack }: { onBack: () => void }) {
-  const [step, setStep] = useState(1)
-  const [form, setForm] = useState({ empfaenger: "", iban: "", betrag: "", waehrung: "USD", verwendungszweck: "" })
-
-  if (step === 2) {
     return (
       <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
-        <button onClick={() => setStep(1)} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Zurück</button>
-        <h2 className="text-xl font-semibold mb-4">Bestätigung</h2>
-        <div className="space-y-3 text-sm mb-6">
-          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
-            <span className="text-gray-500">Empfänger</span>
-            <span className="font-medium">{form.empfaenger}</span>
-          </div>
-          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
-            <span className="text-gray-500">IBAN/Konto</span>
-            <span className="font-medium font-mono text-xs">{form.iban}</span>
-          </div>
-          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
-            <span className="text-gray-500">Betrag</span>
-            <span className="font-medium">{parseFloat(form.betrag || "0").toFixed(2).replace(".", ",")} {form.waehrung}</span>
-          </div>
-          <div className="p-3 bg-gray-50 rounded-lg flex justify-between">
-            <span className="text-gray-500">Verwendungszweck</span>
-            <span className="font-medium">{form.verwendungszweck || "—"}</span>
-          </div>
-          <div className="p-3 bg-teal-50 rounded-lg text-xs text-teal-700">
-            <Globe size={14} className="inline mr-1" />Auslandsüberweisung via Wise • 1–5 Werktage • Günstige Wechselkurse
-          </div>
-        </div>
-        <div className="flex gap-3">
-          <button onClick={() => setStep(1)} className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors bg-white cursor-pointer">Ändern</button>
-          <button onClick={() => setStep(3)} className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">Absenden</button>
-        </div>
-      </div>
-    )
-  }
-
-  if (step === 3) {
-    return (
-      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg text-center py-12">
-        <div className="text-4xl mb-4 text-green-500">✓</div>
-        <h2 className="text-xl font-semibold mb-2">Auslandsüberweisung ausgeführt</h2>
-        <p className="text-sm text-gray-500 mb-6">{form.betrag?.replace(".", ",")} {form.waehrung} an {form.empfaenger} wird in 1–5 Werktagen ankommen.</p>
-        <button onClick={() => { setStep(1); setForm({ empfaenger: "", iban: "", betrag: "", waehrung: "USD", verwendungszweck: "" }) }} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer">
-          Neue Überweisung
-        </button>
-      </div>
-    )
-  }
-
-  return (
-    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Alle Transferarten</button>
-      <h2 className="text-xl font-semibold mb-1">Auslandsüberweisung</h2>
-      <p className="text-xs text-gray-500 mb-4">In Kooperation mit Wise • Günstige Wechselkurse • 1–5 Werktage</p>
-      <div className="space-y-4">
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Empfänger</p>
-          <input value={form.empfaenger} onChange={e => setForm({ ...form, empfaenger: e.target.value })} placeholder="Name des Empfängers" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">IBAN / Kontonummer</p>
-          <input value={form.iban} onChange={e => setForm({ ...form, iban: e.target.value })} placeholder="IBAN oder lokale Kontonummer" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white font-mono" />
-        </div>
-        <div className="grid grid-cols-2 gap-4">
+        <button onClick={() => setStep(method === "qr" ? 1 : 2)} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Zurück</button>
+        <h2 className="text-xl font-semibold mb-1">Zahlungsdetails</h2>
+        <p className="text-xs text-gray-500 mb-4">Gib den Betrag und optional einen Verwendungszweck ein. Wie funktionieren Überweisungen? – DKB.</p>
+        <div className="space-y-4">
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Betrag</p>
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Empfänger</p>
+            <p className="font-medium">{form.empfaenger}</p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">IBAN</p>
+            <p className="font-medium font-mono text-sm">{form.iban}</p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Betrag (€)</p>
             <input type="number" value={form.betrag} onChange={e => setForm({ ...form, betrag: e.target.value })} placeholder="0,00" step="0.01" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
           </div>
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Währung</p>
-            <select value={form.waehrung} onChange={e => setForm({ ...form, waehrung: e.target.value })} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white">
-              <option value="USD">USD</option>
-              <option value="GBP">GBP</option>
-              <option value="CHF">CHF</option>
-              <option value="PLN">PLN</option>
-              <option value="TRY">TRY</option>
-              <option value="JPY">JPY</option>
-            </select>
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Verwendungszweck</p>
+            <textarea value={form.verwendungszweck} onChange={e => setForm({ ...form, verwendungszweck: e.target.value })} placeholder="Optional" rows={2} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white resize-none" />
+          </div>
+          <div className="flex justify-end">
+            <button onClick={() => setStep(4)} disabled={!form.betrag} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Weiter</button>
           </div>
         </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Verwendungszweck</p>
-          <textarea value={form.verwendungszweck} onChange={e => setForm({ ...form, verwendungszweck: e.target.value })} placeholder="Optional" rows={2} className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white resize-none" />
+      </div>
+    )
+  }
+
+  if (step === 2 && method === "saved" && savedId) {
+    const payee = savedPayees.find(p => p.id === savedId)
+    if (payee) {
+      setForm({ ...form, empfaenger: payee.name, iban: payee.iban })
+      setStep(3)
+      return null
+    }
+  }
+
+  if (step === 2) {
+    if (method === "saved") {
+      return (
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
+          <button onClick={() => { setStep(1); setMethod(null) }} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Zurück</button>
+          <h2 className="text-xl font-semibold mb-1">Gespeicherte Empfänger</h2>
+          <p className="text-xs text-gray-500 mb-4">Wähle einen Empfänger aus deinen Vorlagen. Wie funktionieren Überweisungen? – DKB.</p>
+          <div className="space-y-2">
+            {savedPayees.map(p => (
+              <button
+                key={p.id}
+                onClick={() => { setSavedId(p.id); setForm({ ...form, empfaenger: p.name, iban: p.iban }); setStep(3) }}
+                className="w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50 transition-colors border-none cursor-pointer"
+              >
+                <p className="font-medium text-sm">{p.name}</p>
+                <p className="text-xs text-gray-500 font-mono">{p.iban}</p>
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="flex justify-end">
-          <button onClick={() => setStep(2)} disabled={!form.empfaenger || !form.iban || !form.betrag} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Weiter</button>
+      )
+    }
+
+    if (method === "qr") {
+      return (
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg text-center py-12">
+          <button onClick={() => { setStep(1); setMethod(null) }} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Zurück</button>
+          <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-xl flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gray-400"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 17h2v4h-2zM17 14h2v2h-2zM14 14h2v2h-2zM20 14h2v2h-2zM17 17h2v2h-2zM20 17h2v2h-2zM17 20h2v2h-2zM20 20h2v2h-2z"/></svg>
+          </div>
+          <h2 className="text-xl font-semibold mb-1">Foto/QR</h2>
+          <p className="text-sm text-gray-500 mb-6">Scanne eine Rechnung mit deiner Kamera. Wie funktionieren Überweisungen? – DKB.</p>
+          <div className="max-w-[200px] mx-auto p-4 bg-white border-2 border-dashed border-gray-300 rounded-xl mb-6">
+            <p className="text-xs text-gray-400 text-center">Kamera-Ansicht</p>
+          </div>
+          <div className="space-y-2">
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Empfänger</p>
+              <input value={form.empfaenger} onChange={e => setForm({ ...form, empfaenger: e.target.value })} placeholder="Name des Empfängers" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">IBAN</p>
+              <input value={form.iban} onChange={e => setForm({ ...form, iban: e.target.value })} placeholder="DE00 0000 0000 0000 0000 00" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white font-mono" />
+            </div>
+            <div className="flex justify-end pt-2">
+              <button onClick={() => setStep(3)} disabled={!form.empfaenger || !form.iban} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Weiter</button>
+            </div>
+          </div>
         </div>
+      )
+    }
+
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
+        <button onClick={() => { setStep(1); setMethod(null) }} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">← Zurück</button>
+        <h2 className="text-xl font-semibold mb-1">Neue Überweisung</h2>
+        <p className="text-xs text-gray-500 mb-4">Gib den Namen und die IBAN des Empfängers ein. Wie funktionieren Überweisungen? – DKB.</p>
+        <div className="space-y-4">
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Empfänger</p>
+            <input value={form.empfaenger} onChange={e => setForm({ ...form, empfaenger: e.target.value })} placeholder="Name des Empfängers" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white" />
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">IBAN</p>
+            <input value={form.iban} onChange={e => setForm({ ...form, iban: e.target.value })} placeholder="DE00 0000 0000 0000 0000 00" className="w-full p-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white font-mono" />
+          </div>
+          <div className="flex justify-end">
+            <button onClick={() => setStep(3)} disabled={!form.empfaenger || !form.iban} className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Weiter</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-lg">
+      <h2 className="text-xl font-semibold mb-1">Überweisung</h2>
+      <p className="text-sm text-gray-500 mb-6">Wie funktionieren Überweisungen? – DKB.</p>
+      <div className="space-y-3">
+        <button onClick={() => { setMethod("new"); setStep(2) }} className="w-full p-4 border border-gray-200 rounded-lg text-left hover:bg-gray-50 transition-colors border-none cursor-pointer">
+          <p className="font-medium text-sm">Neue Überweisung</p>
+          <p className="text-xs text-gray-500">Empfängername und IBAN eingeben</p>
+        </button>
+        <button onClick={() => { setMethod("saved"); setStep(2) }} className="w-full p-4 border border-gray-200 rounded-lg text-left hover:bg-gray-50 transition-colors border-none cursor-pointer">
+          <p className="font-medium text-sm">Gespeicherte Empfänger</p>
+          <p className="text-xs text-gray-500">Aus deinen Vorlagen oder letzten Überweisungen wählen</p>
+        </button>
+        <button onClick={() => { setMethod("qr"); setStep(2) }} className="w-full p-4 border border-gray-200 rounded-lg text-left hover:bg-gray-50 transition-colors border-none cursor-pointer">
+          <p className="font-medium text-sm">Foto/QR</p>
+          <p className="text-xs text-gray-500">Rechnung mit Kamera scannen</p>
+        </button>
       </div>
     </div>
   )
