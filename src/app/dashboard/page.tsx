@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { demoGetUser, demoSignOut, demoGetAccountInfo } from "@/lib/demo-auth"
-import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight, X } from "lucide-react"
+import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight } from "lucide-react"
 
 type PageView = "finanzstatus" | "karten" | "auftraege" | "produkte"
 
@@ -245,13 +245,7 @@ export default function DashboardPage() {
             <div className="text-2xl font-bold text-blue-600">DKB</div>
             <div className="text-xs text-gray-600">Das kann Bank</div>
           </div>
-          <button
-            onClick={handleLogout}
-            className="text-[11px] text-gray-500 hover:text-red-500 bg-transparent border-none cursor-pointer"
-            title="Abmelden"
-          >
-            <ArrowUpRight size={16} />
-          </button>
+          <div />
         </div>
         <nav className="space-y-1 px-3 flex-1">
           {sidebarItems.map((item) => (
@@ -269,6 +263,15 @@ export default function DashboardPage() {
             </button>
           ))}
         </nav>
+        <div className="p-3 border-t border-gray-200">
+          <button
+            onClick={handleLogout}
+            className="w-full px-3 py-3 rounded-lg flex items-center gap-3 font-medium text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors border-none bg-transparent cursor-pointer"
+          >
+            <ArrowUpRight size={20} />
+            Abmelden
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 overflow-auto">
@@ -281,22 +284,6 @@ export default function DashboardPage() {
           </div>
 
           <div className="w-96 p-8 space-y-6 shrink-0 hidden xl:block">
-            <div className="bg-blue-50 rounded-lg p-6 relative">
-              <button className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer">
-                <X size={16} />
-              </button>
-              <h3 className="text-lg font-semibold mb-3">Banking entdecken</h3>
-              <p className="text-sm text-gray-600 mb-4">Entdecke Funktionen im Banking</p>
-              <p className="text-xs text-gray-600 mb-4">
-                Finde dich schneller zurecht! Klicke hier, um deine Tour zu starten.
-              </p>
-              <div className="flex justify-end">
-                <div className="w-16 h-16 bg-blue-200 rounded-lg flex items-center justify-center">
-                  <span className="text-2xl">👆</span>
-                </div>
-              </div>
-            </div>
-
             <div>
               <h3 className="text-lg font-semibold mb-4">Aktuelles</h3>
               <div className="bg-blue-600 text-white rounded-lg p-6">
