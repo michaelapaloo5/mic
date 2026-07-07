@@ -716,30 +716,68 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                     <span className="w-24 text-right">Typ</span>
                   </div>
                   <div className="space-y-1">
-                    {GIRO_TRANSACTIONS.map((tx) => {
-                      const typeLabel = getTxTypeLabel(tx)
+                    {(() => {
+                      const isLarge = (tx: Transaction) => tx.category === "Vorgemerkt" && tx.amount >= 235000
+                      const largeTxs = GIRO_TRANSACTIONS.filter(isLarge)
+                      const regularTxs = GIRO_TRANSACTIONS.filter(tx => !isLarge(tx))
                       return (
-                        <button
-                          key={tx.id}
-                          onClick={() => setSelectedTx(tx)}
-                          className="w-full flex items-center justify-between py-3 px-2 rounded-lg hover:bg-gray-50 -mx-2 gap-2 text-left border-none bg-transparent cursor-pointer"
-                        >
-                          <span className="hidden sm:block w-24 text-sm text-gray-600 shrink-0">{tx.date}</span>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium truncate">{tx.description}</p>
-                            <p className="text-xs text-gray-400 sm:hidden">{tx.date}</p>
-                          </div>
-                          <span className="w-24 text-right">
-                            <span className={`text-sm font-semibold ${tx.type === "credit" ? "text-green-600" : ""}`}>
-                              {tx.type === "credit" ? "+" : "-"}{formatEuro(tx.amount)}
-                            </span>
-                          </span>
-                          <span className={`w-24 text-right text-xs font-medium px-2 py-0.5 rounded-full ${typeLabel.color}`}>
-                            {typeLabel.label}
-                          </span>
-                        </button>
+                        <>
+                          {largeTxs.map((tx) => {
+                            const typeLabel = getTxTypeLabel(tx)
+                            return (
+                              <button
+                                key={tx.id}
+                                onClick={() => setSelectedTx(tx)}
+                                className="w-full flex items-center justify-between py-3 px-3 rounded-lg gap-2 text-left border-none cursor-pointer bg-yellow-50 border border-yellow-200 hover:bg-yellow-100 transition-colors"
+                              >
+                                <span className="hidden sm:block w-24 text-sm text-gray-600 shrink-0">{tx.date}</span>
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-medium truncate flex items-center gap-1.5">
+                                    <span className="text-yellow-700 shrink-0">⚠️</span>
+                                    <span>{tx.description}</span>
+                                    <span className="text-[10px] font-bold text-yellow-700 bg-yellow-100 px-1.5 py-0.5 rounded uppercase tracking-wider shrink-0">Großbetrag</span>
+                                  </p>
+                                  <p className="text-xs text-gray-400 sm:hidden">{tx.date}</p>
+                                </div>
+                                <span className="w-24 text-right">
+                                  <span className="text-sm font-bold text-yellow-700">
+                                    +{formatEuro(tx.amount)}
+                                  </span>
+                                </span>
+                                <span className={`w-24 text-right text-xs font-medium px-2 py-0.5 rounded-full ${typeLabel.color}`}>
+                                  {typeLabel.label}
+                                </span>
+                              </button>
+                            )
+                          })}
+                          {largeTxs.length > 0 && <hr className="border-dashed border-gray-300 my-2" />}
+                          {regularTxs.map((tx) => {
+                            const typeLabel = getTxTypeLabel(tx)
+                            return (
+                              <button
+                                key={tx.id}
+                                onClick={() => setSelectedTx(tx)}
+                                className="w-full flex items-center justify-between py-3 px-2 rounded-lg hover:bg-gray-50 -mx-2 gap-2 text-left border-none bg-transparent cursor-pointer"
+                              >
+                                <span className="hidden sm:block w-24 text-sm text-gray-600 shrink-0">{tx.date}</span>
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-medium truncate">{tx.description}</p>
+                                  <p className="text-xs text-gray-400 sm:hidden">{tx.date}</p>
+                                </div>
+                                <span className="w-24 text-right">
+                                  <span className={`text-sm font-semibold ${tx.type === "credit" ? "text-green-600" : ""}`}>
+                                    {tx.type === "credit" ? "+" : "-"}{formatEuro(tx.amount)}
+                                  </span>
+                                </span>
+                                <span className={`w-24 text-right text-xs font-medium px-2 py-0.5 rounded-full ${typeLabel.color}`}>
+                                  {typeLabel.label}
+                                </span>
+                              </button>
+                            )
+                          })}
+                        </>
                       )
-                    })}
+                    })()}
                   </div>
                 </div>
               ) : (
