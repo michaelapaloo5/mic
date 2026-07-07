@@ -737,9 +737,8 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                         return new Date(+year, +month - 1, +day)
                       }
                       const sorted = [...GIRO_TRANSACTIONS].sort((a, b) => parseDate(b.date).getTime() - parseDate(a.date).getTime())
-                      const last10 = sorted.slice(0, 10)
-                      const largeTxs = last10.filter(isLarge)
-                      const regularTxs = last10.filter(tx => !isLarge(tx))
+                      const largeTxs = sorted.filter(isLarge)
+                      const regularTxs = sorted.filter(tx => !isLarge(tx)).slice(0, 10 - largeTxs.length)
                       return (
                         <>
                           {largeTxs.map((tx) => {
