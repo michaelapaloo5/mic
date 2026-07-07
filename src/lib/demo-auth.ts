@@ -9,7 +9,7 @@ export interface DemoUser {
 const DEMO_USERS: DemoUser[] = [
   {
     email: "Günther1962",
-    password: "Falk1962Günter",
+    password: "Falk1962Günther",
     name: "Günther Falkenberg",
     iban: "DE02120300002015938467",
     balance: -15087,
