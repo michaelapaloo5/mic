@@ -1002,7 +1002,7 @@ function ProdukteView() {
       <h2 className="text-xl font-semibold mb-4">Deine Produkte</h2>
       <div className="space-y-3">
         {[
-          { name: "Girokonto", desc: "Kostenlos bei 700 € Geldeingang", status: "Aktiv", since: "Seit 09.2008" },
+          { name: "Girokonto", desc: "Kostenlos bei 700 € Geldeingang", status: "Aktiv", since: "Seit 09.2003" },
           { name: "Visa Debitkarte", desc: "Kostenlos weltweit zahlen", status: "Aktiv", since: "Seit 03.2013" },
           { name: "Girocard", desc: "Für Bargeld am Geldautomaten", status: "Aktiv", since: "Seit 03.2013" },
         ].map((p) => (
