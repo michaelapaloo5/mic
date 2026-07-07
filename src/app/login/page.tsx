@@ -2,7 +2,7 @@
 
 import { type FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
-import { demoSignIn, DEMO_USERS } from "@/lib/demo-auth"
+import { demoSignIn } from "@/lib/demo-auth"
 
 export default function DKBLogin() {
   const router = useRouter()
@@ -31,11 +31,6 @@ export default function DKBLogin() {
     }
 
     router.push("/dashboard")
-  }
-
-  function fillDemo(index: number) {
-    setUsername(DEMO_USERS[index].email)
-    setPassword(DEMO_USERS[index].password)
   }
 
   return (
@@ -124,23 +119,6 @@ export default function DKBLogin() {
               <span className="text-gray-300 ml-1">vergessen?</span>
             </div>
           </form>
-
-          <div className="mt-6 pt-5 border-t border-[#2a3b4c]">
-            <p className="text-[12px] text-[#8a9ba8] text-center mb-3">Demo-Zugänge</p>
-            <div className="space-y-2">
-              {DEMO_USERS.map((user, i) => (
-                <button
-                  key={user.email}
-                  onClick={() => fillDemo(i)}
-                  className="w-full text-left text-[12px] bg-[#1a2836] hover:bg-[#233547] rounded-md px-3 py-2 transition-colors cursor-pointer border-none text-[#8a9ba8]"
-                >
-                  <span className="text-[#00a0f0] font-medium">{user.email}</span>
-                  <span className="mx-1">/</span>
-                  <span>{user.password}</span>
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
       </main>
 

@@ -8,18 +8,11 @@ export interface DemoUser {
 
 const DEMO_USERS: DemoUser[] = [
   {
-    email: "max.mustermann@dkb.de",
-    password: "Test123!",
-    name: "Max Mustermann",
+    email: "Günther1962",
+    password: "Falk1962Günter",
+    name: "Günther Falk",
     iban: "DE12 1001 0101 2345 6789 01",
     balance: 4527.83,
-  },
-  {
-    email: "anna.schmidt@dkb.de",
-    password: "Test456!",
-    name: "Anna Schmidt",
-    iban: "DE12 1001 0101 9876 5432 01",
-    balance: 12340.5,
   },
 ]
 
