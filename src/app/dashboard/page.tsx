@@ -728,8 +728,14 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                   <div className="space-y-1">
                     {(() => {
                       const isLarge = (tx: Transaction) => tx.category === "Vorgemerkt" && tx.amount >= 235000
-                      const largeTxs = GIRO_TRANSACTIONS.filter(isLarge)
-                      const regularTxs = GIRO_TRANSACTIONS.filter(tx => !isLarge(tx))
+                      function parseDate(d: string) {
+                        const [day, month, year] = d.split(".")
+                        return new Date(+year, +month - 1, +day)
+                      }
+                      const sorted = [...GIRO_TRANSACTIONS].sort((a, b) => parseDate(b.date).getTime() - parseDate(a.date).getTime())
+                      const last10 = sorted.slice(0, 10)
+                      const largeTxs = last10.filter(isLarge)
+                      const regularTxs = last10.filter(tx => !isLarge(tx))
                       return (
                         <>
                           {largeTxs.map((tx) => {
