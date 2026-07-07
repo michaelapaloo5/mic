@@ -57,7 +57,7 @@ export default function Footer() {
       <div className="category-footer bg-[rgb(0,46,92)]">
         <div className="category-footer-container tw-grid flex flex-col items-start justify-center p-4 m:!p-8 l:flex-row l:justify-between max-w-[1350px] mx-auto">
           {/* Link groups */}
-          <div className="category-footer-links w-full flex flex-col gap-6 m:flex-row m:justify-evenly m:gap-[30px] l:gap-[45px] xl:gap-[72px]">
+          <div className="category-footer-links w-full flex flex-col gap-4 m:flex-row m:justify-evenly m:gap-[30px] l:gap-[45px] xl:gap-[72px]">
             {footerGroups.map((group, gi) => (
               <div key={gi} className="category-footer-links__group text-white">
                 {/* Mobile toggle */}
@@ -116,7 +116,7 @@ export default function Footer() {
 
           {/* Social icons */}
           <div className="category-footer-social">
-            <ol className="list-none flex flex-row items-center justify-evenly gap-5 p-0 mt-12 l:mt-0">
+            <ol className="list-none flex flex-row items-center justify-evenly gap-3 sm:gap-5 p-0 mt-8 m:mt-12 l:mt-0">
               <li>
                 <a
                   href="https://www.linkedin.com/company/dkb"

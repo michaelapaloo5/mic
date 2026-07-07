@@ -194,19 +194,22 @@ export default function DashboardPage() {
         { id: "instant", title: "Echtzeit-Überweisung", desc: "Geld in unter 10 Sekunden auf dem Empfängerkonto – 24/7 verfügbar.", icon: <Clock size={24} />, color: "green" },
         { id: "standing", title: "Dauerauftrag", desc: "Wiederkehrende Zahlungen automatisch ausführen – Miete, Versicherung & mehr.", icon: <Repeat size={24} />, color: "purple" },
         { id: "international", title: "Auslandsüberweisung", desc: "Geld außerhalb des SEPA-Raums senden – in Kooperation mit Wise.", icon: <Globe size={24} />, color: "teal" },
-      ].map((item) => (
+      ].map((item) => {
+        const iconBgMap: Record<string, string> = { blue: "bg-blue-100 text-blue-600", green: "bg-green-100 text-green-600", purple: "bg-purple-100 text-purple-600", teal: "bg-teal-100 text-teal-600" }
+        return (
         <button
           key={item.id}
           onClick={() => setSubView(item.id)}
-          className="bg-white rounded-lg shadow-sm p-6 text-left hover:shadow-md transition-shadow border-none cursor-pointer"
+          className="bg-white rounded-lg shadow-sm p-4 sm:p-6 text-left hover:shadow-md transition-shadow border-none cursor-pointer"
         >
-          <div className={`w-12 h-12 rounded-lg bg-${item.color}-100 flex items-center justify-center text-${item.color}-600 mb-4`}>
+          <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-3 sm:mb-4 ${iconBgMap[item.color] || "bg-gray-100 text-gray-600"}`}>
             {item.icon}
           </div>
-          <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
-          <p className="text-sm text-gray-500">{item.desc}</p>
+          <h3 className="text-base sm:text-lg font-semibold mb-1">{item.title}</h3>
+          <p className="text-xs sm:text-sm text-gray-500">{item.desc}</p>
         </button>
-      ))}
+        )
+      })}
     </div>
   )
 }

@@ -6,7 +6,7 @@ export default function Hero() {
       <section className="hub-page">
         <div className="page-hero !grid relative w-full l:!flex l:justify-center l:gap-0 l:items-stretch l:h-[85vh]">
           {/* Image column — order-2 on desktop */}
-          <div className="l:!order-2 flex-1 relative overflow-hidden l:flex-[2] l:flex l:items-center l:justify-center l:h-auto">
+          <div className="l:!order-2 flex-1 relative overflow-hidden l:flex-[2] l:flex l:items-center l:justify-center l:h-auto max-h-[50vh] l:max-h-none">
             <picture>
               <source
                 media="(min-width: 1024px)"
@@ -22,9 +22,9 @@ export default function Hero() {
           </div>
 
           {/* Text column — order-1 on desktop */}
-          <div className="l:!order-1 pl-[30px] s:pr-[30px] pt-[27px] m:px-14 m:py-14 xl:py-0 xl:!px-0 xxl:px-[165px] justify-center relative l:static l:flex l:items-center l:justify-center flex-1 l:flex-[2]">
+          <div className="l:!order-1 px-[30px] pt-[27px] pb-6 m:px-14 m:py-14 xl:py-0 xl:!px-0 xxl:px-[165px] justify-center relative l:static l:flex l:items-center l:justify-center flex-1 l:flex-[2]">
             <div className="xxl:m-0 l:flex l:flex-col l:justify-center max-w-[630px]">
-              <h1 className="text-[32px] l:text-[48px] font-[600] leading-[1.31] l:leading-[1.25] [&_em]:not-italic [&_em]:text-[#2ad1c9]">
+              <h1 className="text-[28px] s:text-[32px] l:text-[48px] font-[600] leading-[1.31] l:leading-[1.25] [&_em]:not-italic [&_em]:text-[#2ad1c9]">
                 <em>Kostenloses Girokonto</em> mit Visa Debitkarte
               </h1>
               <div className="mt-4 mb-8 m:mb-12">

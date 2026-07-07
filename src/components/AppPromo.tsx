@@ -7,7 +7,7 @@ export default function AppPromo() {
       <div className="w-full h-[40px]" />
 
       {/* App badges */}
-      <div className="flex flex-col mb-[-120px] m:mt-[50px] m:mb-[-125px] l:mb-[-150px] [&_a]:[all:unset] mx-auto px-6 m:px-[30px] max-w-[1350px]">
+      <div className="flex flex-col mb-[-80px] m:mt-[50px] m:mb-[-125px] l:mb-[-150px] [&_a]:[all:unset] mx-auto px-6 m:px-[30px] max-w-[1350px]">
         <div className="w-full">
           <a
             href="https://play.google.com/store/apps/details?id=com.dkbcodefactory.banking"
@@ -39,7 +39,7 @@ export default function AppPromo() {
       </div>
 
       {/* Bottom dark section */}
-      <div className="bg-[rgb(9,118,214)] mt-[200px] m:mt-[150px] l:mt-[200px]">
+      <div className="bg-[rgb(9,118,214)] mt-[120px] m:mt-[150px] l:mt-[200px]">
         <div className="mx-auto px-6 m:px-[30px] max-w-[1350px]">
           <div className="flex flex-col m:flex-row m:justify-between l:gap-[90px] xl:gap-[230px]">
             {/* Phone image */}
@@ -47,7 +47,7 @@ export default function AppPromo() {
               <img
                 src="/images/app-phone.png"
                 alt="Illustration eines Smartphone mit Girokonto Umsätzen in der DKB-App"
-                className="max-w-[270px] mt-[-60%] m:max-w-[345px] m:mt-[-50%] l:max-w-[500px] l:mt-[-40%]"
+                className="max-w-[200px] mt-[-45%] m:max-w-[345px] m:mt-[-50%] l:max-w-[500px] l:mt-[-40%]"
               />
             </div>
             {/* Text */}

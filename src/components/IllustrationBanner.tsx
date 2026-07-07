@@ -11,7 +11,7 @@ export default function IllustrationBanner() {
         <div className="l:hidden">
           <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
             {/* Blue slide */}
-            <div className="bg-[rgb(9,118,214)] min-w-[85vw] snap-start p-8 mr-4 first:ml-4 rounded-2xl flex flex-col justify-between min-h-[280px]">
+            <div className="bg-[rgb(9,118,214)] min-w-[85vw] snap-start p-6 s:p-8 mr-4 first:ml-4 rounded-2xl flex flex-col justify-between min-h-[240px] s:min-h-[280px]">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h3 className="text-headline-s font-bold text-white leading-tight">
