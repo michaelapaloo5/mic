@@ -755,7 +755,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                                 <div className="flex-1 min-w-0">
                                   <p className="text-sm font-medium truncate flex items-center gap-1.5">
                                     <span className="text-yellow-700 shrink-0">⚠️</span>
-                                    <span>{tx.description}</span>
+                                    <span className="min-w-0 truncate">{tx.description}</span>
                                     <span className="text-[10px] font-bold text-yellow-700 bg-yellow-100 px-1.5 py-0.5 rounded uppercase tracking-wider shrink-0">Großbetrag</span>
                                   </p>
                                   <p className="text-xs text-gray-400 sm:hidden">{tx.date}</p>
@@ -872,8 +872,8 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
 
       {/* Main */}
       <div className="flex-1 overflow-auto pt-16 sm:pt-0">
-        <div className="flex">
-          <div className="flex-1 p-4 sm:p-8">
+        <div className="flex min-w-0">
+          <div className="flex-1 min-w-0 p-4 sm:p-8">
             <div className="flex items-center justify-between mb-6 sm:mb-8">
               <h1 className="text-2xl sm:text-4xl font-bold">{view === "finanzstatus" ? "Finanzstatus" : sidebarItems.find(i => i.id === view)?.label}</h1>
             </div>
