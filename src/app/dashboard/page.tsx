@@ -981,10 +981,9 @@ function ProdukteView() {
       <h2 className="text-xl font-semibold mb-4">Deine Produkte</h2>
       <div className="space-y-3">
         {[
-          { name: "Girokonto", desc: "Kostenlos bei 700 € Geldeingang", status: "Aktiv", since: "Seit 03.2024" },
-          { name: "Tagesgeld", desc: "Flexibel verzinstes Konto (2,25 % p.a.)", status: "Aktiv", since: "Seit 03.2024" },
-          { name: "Visa Debitkarte", desc: "Kostenlos weltweit zahlen", status: "Aktiv", since: "Seit 03.2024" },
-          { name: "Girocard", desc: "Für Bargeld am Geldautomaten", status: "Aktiv", since: "Seit 03.2024" },
+          { name: "Girokonto", desc: "Kostenlos bei 700 € Geldeingang", status: "Aktiv", since: "Seit 09.2008" },
+          { name: "Visa Debitkarte", desc: "Kostenlos weltweit zahlen", status: "Aktiv", since: "Seit 03.2013" },
+          { name: "Girocard", desc: "Für Bargeld am Geldautomaten", status: "Aktiv", since: "Seit 03.2013" },
         ].map((p) => (
           <div key={p.name} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg gap-4">
             <div className="min-w-0">
