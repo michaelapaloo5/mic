@@ -862,24 +862,114 @@ function KartenView() {
 }
 
 function AuftraegeView() {
+  const [filter, setFilter] = useState<"Alle" | "Eingang" | "Auszahlung" | "Vorgemerkt">("Alle")
+  const [selectedTx, setSelectedTx] = useState<Transaction | null>(null)
+
   const formatEuro = (n: number) =>
     new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(n)
+
+  function getTxTypeLabel(tx: Transaction): { label: string; color: string } {
+    if (tx.category === "Vorgemerkt") return { label: "Vorgemerkt", color: "text-yellow-600 bg-yellow-50" }
+    if (tx.type === "credit") return { label: "Eingang", color: "text-green-600 bg-green-50" }
+    return { label: "Auszahlung", color: "text-red-600 bg-red-50" }
+  }
+
+  function parseDate(d: string) {
+    const [day, month, year] = d.split(".")
+    return new Date(+year, +month - 1, +day)
+  }
+
+  const sorted = [...GIRO_TRANSACTIONS].sort((a, b) => parseDate(b.date).getTime() - parseDate(a.date).getTime())
+
+  const filtered = sorted.filter((tx) => {
+    if (filter === "Alle") return true
+    if (filter === "Eingang") return tx.type === "credit" && tx.category !== "Vorgemerkt"
+    if (filter === "Auszahlung") return tx.type === "debit"
+    if (filter === "Vorgemerkt") return tx.category === "Vorgemerkt"
+    return true
+  })
+
+  if (selectedTx) {
+    const typeLabel = getTxTypeLabel(selectedTx)
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+        <button onClick={() => setSelectedTx(null)} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">
+          ← Zurück zur Übersicht
+        </button>
+        <h3 className="text-lg font-semibold mb-4">Transaktionsdetails</h3>
+        <div className="space-y-3 text-sm">
+          <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
+            <span className="text-gray-500">Datum</span>
+            <span className="font-medium">{selectedTx.date}</span>
+          </div>
+          <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
+            <span className="text-gray-500">Beschreibung</span>
+            <span className="font-medium text-right max-w-[60%]">{selectedTx.description}</span>
+          </div>
+          <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
+            <span className="text-gray-500">Betrag</span>
+            <span className={`font-semibold ${selectedTx.type === "credit" ? "text-green-600" : ""}`}>
+              {selectedTx.type === "credit" ? "+" : "-"}{formatEuro(selectedTx.amount)}
+            </span>
+          </div>
+          <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
+            <span className="text-gray-500">Typ</span>
+            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${typeLabel.color}`}>
+              {typeLabel.label}
+            </span>
+          </div>
+          <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
+            <span className="text-gray-500">Kategorie</span>
+            <span className="font-medium">{selectedTx.category}</span>
+          </div>
+          <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
+            <span className="text-gray-500">Status</span>
+            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.category === "Vorgemerkt" ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
+              {selectedTx.category === "Vorgemerkt" ? "Vorgemerkt" : "Abgeschlossen"}
+            </span>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
       <h2 className="text-xl font-semibold mb-4">Transaktionshistorie</h2>
-      <div className="space-y-1">
-        {[...GIRO_TRANSACTIONS].reverse().map((tx) => (
-          <div key={tx.id} className="flex items-center justify-between py-3 px-2 rounded-lg hover:bg-gray-50 gap-2">
-            <div className="min-w-0">
-              <p className="text-sm font-medium truncate">{tx.description}</p>
-              <p className="text-xs text-gray-400">{tx.date} • {tx.category}</p>
-            </div>
-            <span className={`text-sm font-semibold shrink-0 ${tx.type === "credit" ? "text-green-600" : ""}`}>
-              {tx.type === "credit" ? "+" : "-"}{formatEuro(tx.amount)}
-            </span>
-          </div>
+      <div className="flex gap-2 mb-4 flex-wrap">
+        {(["Alle", "Eingang", "Auszahlung", "Vorgemerkt"] as const).map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium border-none cursor-pointer transition-colors ${
+              filter === f
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            }`}
+          >
+            {f}
+          </button>
         ))}
+      </div>
+      <div className="space-y-1">
+        {filtered.map((tx) => {
+          const typeLabel = getTxTypeLabel(tx)
+          return (
+            <button
+              key={tx.id}
+              onClick={() => setSelectedTx(tx)}
+              className="w-full flex items-center justify-between py-3 px-2 rounded-lg hover:bg-gray-50 gap-2 text-left border-none bg-transparent cursor-pointer"
+            >
+              <div className="min-w-0">
+                <p className="text-sm font-medium truncate">{tx.description}</p>
+                <p className="text-xs text-gray-400">{tx.date} • {tx.category}</p>
+              </div>
+              <span className={`text-sm font-semibold shrink-0 ${tx.type === "credit" ? "text-green-600" : ""}`}>
+                {tx.type === "credit" ? "+" : "-"}{formatEuro(tx.amount)}
+              </span>
+            </button>
+          )
+        })}
       </div>
     </div>
   )
