@@ -829,7 +829,7 @@ function KartenView() {
         <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-xl p-6">
           <p className="text-sm opacity-80 mb-1">Visa Debit</p>
           <p className="text-xs opacity-60 mb-4">Kostenlos weltweit zahlen</p>
-          <p className="text-lg font-mono tracking-wider">**** **** **** 2345</p>
+          <p className="text-lg font-mono tracking-wider">**** **** **** 4967</p>
           <div className="flex justify-between items-end mt-6">
             <div>
               <p className="text-xs opacity-60">Gültig bis</p>
@@ -844,7 +844,7 @@ function KartenView() {
         <div className="bg-gradient-to-br from-gray-700 to-gray-900 text-white rounded-xl p-6">
           <p className="text-sm opacity-80 mb-1">Girocard</p>
           <p className="text-xs opacity-60 mb-4">Für Bargeld am Automaten</p>
-          <p className="text-lg font-mono tracking-wider">**** **** **** 1234</p>
+          <p className="text-lg font-mono tracking-wider">**** **** **** 1462</p>
           <div className="flex justify-between items-end mt-6">
             <div>
               <p className="text-xs opacity-60">Gültig bis</p>
@@ -1013,12 +1013,12 @@ function PostfachView() {
   const [selectedId, setSelectedId] = useState<number | null>(null)
   const messages = [
     { id: 1, from: "DKB AG", subject: "Ihr Kontoauszug für Juli 2026", date: "03.07.2026", unread: true, body: "Sehr geehrter Herr Falkenberg,\n\nanbei erhalten Sie Ihren Kontoauszug für den Monat Juli 2026.\n\nKontostand per 03.07.2026: -15.087,00 €\n\nSie können den Kontoauszug jederzeit im PDF-Format herunterladen.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 6, from: "DKB AG", subject: "Großbetrag 235.000,00 € vorgemerkt", date: "02.07.2026", unread: true, body: "Sehr geehrter Herr Falkenberg,\n\nwir möchten Sie darüber informieren, dass ein Großbetrag in Höhe von 235.000,00 € auf Ihrem Girokonto vorgemerkt ist.\n\nDer Betrag wird nach endgültiger Prüfung Ihrem Konto gutgeschrieben.\n\nBei Fragen stehen wir Ihnen jederzeit zur Verfügung.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
     { id: 2, from: "DKB AG", subject: "Tagesgeld-Zinsaktion: 2,75 % p.a. sichern", date: "01.05.2026", unread: true, body: "Sehr geehrter Herr Falkenberg,\n\nsichern Sie sich jetzt unseren exklusiven Zinsvorteil!\n\nBis zum 31.08.2026 erhalten Sie 2,75 % p.a. auf Neuanlagen auf Ihrem Tagesgeldkonto.\n\nGilt für Einlagen bis 100.000 €.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 7, from: "DKB AG", subject: "Großbetrag 235.000,00 € vorgemerkt", date: "15.04.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nwir möchten Sie darüber informieren, dass ein Großbetrag in Höhe von 235.000,00 € auf Ihrem Girokonto vorgemerkt ist.\n\nDer Betrag wird nach endgültiger Prüfung Ihrem Konto gutgeschrieben.\n\nBei Fragen stehen wir Ihnen jederzeit zur Verfügung.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
     { id: 3, from: "DKB AG", subject: "Jahressteuerbescheinigung 2025", date: "15.03.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nIhre Jahressteuerbescheinigung für das Steuerjahr 2025 steht ab sofort in Ihrem Postfach bereit.\n\nErhaltene Zinsen: 147,23 €\nAbgeführte Kapitalertragsteuer: 36,81 €\nSolidaritätszuschlag: 2,02 €\n\nMit freundlichen Grüßen\nIhre DKB AG" },
     { id: 4, from: "DKB AG", subject: "Ihre neue Visa Debitkarte ist unterwegs", date: "12.03.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nIhre neue Visa Debitkarte wurde erfolgreich bestellt und befindet sich auf dem Versandweg.\n\nDie Karte wird innerhalb der nächsten 5–7 Werktage bei Ihnen eintreffen.\n\nIhre alte Karte behält bis zum Aktivierungsdatum der neuen Karte ihre Gültigkeit.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
     { id: 5, from: "DKB AG", subject: "Strategie DKB 2030 – Information für Kunden", date: "05.03.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nmit einem Vorsteuerergebnis von 1.175,8 Mio. Euro blickt die DKB auf das erfolgreichste Jahr ihrer Geschichte zurück. Wir starten unsere neue Strategie \"DKB 2030\" mit dem Ziel, Deutschlands digitalste Bank zu werden.\n\nBereits 2025 haben wir über 500.000 neue Kunden gewonnen und unser Filialnetz modernisiert.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
-    { id: 6, from: "DKB AG", subject: "Großbetrag 235.000,00 € vorgemerkt", date: "02.07.2026", unread: true, body: "Sehr geehrter Herr Falkenberg,\n\nwir möchten Sie darüber informieren, dass ein Großbetrag in Höhe von 235.000,00 € auf Ihrem Girokonto vorgemerkt ist.\n\nDer Betrag wird nach endgültiger Prüfung Ihrem Konto gutgeschrieben.\n\nBei Fragen stehen wir Ihnen jederzeit zur Verfügung.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
-    { id: 7, from: "DKB AG", subject: "Großbetrag 235.000,00 € vorgemerkt", date: "15.04.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nwir möchten Sie darüber informieren, dass ein Großbetrag in Höhe von 235.000,00 € auf Ihrem Girokonto vorgemerkt ist.\n\nDer Betrag wird nach endgültiger Prüfung Ihrem Konto gutgeschrieben.\n\nBei Fragen stehen wir Ihnen jederzeit zur Verfügung.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
   ]
 
   if (selectedId !== null) {
