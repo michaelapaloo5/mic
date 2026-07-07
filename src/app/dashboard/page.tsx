@@ -388,23 +388,44 @@ function SuccessStep({ betrag, empfaenger, label, onNew }: {
   )
 }
 
+function InsufficientFundsModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
+      <div className="bg-white rounded-2xl p-8 max-w-sm w-full mx-4 shadow-xl text-center" onClick={e => e.stopPropagation()}>
+        <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-5">
+          <span className="text-4xl text-red-600 font-bold">✕</span>
+        </div>
+        <h3 className="text-xl font-bold text-gray-800 mb-2">Überweisung fehlgeschlagen</h3>
+        <p className="text-gray-500 mb-6">Die Überweisung kann nicht ausgeführt werden. Dein Kontostand ist nicht ausreichend.</p>
+        <button onClick={onClose} className="w-full px-6 py-3 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors border-none cursor-pointer">
+          Verstanden
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function SEPATransferFlow({ payees, onBack }: { payees: { id: string; name: string; iban: string }[]; onBack: () => void }) {
   const [step, setStep] = useState(1)
+  const [showError, setShowError] = useState(false)
   const [form, setForm] = useState({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" })
 
+  if (showError) return <InsufficientFundsModal onClose={() => setShowError(false)} />
   if (step === 4) return <SuccessStep betrag={form.betrag} empfaenger={form.empfaenger} label="SEPA-Überweisung ausgeführt" onNew={() => { setStep(1); setForm({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" }) }} />
   if (step === 3) return <TANStep onBack={() => setStep(2)} onConfirm={() => setStep(4)} form={form} />
-  if (step === 2) return <AmountStep onBack={() => setStep(1)} onNext={() => setStep(3)} form={form} setForm={setForm} label="Kostenlos • Ankunft am nächsten Werktag" />
+  if (step === 2) return <AmountStep onBack={() => setStep(1)} onNext={() => setShowError(true)} form={form} setForm={setForm} label="Kostenlos • Ankunft am nächsten Werktag" />
   return <RecipientStep onBack={onBack} onNext={() => setStep(2)} payees={payees} form={form} setForm={(f) => setForm(f)} />
 }
 
 function InstantTransferFlow({ payees, onBack }: { payees: { id: string; name: string; iban: string }[]; onBack: () => void }) {
   const [step, setStep] = useState(1)
+  const [showError, setShowError] = useState(false)
   const [form, setForm] = useState({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" })
 
+  if (showError) return <InsufficientFundsModal onClose={() => setShowError(false)} />
   if (step === 4) return <SuccessStep betrag={form.betrag} empfaenger={form.empfaenger} label="Echtzeit-Überweisung ausgeführt" onNew={() => { setStep(1); setForm({ empfaenger: "", iban: "", betrag: "", verwendungszweck: "" }) }} />
   if (step === 3) return <TANStep onBack={() => setStep(2)} onConfirm={() => setStep(4)} form={form} />
-  if (step === 2) return <AmountStep onBack={() => setStep(1)} onNext={() => setStep(3)} form={form} setForm={setForm} label="In Sekunden beim Empfänger • 24/7" />
+  if (step === 2) return <AmountStep onBack={() => setStep(1)} onNext={() => setShowError(true)} form={form} setForm={setForm} label="In Sekunden beim Empfänger • 24/7" />
   return <RecipientStep onBack={onBack} onNext={() => setStep(2)} payees={payees} form={form} setForm={(f) => setForm(f)} />
 }
 
