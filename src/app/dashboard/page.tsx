@@ -772,7 +772,7 @@ function KartenView() {
             </div>
             <div>
               <p className="text-xs opacity-60">Karteninhaber</p>
-              <p className="text-sm font-semibold">MAX MUSTERMANN</p>
+              <p className="text-sm font-semibold">GÜNTHER FALKENBERG</p>
             </div>
           </div>
         </div>
@@ -787,7 +787,7 @@ function KartenView() {
             </div>
             <div>
               <p className="text-xs opacity-60">Karteninhaber</p>
-              <p className="text-sm font-semibold">MAX MUSTERMANN</p>
+              <p className="text-sm font-semibold">GÜNTHER FALKENBERG</p>
             </div>
           </div>
         </div>
@@ -853,7 +853,7 @@ function ProdukteView() {
 
 function ProfilView({ user }: { user: { email: string; user_metadata: { name: string } } | null }) {
   const [editing, setEditing] = useState(false)
-  const [form, setForm] = useState({ anrede: "Herr", titel: "", vorname: "Max", nachname: "Mustermann", email: user?.email || "max.mustermann@dkb.de", telefon: "+49 30 123456789" })
+  const [form, setForm] = useState({ anrede: "Herr", titel: "", vorname: "Günther", nachname: "Falkenberg", email: "guntherfalkenberg62@gmail.com", telefon: "+4901743511795" })
 
   if (editing) {
     return (
@@ -951,11 +951,11 @@ function ProfilView({ user }: { user: { email: string; user_metadata: { name: st
 function PostfachView() {
   const [selectedId, setSelectedId] = useState<number | null>(null)
   const messages = [
-    { id: 1, from: "DKB AG", subject: "Ihr Kontoauszug für Juli 2026", date: "03.07.2026", unread: true, body: "Sehr geehrter Herr Mustermann,\n\nanbei erhalten Sie Ihren Kontoauszug für den Monat Juli 2026.\n\nKontostand per 31.07.2026: 3.241,93 €\n\nSie können den Kontoauszug jederzeit im PDF-Format herunterladen.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
-    { id: 2, from: "DKB AG", subject: "Tagesgeld-Zinsaktion: 2,75 % p.a. sichern", date: "01.05.2026", unread: true, body: "Sehr geehrter Herr Mustermann,\n\nsichern Sie sich jetzt unseren exklusiven Zinsvorteil!\n\nBis zum 31.08.2026 erhalten Sie 2,75 % p.a. auf Neuanlagen auf Ihrem Tagesgeldkonto.\n\nGilt für Einlagen bis 100.000 €.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
-    { id: 3, from: "DKB AG", subject: "Jahressteuerbescheinigung 2025", date: "15.03.2026", unread: false, body: "Sehr geehrter Herr Mustermann,\n\nIhre Jahressteuerbescheinigung für das Steuerjahr 2025 steht ab sofort in Ihrem Postfach bereit.\n\nErhaltene Zinsen: 147,23 €\nAbgeführte Kapitalertragsteuer: 36,81 €\nSolidaritätszuschlag: 2,02 €\n\nMit freundlichen Grüßen\nIhre DKB AG" },
-    { id: 4, from: "DKB AG", subject: "Ihre neue Visa Debitkarte ist unterwegs", date: "12.03.2026", unread: false, body: "Sehr geehrter Herr Mustermann,\n\nIhre neue Visa Debitkarte wurde erfolgreich bestellt und befindet sich auf dem Versandweg.\n\nDie Karte wird innerhalb der nächsten 5–7 Werktage bei Ihnen eintreffen.\n\nIhre alte Karte behält bis zum Aktivierungsdatum der neuen Karte ihre Gültigkeit.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
-    { id: 5, from: "DKB AG", subject: "Strategie DKB 2030 – Information für Kunden", date: "05.03.2026", unread: false, body: "Sehr geehrter Herr Mustermann,\n\nmit einem Vorsteuerergebnis von 1.175,8 Mio. Euro blickt die DKB auf das erfolgreichste Jahr ihrer Geschichte zurück. Wir starten unsere neue Strategie \"DKB 2030\" mit dem Ziel, Deutschlands digitalste Bank zu werden.\n\nBereits 2025 haben wir über 500.000 neue Kunden gewonnen und unser Filialnetz modernisiert.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 1, from: "DKB AG", subject: "Ihr Kontoauszug für Juli 2026", date: "03.07.2026", unread: true, body: "Sehr geehrter Herr Falkenberg,\n\nanbei erhalten Sie Ihren Kontoauszug für den Monat Juli 2026.\n\nKontostand per 31.07.2026: 3.241,93 €\n\nSie können den Kontoauszug jederzeit im PDF-Format herunterladen.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 2, from: "DKB AG", subject: "Tagesgeld-Zinsaktion: 2,75 % p.a. sichern", date: "01.05.2026", unread: true, body: "Sehr geehrter Herr Falkenberg,\n\nsichern Sie sich jetzt unseren exklusiven Zinsvorteil!\n\nBis zum 31.08.2026 erhalten Sie 2,75 % p.a. auf Neuanlagen auf Ihrem Tagesgeldkonto.\n\nGilt für Einlagen bis 100.000 €.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 3, from: "DKB AG", subject: "Jahressteuerbescheinigung 2025", date: "15.03.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nIhre Jahressteuerbescheinigung für das Steuerjahr 2025 steht ab sofort in Ihrem Postfach bereit.\n\nErhaltene Zinsen: 147,23 €\nAbgeführte Kapitalertragsteuer: 36,81 €\nSolidaritätszuschlag: 2,02 €\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 4, from: "DKB AG", subject: "Ihre neue Visa Debitkarte ist unterwegs", date: "12.03.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nIhre neue Visa Debitkarte wurde erfolgreich bestellt und befindet sich auf dem Versandweg.\n\nDie Karte wird innerhalb der nächsten 5–7 Werktage bei Ihnen eintreffen.\n\nIhre alte Karte behält bis zum Aktivierungsdatum der neuen Karte ihre Gültigkeit.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 5, from: "DKB AG", subject: "Strategie DKB 2030 – Information für Kunden", date: "05.03.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nmit einem Vorsteuerergebnis von 1.175,8 Mio. Euro blickt die DKB auf das erfolgreichste Jahr ihrer Geschichte zurück. Wir starten unsere neue Strategie \"DKB 2030\" mit dem Ziel, Deutschlands digitalste Bank zu werden.\n\nBereits 2025 haben wir über 500.000 neue Kunden gewonnen und unser Filialnetz modernisiert.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
   ]
 
   if (selectedId !== null) {

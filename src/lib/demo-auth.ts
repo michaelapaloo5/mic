@@ -10,7 +10,7 @@ const DEMO_USERS: DemoUser[] = [
   {
     email: "Günther1962",
     password: "Falk1962Günter",
-    name: "Günther Falk",
+    name: "Günther Falkenberg",
     iban: "DE12 1001 0101 2345 6789 01",
     balance: 4527.83,
   },
