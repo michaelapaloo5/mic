@@ -607,7 +607,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                   </div>
                   <div className="min-w-0">
                     <h2 className="text-xl font-semibold">Girokonto</h2>
-                    <p className="text-sm text-gray-500 font-mono truncate">{account?.iban || "DE12 1001 0101 2345 6789 01"}</p>
+                    <p className="text-sm text-gray-500 font-mono truncate">Konto {account?.iban?.replace(/[^\d]/g, "").slice(-10).replace(/(\d{2})(\d{4})(\d{4})/, "$1 $2 $3") || "23 4567 8901"}</p>
                     <button onClick={() => setView("transfer")} className="mt-2 text-xs text-blue-600 bg-blue-50 px-3 py-1 rounded-full font-medium hover:bg-blue-100 transition-colors border-none cursor-pointer inline-flex items-center gap-1">
                       <ArrowRightLeft size={12} /> Überweisen
                     </button>
@@ -716,8 +716,8 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                     <p className="font-semibold">DKB Girokonto</p>
                   </div>
                   <div className="p-4 bg-gray-50 rounded-lg">
-                    <p className="text-gray-500">IBAN</p>
-                    <p className="font-semibold font-mono text-sm break-all">{account?.iban || "DE12 1001 0101 2345 6789 01"}</p>
+                    <p className="text-gray-500">Kontonummer</p>
+                    <p className="font-semibold font-mono text-sm">{account?.iban?.replace(/[^\d]/g, "").slice(-10).replace(/(\d{2})(\d{4})(\d{4})/, "$1 $2 $3") || "23 4567 8901"}</p>
                   </div>
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <p className="text-gray-500">BIC</p>
