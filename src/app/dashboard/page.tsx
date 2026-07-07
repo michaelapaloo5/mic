@@ -20,7 +20,7 @@ interface Transaction {
 const GIRO_TRANSACTIONS: Transaction[] = [
   { id: 1, date: "06.07.2026", description: "CheapOair", amount: 921.94, type: "debit", category: "Reise" },
   { id: 2, date: "06.07.2026", description: "Visa Debit", amount: 52.06, type: "debit", category: "Shopping" },
-
+  { id: 3, date: "06.07.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
   { id: 4, date: "02.07.2026", description: "Vorgemerkt: Großbetrag 235.000,00 €", amount: 235000, type: "credit", category: "Vorgemerkt" },
   { id: 5, date: "02.07.2026", description: "Miete Überweisung", amount: 1200.0, type: "debit", category: "Wohnen" },
   { id: 6, date: "01.07.2026", description: "REWE Märkte AG", amount: 87.43, type: "debit", category: "Lebensmittel" },
@@ -32,12 +32,17 @@ const GIRO_TRANSACTIONS: Transaction[] = [
   { id: 12, date: "22.06.2026", description: "DM-Drogerie Markt", amount: 32.15, type: "debit", category: "Drogerie" },
   { id: 13, date: "20.06.2026", description: "Stadtwerke Strom", amount: 89.50, type: "debit", category: "Energie" },
   { id: 14, date: "04.06.2026", description: "Amazon.de", amount: 240.0, type: "debit", category: "Shopping" },
-  { id: 15, date: "22.05.2026", description: "Visa Debit", amount: 3406.02, type: "debit", category: "Shopping" },
-  { id: 16, date: "20.05.2026", description: "Amazon.de", amount: 239.64, type: "debit", category: "Shopping" },
-  { id: 17, date: "15.04.2026", description: "Vorgemerkt: Großbetrag 235.000,00 €", amount: 235000, type: "credit", category: "Vorgemerkt" },
-  { id: 18, date: "25.03.2026", description: "Visa Debit", amount: 347.76, type: "debit", category: "Shopping" },
-  { id: 19, date: "15.02.2026", description: "Visa Debit", amount: 869.55, type: "debit", category: "Shopping" },
-  { id: 20, date: "28.01.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
+  { id: 15, date: "30.05.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
+  { id: 16, date: "22.05.2026", description: "Visa Debit", amount: 3406.02, type: "debit", category: "Shopping" },
+  { id: 17, date: "20.05.2026", description: "Amazon.de", amount: 239.64, type: "debit", category: "Shopping" },
+  { id: 18, date: "30.04.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
+  { id: 19, date: "15.04.2026", description: "Vorgemerkt: Großbetrag 235.000,00 €", amount: 235000, type: "credit", category: "Vorgemerkt" },
+  { id: 20, date: "30.03.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
+  { id: 21, date: "25.03.2026", description: "Visa Debit", amount: 347.76, type: "debit", category: "Shopping" },
+  { id: 22, date: "28.02.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
+  { id: 23, date: "15.02.2026", description: "Visa Debit", amount: 869.55, type: "debit", category: "Shopping" },
+  { id: 24, date: "28.01.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
+  { id: 25, date: "28.01.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
 ]
 
 
