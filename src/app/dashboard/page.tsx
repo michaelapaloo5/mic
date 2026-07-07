@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { demoGetUser, demoSignOut, demoGetAccountInfo } from "@/lib/demo-auth"
+import { demoGetUser, demoSignOut, demoGetAccountInfo, DEMO_USERS } from "@/lib/demo-auth"
+import { supabase } from "@/lib/supabase"
 import { Home, CreditCard, Send, ShoppingBag, ArrowUpRight, HelpCircle, FileText, Menu, X, User, Mail, MessageSquare, Shield, ArrowRightLeft, Clock, Globe, Repeat } from "lucide-react"
 
 type PageView = "finanzstatus" | "karten" | "auftraege" | "produkte" | "profil" | "postfach" | "feedback" | "sicherheit" | "transfer"
@@ -42,16 +43,27 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const { data } = demoGetUser()
-    if (!data.user) {
-      router.push("/login")
+    if (data.user) {
+      setUser(data.user)
+      setAccount(demoGetAccountInfo())
       return
     }
-    setUser(data.user)
-    setAccount(demoGetAccountInfo())
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        const demoUser = DEMO_USERS[0]
+        const sessionData = { user: { email: demoUser.email, user_metadata: { name: demoUser.name } }, iban: demoUser.iban, balance: demoUser.balance }
+        localStorage.setItem("dkb_demo_session", JSON.stringify(sessionData))
+        setUser(sessionData.user)
+        setAccount({ iban: demoUser.iban, balance: demoUser.balance })
+      } else {
+        router.push("/login")
+      }
+    })
   }, [router])
 
   function handleLogout() {
     demoSignOut()
+    supabase.auth.signOut()
     router.push("/login")
   }
 

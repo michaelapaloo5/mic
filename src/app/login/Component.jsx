@@ -1,49 +1,11 @@
-"use client"
-
-import { type FormEvent, useState } from "react"
-import { useRouter } from "next/navigation"
-import { supabase } from "@/lib/supabase"
-import { DEMO_USERS } from "@/lib/demo-auth"
+import React, { useState } from 'react';
 
 export default function DKBLogin() {
-  const router = useRouter()
-  const [showPassword, setShowPassword] = useState(false)
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    if (!username.trim() || !password) return
-    setError(null)
-    setLoading(true)
-
-    const EMAIL_MAP: Record<string, string> = {
-      "günther1962": "guntherfalkenberg62@gmail.com",
-    }
-    const email = EMAIL_MAP[username.toLowerCase().trim()] || username
-
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-
-    if (signInError) {
-      setError("Anmeldename oder Passwort falsch.")
-      setLoading(false)
-      return
-    }
-
-    const demoUser = DEMO_USERS[0]
-    const session = { user: { email: demoUser.email, user_metadata: { name: demoUser.name } }, iban: demoUser.iban, balance: demoUser.balance }
-    localStorage.setItem("dkb_demo_session", JSON.stringify(session))
-
-    router.push("/dashboard")
-  }
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0b1620] text-white font-sans selection:bg-[#005ea8] selection:text-white">
+      {/* Header */}
       <header className="p-6 md:p-8 flex-none">
         <div className="flex flex-col w-fit cursor-pointer">
           <span className="text-[40px] font-black text-[#0070c0] leading-[0.8] tracking-[-0.05em]">DKB</span>
@@ -51,33 +13,27 @@ export default function DKBLogin() {
         </div>
       </header>
 
+      {/* Main Content */}
       <main className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-[460px] bg-[#14202b] border border-[#2a3b4c] rounded-xl p-8 md:p-10 shadow-2xl">
           <h1 className="text-[28px] font-bold text-center mb-8 tracking-tight">Mein Banking</h1>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+            {/* Username Input */}
             <div>
               <input
                 type="text"
                 placeholder="Anmeldename"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                autoFocus
-                autoComplete="username"
                 aria-label="Anmeldename"
                 className="w-full bg-[#1a2836] border border-[#2a3b4c] rounded-md px-4 py-3.5 text-[15px] text-white placeholder-[#8a9ba8] focus:outline-none focus:border-[#00a0f0] focus:ring-1 focus:ring-[#00a0f0] transition-colors"
               />
             </div>
 
+            {/* Password Input */}
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Passwort"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="current-password"
                 aria-label="Passwort"
                 className="w-full bg-[#1a2836] border border-[#2a3b4c] rounded-md pl-4 pr-12 py-3.5 text-[15px] text-white placeholder-[#8a9ba8] focus:outline-none focus:border-[#00a0f0] focus:ring-1 focus:ring-[#00a0f0] transition-colors"
               />
@@ -94,6 +50,7 @@ export default function DKBLogin() {
               </button>
             </div>
 
+            {/* Captcha Box */}
             <div className="bg-[#1a2836] border border-[#2a3b4c] rounded-md p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[#00a88f]">
@@ -109,18 +66,15 @@ export default function DKBLogin() {
               </div>
             </div>
 
-            {error && (
-              <p className="text-[14px] text-[#e74c3c] text-center">{error}</p>
-            )}
-
+            {/* Submit Button */}
             <button
               type="submit"
-              disabled={!username.trim() || !password || loading}
-              className="w-full bg-[#005ea8] hover:bg-[#004c8a] text-white font-semibold py-3.5 rounded-md transition-colors mt-2 text-[15px] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#005ea8] hover:bg-[#004c8a] text-white font-semibold py-3.5 rounded-md transition-colors mt-2 text-[15px]"
             >
-              {loading ? "Wird geladen..." : "Anmelden"}
+              Anmelden
             </button>
 
+            {/* Forgot Links */}
             <div className="text-center text-[14px] mt-6 pt-2">
               <a href="#" className="text-[#00a0f0] hover:underline underline-offset-2">Anmeldename</a>
               <span className="text-gray-300 mx-1">oder</span>
@@ -131,6 +85,7 @@ export default function DKBLogin() {
         </div>
       </main>
 
+      {/* Footer */}
       <footer className="flex-none border-t border-[#2a3b4c] bg-[#0b1620]">
         <div className="max-w-[1600px] mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4 text-[13px] font-medium text-white">
           <div>
@@ -148,5 +103,5 @@ export default function DKBLogin() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
