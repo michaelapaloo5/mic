@@ -60,7 +60,7 @@ export default function DashboardPage() {
   const sidebarItems: { id: PageView; label: string; icon: React.ReactNode }[] = [
     { id: "finanzstatus", label: "Finanzstatus", icon: <Home size={20} /> },
     { id: "karten", label: "Karten", icon: <CreditCard size={20} /> },
-    { id: "auftraege", label: "Aufträge", icon: <Send size={20} /> },
+    { id: "auftraege", label: "Umsätze", icon: <Send size={20} /> },
     { id: "produkte", label: "Produkte", icon: <ShoppingBag size={20} /> },
     { id: "postfach", label: "Postfach", icon: <Mail size={20} /> },
     { id: "profil", label: "Profileinstellungen", icon: <User size={20} /> },
@@ -799,26 +799,22 @@ function KartenView() {
 }
 
 function AuftraegeView() {
-  const orders = [
-    { id: 1, type: "Dauerauftrag", description: "Miete", amount: 1200.0, iban: "DE12 5001 0517 1234 5678 90", date: "01.09.25", status: "Aktiv", interval: "Monatlich" },
-    { id: 2, type: "Dauerauftrag", description: "Stadtwerke Strom", amount: 89.5, iban: "DE33 1001 0010 0987 6543 21", date: "15.09.25", status: "Aktiv", interval: "Monatlich" },
-    { id: 3, type: "Dauerauftrag", description: "HUK-Versicherung", amount: 45.9, iban: "DE78 7002 0270 0012 3456 78", date: "01.10.25", status: "Aktiv", interval: "Monatlich" },
-  ]
+  const formatEuro = (n: number) =>
+    new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(n)
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-      <h2 className="text-xl font-semibold mb-4">Daueraufträge</h2>
-      <div className="space-y-3">
-        {orders.map((o) => (
-          <div key={o.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg gap-4">
+      <h2 className="text-xl font-semibold mb-4">Transaktionshistorie</h2>
+      <div className="space-y-1">
+        {[...GIRO_TRANSACTIONS].reverse().map((tx) => (
+          <div key={tx.id} className="flex items-center justify-between py-3 px-2 rounded-lg hover:bg-gray-50 gap-2">
             <div className="min-w-0">
-              <p className="font-medium truncate">{o.description}</p>
-              <p className="text-sm text-gray-500">{o.type} • {o.interval}</p>
-              <p className="text-xs text-gray-400 font-mono truncate mt-0.5">{o.iban}</p>
+              <p className="text-sm font-medium truncate">{tx.description}</p>
+              <p className="text-xs text-gray-400">{tx.date} • {tx.category}</p>
             </div>
-            <div className="text-right shrink-0">
-              <p className="font-semibold">{o.amount.toFixed(2).replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".")} €</p>
-              <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">{o.status}</span>
-            </div>
+            <span className={`text-sm font-semibold shrink-0 ${tx.type === "credit" ? "text-green-600" : ""}`}>
+              {tx.type === "credit" ? "+" : "-"}{formatEuro(tx.amount)}
+            </span>
           </div>
         ))}
       </div>
