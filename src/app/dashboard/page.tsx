@@ -36,8 +36,9 @@ export default function DashboardPage() {
   const [user, setUser] = useState<{ email: string; user_metadata: { name: string } } | null>(null)
   const [account, setAccount] = useState<{ iban: string; balance: number } | null>(null)
   const [view, setView] = useState<PageView>("finanzstatus")
-  const [giroTab, setGiroTab] = useState("Umsatzliste")
+  const [giroTab, setGiroTab] = useState("Letzte Umsätze")
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [selectedTx, setSelectedTx] = useState<Transaction | null>(null)
 
   useEffect(() => {
     const { data } = demoGetUser()
@@ -56,6 +57,12 @@ export default function DashboardPage() {
 
   const formatEuro = (n: number) =>
     new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(n)
+
+  function getTxTypeLabel(tx: Transaction): { label: string; color: string } {
+    if (tx.category === "Vorgemerkt") return { label: "Vorgemerkt", color: "text-yellow-600 bg-yellow-50" }
+    if (tx.type === "credit") return { label: "Eingang", color: "text-green-600 bg-green-50" }
+    return { label: "Auszahlung", color: "text-red-600 bg-red-50" }
+  }
 
   const sidebarItems: { id: PageView; label: string; icon: React.ReactNode }[] = [
     { id: "finanzstatus", label: "Finanzstatus", icon: <Home size={20} /> },
@@ -613,10 +620,10 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
               </div>
 
               <div className="flex gap-4 mb-6 border-b overflow-x-auto">
-                {["Umsatzliste", "Kontodetails"].map((tab) => (
+                {["Letzte Umsätze", "Kontodetails"].map((tab) => (
                   <button
                     key={tab}
-                    onClick={() => setGiroTab(tab)}
+                    onClick={() => { setGiroTab(tab); setSelectedTx(null) }}
                     className={`px-4 py-3 font-medium text-sm whitespace-nowrap border-none bg-transparent cursor-pointer ${
                       giroTab === tab
                         ? "text-blue-600 border-b-2 border-blue-600"
@@ -628,26 +635,78 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                 ))}
               </div>
 
-              {giroTab === "Umsatzliste" ? (
+              {giroTab === "Letzte Umsätze" && selectedTx ? (
+                <div className="bg-gray-50 rounded-lg p-4 sm:p-6">
+                  <button onClick={() => setSelectedTx(null)} className="flex items-center gap-2 text-sm text-blue-600 hover:underline mb-4 border-none bg-transparent cursor-pointer">
+                    ← Zurück zur Übersicht
+                  </button>
+                  <h3 className="text-lg font-semibold mb-4">Transaktionsdetails</h3>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between p-3 bg-white rounded-lg">
+                      <span className="text-gray-500">Datum</span>
+                      <span className="font-medium">{selectedTx.date}</span>
+                    </div>
+                    <div className="flex justify-between p-3 bg-white rounded-lg">
+                      <span className="text-gray-500">Beschreibung</span>
+                      <span className="font-medium text-right max-w-[60%]">{selectedTx.description}</span>
+                    </div>
+                    <div className="flex justify-between p-3 bg-white rounded-lg">
+                      <span className="text-gray-500">Betrag</span>
+                      <span className={`font-semibold ${selectedTx.type === "credit" ? "text-green-600" : ""}`}>
+                        {selectedTx.type === "credit" ? "+" : "-"}{formatEuro(selectedTx.amount)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between p-3 bg-white rounded-lg">
+                      <span className="text-gray-500">Typ</span>
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getTxTypeLabel(selectedTx).color}`}>
+                        {getTxTypeLabel(selectedTx).label}
+                      </span>
+                    </div>
+                    <div className="flex justify-between p-3 bg-white rounded-lg">
+                      <span className="text-gray-500">Kategorie</span>
+                      <span className="font-medium">{selectedTx.category}</span>
+                    </div>
+                    <div className="flex justify-between p-3 bg-white rounded-lg">
+                      <span className="text-gray-500">Status</span>
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.category === "Vorgemerkt" ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
+                        {selectedTx.category === "Vorgemerkt" ? "Vorgemerkt" : "Abgeschlossen"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ) : giroTab === "Letzte Umsätze" ? (
                 <div>
                   <div className="hidden sm:flex items-center justify-between text-xs text-gray-500 uppercase tracking-wider pb-2 border-b mb-3">
                     <span className="w-24">Datum</span>
                     <span className="flex-1">Beschreibung</span>
-                    <span className="w-20 text-right">Betrag</span>
+                    <span className="w-24 text-right">Betrag</span>
+                    <span className="w-24 text-right">Typ</span>
                   </div>
                   <div className="space-y-1">
-                    {GIRO_TRANSACTIONS.map((tx) => (
-                      <div key={tx.id} className="flex items-center justify-between py-3 px-2 rounded-lg hover:bg-gray-50 -mx-2 gap-2">
-                        <span className="hidden sm:block w-24 text-sm text-gray-600 shrink-0">{tx.date}</span>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium truncate">{tx.description}</p>
-                          <p className="text-xs text-gray-400 sm:hidden">{tx.date}</p>
-                        </div>
-                        <span className={`text-sm font-semibold shrink-0 ${tx.type === "credit" ? "text-green-600" : ""}`}>
-                          {tx.type === "credit" ? "+" : "-"}{formatEuro(tx.amount)}
-                        </span>
-                      </div>
-                    ))}
+                    {GIRO_TRANSACTIONS.map((tx) => {
+                      const typeLabel = getTxTypeLabel(tx)
+                      return (
+                        <button
+                          key={tx.id}
+                          onClick={() => setSelectedTx(tx)}
+                          className="w-full flex items-center justify-between py-3 px-2 rounded-lg hover:bg-gray-50 -mx-2 gap-2 text-left border-none bg-transparent cursor-pointer"
+                        >
+                          <span className="hidden sm:block w-24 text-sm text-gray-600 shrink-0">{tx.date}</span>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium truncate">{tx.description}</p>
+                            <p className="text-xs text-gray-400 sm:hidden">{tx.date}</p>
+                          </div>
+                          <span className="w-24 text-right">
+                            <span className={`text-sm font-semibold ${tx.type === "credit" ? "text-green-600" : ""}`}>
+                              {tx.type === "credit" ? "+" : "-"}{formatEuro(tx.amount)}
+                            </span>
+                          </span>
+                          <span className={`w-24 text-right text-xs font-medium px-2 py-0.5 rounded-full ${typeLabel.color}`}>
+                            {typeLabel.label}
+                          </span>
+                        </button>
+                      )
+                    })}
                   </div>
                 </div>
               ) : (
