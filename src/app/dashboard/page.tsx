@@ -20,7 +20,7 @@ interface Transaction {
 const GIRO_TRANSACTIONS: Transaction[] = [
   { id: 1, date: "06.07.2026", description: "CheapOair", amount: 921.94, type: "debit", category: "Reise" },
   { id: 2, date: "06.07.2026", description: "Visa Debit", amount: 52.06, type: "debit", category: "Shopping" },
-  { id: 3, date: "03.07.2026", description: "Gehalt Muster GmbH", amount: 3450.0, type: "credit", category: "Gehalt" },
+
   { id: 4, date: "02.07.2026", description: "Vorgemerkt: Großbetrag 235.000,00 €", amount: 235000, type: "credit", category: "Vorgemerkt" },
   { id: 5, date: "02.07.2026", description: "Miete Überweisung", amount: 1200.0, type: "debit", category: "Wohnen" },
   { id: 6, date: "01.07.2026", description: "REWE Märkte AG", amount: 87.43, type: "debit", category: "Lebensmittel" },
