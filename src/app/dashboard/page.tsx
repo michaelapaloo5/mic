@@ -35,6 +35,9 @@ const GIRO_TRANSACTIONS: Transaction[] = [
   { id: 15, date: "22.05.2026", description: "Visa Debit", amount: 3406.02, type: "debit", category: "Shopping" },
   { id: 16, date: "20.05.2026", description: "Amazon.de", amount: 239.64, type: "debit", category: "Shopping" },
   { id: 17, date: "15.04.2026", description: "Vorgemerkt: Großbetrag 235.000,00 €", amount: 235000, type: "credit", category: "Vorgemerkt" },
+  { id: 18, date: "25.03.2026", description: "Visa Debit", amount: 347.76, type: "debit", category: "Shopping" },
+  { id: 19, date: "15.02.2026", description: "Visa Debit", amount: 869.55, type: "debit", category: "Shopping" },
+  { id: 20, date: "28.01.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
 ]
 
 
