@@ -821,7 +821,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                   </div>
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <p className="text-gray-500">Verfügbar</p>
-                    <p className="font-semibold">{account ? formatEuro(account.balance) : "—"}</p>
+                    <p className="font-semibold">0,00 €</p>
                   </div>
                 </div>
               )}
