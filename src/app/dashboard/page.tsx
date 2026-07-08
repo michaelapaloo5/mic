@@ -708,7 +708,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                     <div className="flex justify-between p-3 bg-white rounded-lg">
                       <span className="text-gray-500">Status</span>
                       <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.category === "Ausstehend" ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
-                        {selectedTx.category === "Ausstehend" ? "Ausstehend" : "Abgeschlossen"}
+                        {selectedTx.category === "Ausstehend" ? "Ausstehend" : "Ausstehend"}
                       </span>
                     </div>
                   </div>
@@ -1006,7 +1006,7 @@ function AuftraegeView() {
           <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
             <span className="text-gray-500">Status</span>
             <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.category === "Ausstehend" ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
-              {selectedTx.category === "Ausstehend" ? "Ausstehend" : "Abgeschlossen"}
+              {selectedTx.category === "Ausstehend" ? "Ausstehend" : "Ausstehend"}
             </span>
           </div>
         </div>
