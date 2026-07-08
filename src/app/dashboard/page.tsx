@@ -18,8 +18,8 @@ interface Transaction {
 }
 
 const GIRO_TRANSACTIONS: Transaction[] = [
-  { id: 18, date: "02.07.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Ausstehend" },
-  { id: 19, date: "15.04.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Ausstehend" },
+  { id: 18, date: "02.07.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Einzahlung" },
+  { id: 19, date: "15.04.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Einzahlung" },
   { id: 8, date: "08.03.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
   { id: 9, date: "07.03.2026", description: "Spic and Span Reinigung", amount: 870.00, type: "debit", category: "Haushalt" },
   { id: 10, date: "05.03.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
@@ -723,7 +723,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                   </div>
                   <div className="space-y-1">
                     {(() => {
-                      const isLarge = (tx: Transaction) => tx.category === "Ausstehend" && tx.amount >= 235000
+                      const isLarge = (tx: Transaction) => (tx.category === "Ausstehend" || tx.category === "Einzahlung") && tx.amount >= 235000
                       function parseDate(d: string) {
                         const [day, month, year] = d.split(".")
                         return new Date(+year, +month - 1, +day)
