@@ -19,7 +19,6 @@ interface Transaction {
 
 const GIRO_TRANSACTIONS: Transaction[] = [
   { id: 1, date: "21.03.2026", description: "Visa Debit", amount: 52.06, type: "debit", category: "Shopping" },
-  { id: 2, date: "20.03.2026", description: "Überweisung an Vermieterin S. Müller", amount: 2000.0, type: "debit", category: "Wohnen" },
   { id: 3, date: "18.03.2026", description: "Restaurant La Trattoria", amount: 67.50, type: "debit", category: "Restaurant" },
   { id: 4, date: "16.03.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
   { id: 5, date: "14.03.2026", description: "Visa Debit", amount: 45.0, type: "debit", category: "Shopping" },
