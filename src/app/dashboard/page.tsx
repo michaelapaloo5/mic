@@ -18,8 +18,8 @@ interface Transaction {
 }
 
 const GIRO_TRANSACTIONS: Transaction[] = [
-  { id: 18, date: "06.03.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Vorgemerkt" },
-  { id: 19, date: "02.03.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Vorgemerkt" },
+  { id: 18, date: "02.07.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Vorgemerkt" },
+  { id: 19, date: "15.04.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Vorgemerkt" },
   { id: 8, date: "08.03.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
   { id: 9, date: "07.03.2026", description: "Spic and Span Reinigung", amount: 45.00, type: "debit", category: "Haushalt" },
   { id: 10, date: "05.03.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
