@@ -18,8 +18,8 @@ interface Transaction {
 }
 
 const GIRO_TRANSACTIONS: Transaction[] = [
-  { id: 18, date: "02.07.2026", description: "Großbetrag in der Warteschleife", amount: 235000.00, type: "credit", category: "Ausstehend" },
-  { id: 19, date: "15.04.2026", description: "Großbetrag in der Warteschleife", amount: 235000.00, type: "credit", category: "Ausstehend" },
+  { id: 18, date: "02.07.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Ausstehend" },
+  { id: 19, date: "15.04.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Ausstehend" },
   { id: 8, date: "08.03.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
   { id: 9, date: "07.03.2026", description: "Spic and Span Reinigung", amount: 870.00, type: "debit", category: "Haushalt" },
   { id: 10, date: "05.03.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
@@ -754,8 +754,8 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                                     +{formatEuro(tx.amount)}
                                   </span>
                                 </span>
-                                <span className={`w-24 text-right text-xs font-medium px-2 py-0.5 rounded-full ${typeLabel.color}`}>
-                                  {typeLabel.label}
+                                <span className="w-24 text-right text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-50 text-yellow-600">
+                                  In der Warteschleife
                                 </span>
                               </button>
                             )
