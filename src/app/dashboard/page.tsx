@@ -18,8 +18,8 @@ interface Transaction {
 }
 
 const GIRO_TRANSACTIONS: Transaction[] = [
-  { id: 18, date: "02.07.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Vorgemerkt" },
-  { id: 19, date: "15.04.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Vorgemerkt" },
+  { id: 18, date: "02.07.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Ausstehend" },
+  { id: 19, date: "15.04.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Ausstehend" },
   { id: 8, date: "08.03.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
   { id: 9, date: "07.03.2026", description: "Spic and Span Reinigung", amount: 870.00, type: "debit", category: "Haushalt" },
   { id: 10, date: "05.03.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
@@ -74,7 +74,7 @@ export default function DashboardPage() {
     new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(n)
 
   function getTxTypeLabel(tx: Transaction): { label: string; color: string } {
-    if (tx.category === "Vorgemerkt") return { label: "Vorgemerkt", color: "text-yellow-600 bg-yellow-50" }
+    if (tx.category === "Ausstehend") return { label: "Ausstehend", color: "text-yellow-600 bg-yellow-50" }
     if (tx.type === "credit") return { label: "Eingang", color: "text-green-600 bg-green-50" }
     return { label: "Auszahlung", color: "text-red-600 bg-red-50" }
   }
@@ -707,8 +707,8 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                     </div>
                     <div className="flex justify-between p-3 bg-white rounded-lg">
                       <span className="text-gray-500">Status</span>
-                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.category === "Vorgemerkt" ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
-                        {selectedTx.category === "Vorgemerkt" ? "Vorgemerkt" : "Abgeschlossen"}
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.category === "Ausstehend" ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
+                        {selectedTx.category === "Ausstehend" ? "Ausstehend" : "Abgeschlossen"}
                       </span>
                     </div>
                   </div>
@@ -723,7 +723,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                   </div>
                   <div className="space-y-1">
                     {(() => {
-                      const isLarge = (tx: Transaction) => tx.category === "Vorgemerkt" && tx.amount >= 235000
+                      const isLarge = (tx: Transaction) => tx.category === "Ausstehend" && tx.amount >= 235000
                       function parseDate(d: string) {
                         const [day, month, year] = d.split(".")
                         return new Date(+year, +month - 1, +day)
@@ -746,7 +746,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                                   <p className="text-sm font-medium truncate flex items-center gap-1.5">
                                     <span className="text-yellow-700 shrink-0"><Clock size={16} /></span>
                                     <span className="min-w-0 truncate">{tx.description}</span>
-                                    <span className="text-[10px] font-bold text-yellow-700 bg-yellow-100 px-1.5 py-0.5 rounded uppercase tracking-wider shrink-0">Ausstehend</span>
+                                    <span className="text-[10px] font-bold text-yellow-700 bg-yellow-100 px-1.5 py-0.5 rounded uppercase tracking-wider shrink-0">On Hold</span>
                                   </p>
                                   <p className="text-xs text-gray-400 sm:hidden">{tx.date}</p>
                                 </div>
@@ -944,14 +944,14 @@ function KartenView() {
 }
 
 function AuftraegeView() {
-  const [filter, setFilter] = useState<"Alle" | "Eingang" | "Auszahlung" | "Vorgemerkt">("Alle")
+  const [filter, setFilter] = useState<"Alle" | "Eingang" | "Auszahlung" | "Ausstehend">("Alle")
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null)
 
   const formatEuro = (n: number) =>
     new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(n)
 
   function getTxTypeLabel(tx: Transaction): { label: string; color: string } {
-    if (tx.category === "Vorgemerkt") return { label: "Vorgemerkt", color: "text-yellow-600 bg-yellow-50" }
+    if (tx.category === "Ausstehend") return { label: "Ausstehend", color: "text-yellow-600 bg-yellow-50" }
     if (tx.type === "credit") return { label: "Eingang", color: "text-green-600 bg-green-50" }
     return { label: "Auszahlung", color: "text-red-600 bg-red-50" }
   }
@@ -965,9 +965,9 @@ function AuftraegeView() {
 
   const filtered = sorted.filter((tx) => {
     if (filter === "Alle") return true
-    if (filter === "Eingang") return tx.type === "credit" && tx.category !== "Vorgemerkt"
+    if (filter === "Eingang") return tx.type === "credit" && tx.category !== "Ausstehend"
     if (filter === "Auszahlung") return tx.type === "debit"
-    if (filter === "Vorgemerkt") return tx.category === "Vorgemerkt"
+    if (filter === "Ausstehend") return tx.category === "Ausstehend"
     return true
   })
 
@@ -1006,8 +1006,8 @@ function AuftraegeView() {
           </div>
           <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
             <span className="text-gray-500">Status</span>
-            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.category === "Vorgemerkt" ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
-              {selectedTx.category === "Vorgemerkt" ? "Vorgemerkt" : "Abgeschlossen"}
+            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.category === "Ausstehend" ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
+              {selectedTx.category === "Ausstehend" ? "Ausstehend" : "Abgeschlossen"}
             </span>
           </div>
         </div>
@@ -1019,7 +1019,7 @@ function AuftraegeView() {
     <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
       <h2 className="text-xl font-semibold mb-4">Transaktionshistorie</h2>
       <div className="flex gap-2 mb-4 flex-wrap">
-        {(["Alle", "Eingang", "Auszahlung", "Vorgemerkt"] as const).map((f) => (
+        {(["Alle", "Eingang", "Auszahlung", "Ausstehend"] as const).map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
