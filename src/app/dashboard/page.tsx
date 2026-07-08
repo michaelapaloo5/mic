@@ -19,11 +19,13 @@ interface Transaction {
 
 const GIRO_TRANSACTIONS: Transaction[] = [
   { id: 8, date: "08.03.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
-  { id: 9, date: "05.03.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
-  { id: 10, date: "01.03.2026", description: "Visa Debit", amount: 870.0, type: "debit", category: "Shopping" },
-  { id: 11, date: "25.02.2026", description: "Restaurant Chen's Bistro", amount: 82.30, type: "debit", category: "Restaurant" },
-  { id: 12, date: "20.02.2026", description: "Visa Debit", amount: 3406.02, type: "debit", category: "Shopping" },
-  { id: 13, date: "15.02.2026", description: "Restaurant Zum Alten Fass", amount: 124.80, type: "debit", category: "Restaurant" },
+  { id: 9, date: "07.03.2026", description: "Spic and Span Reinigung", amount: 45.00, type: "debit", category: "Haushalt" },
+  { id: 10, date: "05.03.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
+  { id: 1, date: "01.03.2026", description: "Visa Debit", amount: 870.0, type: "debit", category: "Shopping" },
+  { id: 11, date: "25.02.2026", description: "Restaurant Steinheil 16", amount: 82.30, type: "debit", category: "Restaurant" },
+  { id: 12, date: "22.02.2026", description: "GeigerCars Inspektion", amount: 485.00, type: "debit", category: "Kfz-Werkstatt" },
+  { id: 17, date: "20.02.2026", description: "Visa Debit", amount: 3406.02, type: "debit", category: "Shopping" },
+  { id: 13, date: "15.02.2026", description: "Restaurant Servus Heidi", amount: 124.80, type: "debit", category: "Restaurant" },
   { id: 14, date: "10.02.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
   { id: 15, date: "05.02.2026", description: "Visa Debit", amount: 347.76, type: "debit", category: "Shopping" },
 
