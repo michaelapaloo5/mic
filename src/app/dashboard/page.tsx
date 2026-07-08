@@ -744,7 +744,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                                 <span className="hidden sm:block w-24 text-sm text-gray-600 shrink-0">{tx.date}</span>
                                 <div className="flex-1 min-w-0">
                                   <p className="text-sm font-medium truncate flex items-center gap-1.5">
-                                    <span className="text-yellow-700 shrink-0">🕐</span>
+                                    <span className="text-yellow-700 shrink-0"><Clock size={16} /></span>
                                     <span className="min-w-0 truncate">{tx.description}</span>
                                     <span className="text-[10px] font-bold text-yellow-700 bg-yellow-100 px-1.5 py-0.5 rounded uppercase tracking-wider shrink-0">Großbetrag</span>
                                   </p>
