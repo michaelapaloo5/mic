@@ -723,7 +723,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                   </div>
                   <div className="space-y-1">
                     {(() => {
-                      const isLarge = (tx: Transaction) => (tx.category === "Ausstehend" || tx.category === "Verbindlichkeiten") && tx.amount >= 235000
+                      const isLarge = (tx: Transaction) => (tx.category === "Ausstehend" || tx.category === "Kaution") && tx.amount >= 235000
                       function parseDate(d: string) {
                         const [day, month, year] = d.split(".")
                         return new Date(+year, +month - 1, +day)
