@@ -755,7 +755,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                                   </span>
                                 </span>
                                 <span className="w-24 text-right text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-50 text-yellow-600">
-                                  In der Warteschleife
+                                  Ausstehend
                                 </span>
                               </button>
                             )
