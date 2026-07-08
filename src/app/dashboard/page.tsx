@@ -21,9 +21,9 @@ const GIRO_TRANSACTIONS: Transaction[] = [
   { id: 18, date: "02.07.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Vorgemerkt" },
   { id: 19, date: "15.04.2026", description: "Großbetrag vorgemerkt", amount: 235000.00, type: "credit", category: "Vorgemerkt" },
   { id: 8, date: "08.03.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
-  { id: 9, date: "07.03.2026", description: "Spic and Span Reinigung", amount: 45.00, type: "debit", category: "Haushalt" },
+  { id: 9, date: "07.03.2026", description: "Spic and Span Reinigung", amount: 870.00, type: "debit", category: "Haushalt" },
   { id: 10, date: "05.03.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
-  { id: 1, date: "01.03.2026", description: "Visa Debit", amount: 870.0, type: "debit", category: "Shopping" },
+  { id: 1, date: "01.03.2026", description: "Visa Debit", amount: 45.0, type: "debit", category: "Shopping" },
   { id: 11, date: "25.02.2026", description: "Restaurant Steinheil 16", amount: 82.30, type: "debit", category: "Restaurant" },
   { id: 12, date: "22.02.2026", description: "GeigerCars Inspektion", amount: 485.00, type: "debit", category: "Kfz-Werkstatt" },
   { id: 17, date: "20.02.2026", description: "Visa Debit", amount: 3406.02, type: "debit", category: "Shopping" },
@@ -744,7 +744,7 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                                 <span className="hidden sm:block w-24 text-sm text-gray-600 shrink-0">{tx.date}</span>
                                 <div className="flex-1 min-w-0">
                                   <p className="text-sm font-medium truncate flex items-center gap-1.5">
-                                    <span className="text-yellow-700 shrink-0">⚠️</span>
+                                    <span className="text-yellow-700 shrink-0">🕐</span>
                                     <span className="min-w-0 truncate">{tx.description}</span>
                                     <span className="text-[10px] font-bold text-yellow-700 bg-yellow-100 px-1.5 py-0.5 rounded uppercase tracking-wider shrink-0">Großbetrag</span>
                                   </p>
