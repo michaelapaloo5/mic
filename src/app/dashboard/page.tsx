@@ -1183,13 +1183,13 @@ function ProfilView({ user }: { user: { email: string; user_metadata: { name: st
 function PostfachView() {
   const [selectedId, setSelectedId] = useState<number | null>(null)
   const messages = [
-    { id: 6, from: "DKB AG", subject: "Großbetrag 235.000,00 € vorgemerkt", date: "06.03.2026", unread: true, body: "Sehr geehrter Herr Falkenberg,\n\nwir möchten Sie darüber informieren, dass ein Großbetrag in Höhe von 235.000,00 € auf Ihrem Girokonto vorgemerkt ist.\n\nDer Betrag wird nach endgültiger Prüfung Ihrem Konto gutgeschrieben.\n\nBei Fragen stehen wir Ihnen jederzeit zur Verfügung.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
     { id: 2, from: "DKB AG", subject: "Tagesgeld-Zinsaktion: 2,75 % p.a. sichern", date: "01.05.2026", unread: true, body: "Sehr geehrter Herr Falkenberg,\n\nsichern Sie sich jetzt unseren exklusiven Zinsvorteil!\n\nBis zum 31.08.2026 erhalten Sie 2,75 % p.a. auf Neuanlagen auf Ihrem Tagesgeldkonto.\n\nGilt für Einlagen bis 100.000 €.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
-    { id: 7, from: "DKB AG", subject: "Großbetrag 235.000,00 € vorgemerkt", date: "02.03.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nwir möchten Sie darüber informieren, dass ein Großbetrag in Höhe von 235.000,00 € auf Ihrem Girokonto vorgemerkt ist.\n\nDer Betrag wird nach endgültiger Prüfung Ihrem Konto gutgeschrieben.\n\nBei Fragen stehen wir Ihnen jederzeit zur Verfügung.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
     { id: 3, from: "DKB AG", subject: "Jahressteuerbescheinigung 2025", date: "15.03.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nIhre Jahressteuerbescheinigung für das Steuerjahr 2025 steht ab sofort in Ihrem Postfach bereit.\n\nErhaltene Zinsen: 147,23 €\nAbgeführte Kapitalertragsteuer: 36,81 €\nSolidaritätszuschlag: 2,02 €\n\nMit freundlichen Grüßen\nIhre DKB AG" },
-    { id: 4, from: "DKB AG", subject: "Ihre neue Visa Debitkarte ist unterwegs", date: "14.08.2025", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nIhre neue Visa Debitkarte wurde erfolgreich bestellt und befindet sich auf dem Versandweg.\n\nDie Karte wird innerhalb der nächsten 5–7 Werktage bei Ihnen eintreffen.\n\nIhre alte Karte behält bis zum Aktivierungsdatum der neuen Karte ihre Gültigkeit.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 6, from: "DKB AG", subject: "Großbetrag 235.000,00 € vorgemerkt", date: "06.03.2026", unread: true, body: "Sehr geehrter Herr Falkenberg,\n\nwir möchten Sie darüber informieren, dass ein Großbetrag in Höhe von 235.000,00 € auf Ihrem Girokonto vorgemerkt ist.\n\nDer Betrag wird nach endgültiger Prüfung Ihrem Konto gutgeschrieben.\n\nBei Fragen stehen wir Ihnen jederzeit zur Verfügung.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
     { id: 5, from: "DKB AG", subject: "Strategie DKB 2030 – Information für Kunden", date: "05.03.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nmit einem Vorsteuerergebnis von 1.175,8 Mio. Euro blickt die DKB auf das erfolgreichste Jahr ihrer Geschichte zurück. Wir starten unsere neue Strategie \"DKB 2030\" mit dem Ziel, Deutschlands digitalste Bank zu werden.\n\nBereits 2025 haben wir über 500.000 neue Kunden gewonnen und unser Filialnetz modernisiert.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
     { id: 1, from: "DKB AG", subject: "Ihr Kontoauszug für März 2026", date: "03.03.2026", unread: true, body: "Sehr geehrter Herr Falkenberg,\n\nanbei erhalten Sie Ihren Kontoauszug für den Monat März 2026.\n\nKontostand per 03.03.2026: -783.041,00 €\n\nSie können den Kontoauszug jederzeit im PDF-Format herunterladen.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 7, from: "DKB AG", subject: "Großbetrag 235.000,00 € vorgemerkt", date: "02.03.2026", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nwir möchten Sie darüber informieren, dass ein Großbetrag in Höhe von 235.000,00 € auf Ihrem Girokonto vorgemerkt ist.\n\nDer Betrag wird nach endgültiger Prüfung Ihrem Konto gutgeschrieben.\n\nBei Fragen stehen wir Ihnen jederzeit zur Verfügung.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
+    { id: 4, from: "DKB AG", subject: "Ihre neue Visa Debitkarte ist unterwegs", date: "14.08.2025", unread: false, body: "Sehr geehrter Herr Falkenberg,\n\nIhre neue Visa Debitkarte wurde erfolgreich bestellt und befindet sich auf dem Versandweg.\n\nDie Karte wird innerhalb der nächsten 5–7 Werktage bei Ihnen eintreffen.\n\nIhre alte Karte behält bis zum Aktivierungsdatum der neuen Karte ihre Gültigkeit.\n\nMit freundlichen Grüßen\nIhre DKB AG" },
   ]
 
   if (selectedId !== null) {
@@ -1217,7 +1217,15 @@ function PostfachView() {
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-      <h2 className="text-xl font-semibold mb-4">Postfach</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold">Postfach</h2>
+        <button
+          onClick={() => {/* clear logic */}}
+          className="text-sm text-blue-600 hover:text-blue-700 font-medium border-none bg-transparent cursor-pointer"
+        >
+          Postfach leeren
+        </button>
+      </div>
       <div className="space-y-2">
         {messages.map((m) => (
           <div key={m.id} onClick={() => setSelectedId(m.id)} className={`flex items-center justify-between p-4 rounded-lg gap-4 cursor-pointer hover:bg-gray-50 transition-colors ${m.unread ? "bg-blue-50 border-l-4 border-blue-600" : "bg-gray-50"}`}>
