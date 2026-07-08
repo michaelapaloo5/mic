@@ -18,12 +18,6 @@ interface Transaction {
 }
 
 const GIRO_TRANSACTIONS: Transaction[] = [
-  { id: 1, date: "21.03.2026", description: "Visa Debit", amount: 52.06, type: "debit", category: "Shopping" },
-  { id: 3, date: "18.03.2026", description: "Restaurant La Trattoria", amount: 67.50, type: "debit", category: "Restaurant" },
-  { id: 4, date: "16.03.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
-  { id: 5, date: "14.03.2026", description: "Visa Debit", amount: 45.0, type: "debit", category: "Shopping" },
-  { id: 6, date: "12.03.2026", description: "Visa Debit", amount: 79.98, type: "debit", category: "Shopping" },
-  { id: 7, date: "10.03.2026", description: "Visa Debit", amount: 3700.0, type: "debit", category: "Shopping" },
   { id: 8, date: "08.03.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
   { id: 9, date: "05.03.2026", description: "Visa Debit", amount: 230.63, type: "debit", category: "Shopping" },
   { id: 10, date: "01.03.2026", description: "Visa Debit", amount: 870.0, type: "debit", category: "Shopping" },
@@ -32,7 +26,7 @@ const GIRO_TRANSACTIONS: Transaction[] = [
   { id: 13, date: "15.02.2026", description: "Restaurant Zum Alten Fass", amount: 124.80, type: "debit", category: "Restaurant" },
   { id: 14, date: "10.02.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
   { id: 15, date: "05.02.2026", description: "Visa Debit", amount: 347.76, type: "debit", category: "Shopping" },
-  { id: 16, date: "28.01.2026", description: "Netflix Abo", amount: 17.99, type: "debit", category: "Unterhaltung" },
+
 ]
 
 
