@@ -707,8 +707,8 @@ function InternationalTransferForm({ onBack }: { onBack: () => void }) {
                     </div>
                     <div className="flex justify-between p-3 bg-white rounded-lg">
                       <span className="text-gray-500">Status</span>
-                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.description === "Großbetrag vorgemerkt" ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
-                        {selectedTx.description === "Großbetrag vorgemerkt" ? "Ausstehend" : "Abgeschlossen"}
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.id >= 18 ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
+                        {selectedTx.id >= 18 ? "Ausstehend" : "Abgeschlossen"}
                       </span>
                     </div>
                   </div>
@@ -1005,8 +1005,8 @@ function AuftraegeView() {
           </div>
           <div className="flex justify-between p-3 bg-gray-50 rounded-lg">
             <span className="text-gray-500">Status</span>
-            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.description === "Großbetrag vorgemerkt" ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
-              {selectedTx.description === "Großbetrag vorgemerkt" ? "Ausstehend" : "Abgeschlossen"}
+            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${selectedTx.id >= 18 ? "text-yellow-600 bg-yellow-50" : "text-green-600 bg-green-50"}`}>
+              {selectedTx.id >= 18 ? "Ausstehend" : "Abgeschlossen"}
             </span>
           </div>
         </div>
